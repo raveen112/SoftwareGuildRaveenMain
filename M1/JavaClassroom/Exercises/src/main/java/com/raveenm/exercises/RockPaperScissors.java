@@ -46,7 +46,7 @@ public class RockPaperScissors {
         }   
         // if statement with method to output the number of wins losses and ties
         // must declare an overall winner 
-        // dont know how to call the win, tie, loss counter from the method
+        
             System.out.println("Wins: " + scoreboard[0]);
             System.out.println("Ties: " + scoreboard[1]);
             System.out.println("Losses: "+ scoreboard[2]);
@@ -66,58 +66,51 @@ public class RockPaperScissors {
             else{
                 System.out.println("That's a tie. You must try again!");
             }
-           System.out.println("Do you want to play again (y/n)? ");
-           String playAgain = sc.nextLine();
+           System.out.println("Do you want to play again (1- Yes/2 - No)? ");
+           int playAgain= Integer.parseInt(sc.nextLine());
            
            
-           if(playAgain=="y"){
+           if(playAgain==1){
                play=true;
            }
-    }while(play=true);
+               
+    }while(play==true);
    }                                                                            // end of main
     
         
-        public static int rockpaperscissors(int choice, int [] scores){
-            
-            int win=0;
-            int loss=0;
-            int tie=0;
-            
-            
-            int x = (int)(Math.random()*((3-1)+1))+1;    // random computer decision
-            
-            if(choice==x){
-                System.out.println("Thats a tie!");
-                scores[1]++;
-                
-                
-            }
-            else if (choice==1 && x==3){
-                System.out.println("Thats a win, computer chose Scissors");
-                scores[0]++;
-            }
-            else if(choice==2 && x==1){
-                System.out.println("Thats a win, computer chose Rock");
-                scores[0]++;
-            }
-            else if(choice == 3 && x==2){
-                System.out.println("Thats a win, computer chose Paper");
-                scores[0]++;
-            }
-            else if (choice== 1&& x==2){
-                System.out.println("Thats a loss, computer chose Paper ");
-                scores[1]++;
-            }
-            else if(choice==2 && x==3){
-                System.out.println("Thats a loss, computer chose Scissors");
-                scores[2]++;
-            }
-            else if(choice == 3 && x==1){
-                System.out.println("Thats a loss, computer chose Rock");
-                scores[3]++;
+      
+    public static void rockpaperscissors(int choice, int[] scores) {
+
+
+
+        int x = (int) (Math.random() * ((3 - 1) + 1)) + 1;    // random computer decision
+
+        if (choice == x) {
+            System.out.println("Thats a tie!");
+            scores[1]++;
+
+        } else if (choice == 1 && x == 3) {
+            System.out.println("Thats a win, computer chose Scissors");
+            scores[0]++;
+
+        } else if (choice == 2 && x == 1) {
+            System.out.println("Thats a win, computer chose Rock");
+            scores[0]++;
+        } else if (choice == 3 && x == 2) {
+            System.out.println("Thats a win, computer chose Paper");
+            scores[0]++;
+        } else if (choice == 1 && x == 2) {
+            System.out.println("Thats a loss, computer chose Paper ");
+            scores[1]++;
+        } else if (choice == 2 && x == 3) {
+            System.out.println("Thats a loss, computer chose Scissors");
+            scores[2]++;
+        } else if (choice == 3 && x == 1) {
+            System.out.println("Thats a loss, computer chose Rock");
+            scores[3]++;
         }
-            return 1;
-       }  
+
+    }
         
         
     }
