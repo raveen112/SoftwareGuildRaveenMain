@@ -16,19 +16,16 @@ public class RockPaperScissors {
     public static void main(String[] args) {
         
         int[] scoreboard = new int[3];
-        int winCounter = 0;
-        int lossCounter = 0;
-        int tieCounter = 0;
         boolean play= false;
         
-       do{
+       do{                                                                     // do you wanna keep playing?
         System.out.println("How many rounds do you want to play? (1-10) ");   // input the rounds
         Scanner sc = new Scanner(System.in);
-        int rounds = Integer.parseInt(sc.nextLine());
+        int rounds = Integer.parseInt(sc.nextLine());                           
         
         
-        
-        if (rounds>0 && rounds<=10){
+        //check if rounds input is valid
+        if (rounds>0 && rounds<=10){                                            
             for(int i= 0; i <rounds; i++)
             {
                 System.out.println("Rock = 1, Paper = 2, Scissors  = 3");             // input play

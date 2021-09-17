@@ -28,13 +28,13 @@ public class DogGenetics {
         int[] dogPercs = new int[dogNameMain.length] ;
         int sum = 0; 
         
-        while(sum!=100){
+        while(sum!=100){                //sum of all percs should be 100
             sum=0;
             for(int i=0; i<dogPercs.length; i++ ){
                 int randomInt = random.nextInt(100)+1;
                 dogPercs[i]=randomInt;
-                sum +=randomInt;
-            }
+                sum +=randomInt;  
+            } 
         }
             for(int i=0; i<dogNameMain.length; i++)
             {
