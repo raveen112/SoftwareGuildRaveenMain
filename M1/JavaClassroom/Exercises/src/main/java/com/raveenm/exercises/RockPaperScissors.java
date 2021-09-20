@@ -56,7 +56,7 @@ public class RockPaperScissors {
             {
                 System.out.println("I win. You have much to learn young one.");
             }
-            else if (scoreboard[0]==scoreboard[2] && scoreboard[2] == scoreboard[1])
+            else if (scoreboard[0] == scoreboard[2] && scoreboard[2] == scoreboard[1])
                     {
                 System.out.println("That's a tie. You must try again!");
             }
@@ -69,6 +69,10 @@ public class RockPaperScissors {
            
            if(playAgain==1){
                play=true;
+           }
+           else
+           {
+               play=false;
            }
                
     }while(play==true);
