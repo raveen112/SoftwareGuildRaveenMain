@@ -26,13 +26,13 @@ public class InterestCalculator {
         
         for(int i=1; i<=time; i++)
         {
-            int profit = 0;
-            int earned = 0;
-            int principalgain = principal+profit;
+            int profit;
+            int earned ;
+            earned = (principal * rate*time)/100;
+            profit = principal + earned;
+            int principalGain = principal += profit;
             System.out.println("Year " + i + ": ");
-            System.out.println("Began with " + principalgain);
-            earned = principal * rate/100;
-            profit = principal + earned; 
+            System.out.println("Began with " + principalGain);
             System.out.println("Earned " + earned);
             System.out.println("Ended with "+ profit);
             System.out.println("\n");

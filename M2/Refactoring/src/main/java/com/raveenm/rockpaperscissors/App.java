@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.raveenm.objectinstantiiation;
+package com.raveenm.rockpaperscissors;
 
 /**
  *
@@ -11,15 +11,7 @@ package com.raveenm.objectinstantiiation;
  */
 public class App {
     public static void main(String[] args) {
-        
-        
-        int sum = Adder.add(5, 4);
-        
-        System.out.println("The sum is " + sum);
-        
-   }
-    
-           
+        RPS rockPaperScissors = new RPS();
+        rockPaperScissors.roposc();
+    }
 }
-    
-    
