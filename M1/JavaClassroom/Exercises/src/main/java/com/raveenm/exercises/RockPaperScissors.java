@@ -49,12 +49,12 @@ public class RockPaperScissors {
             System.out.println("Losses: "+ scoreboard[2]);
             
             
-            // declare a winner
-            if (scoreboard[0] >=scoreboard[1] && scoreboard[1]>scoreboard[2]) 
+            // declare a winner!    
+            if (scoreboard[0] >=scoreboard[1] && scoreboard[0]>scoreboard[2]) 
             {
                 System.out.println("You beat me. Well done Padawan.");
             }
-            else if(scoreboard[2]>scoreboard[0] && scoreboard[2]>scoreboard[0])
+            else if(scoreboard[2]>scoreboard[0] && scoreboard[2]>scoreboard[1])
             {
                 System.out.println("I win. You have much to learn young one.");
             }
@@ -78,7 +78,7 @@ public class RockPaperScissors {
            }
                
     }while(play==true); 
-   }                                                        // end of main
+   }                                                        // end of main.
     
         
       
