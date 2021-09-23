@@ -12,7 +12,7 @@ package com.raveenm.lfactorizer;
 public class App {
     public static void main(String[] args) {
         Factorizer fact = new Factorizer();
-        fact.factr();
+        fact.factr(); // final
     }
     
 }
