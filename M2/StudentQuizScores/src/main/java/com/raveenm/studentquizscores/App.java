@@ -165,17 +165,6 @@ public class App {
                     break;
             }
                         
-                        
-//                for(List<Integer> students: scoreList)
-//                {
-//                scores = students.get(student);
-//                sum = 0;
-//                
-//                for (int score : scores){
-//                    sum = sum + score;
-//                }
-//                }
-//                average = sum/scores.size();
             // create a name hash map
             // names would be the key
             // scores would be an array list
@@ -183,7 +172,7 @@ public class App {
             // calculate average scores
             // options 2to display hashmap (Switch case)
             // create a name hash map
-//    Map<String, List<Integer>> students = new HashMap<>();
+
             // continue program 
             String userResponse = io.readString("Would you like to continue (y/n)? ");
             if (userResponse.equals("n")) {
