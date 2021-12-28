@@ -11,8 +11,11 @@ import com.raveenm.vendingmachine.service.InsufficientFundsException;
 import com.raveenm.vendingmachine.service.NoItemInventoryException;
 import com.raveenm.vendingmachine.service.VendingMachineServiceLayer;
 import com.raveenm.vendingmachine.service.VendingMachineServiceLayerFileImpl;
+import com.raveenm.vendingmachine.ui.InputErrorException;
 import com.raveenm.vendingmachine.ui.UserIO;
 import com.raveenm.vendingmachine.ui.UserIOConsoleImpl;
+import com.raveenm.vendingmachine.ui.VendingMachineView;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -21,79 +24,69 @@ import java.util.List;
  * @author ravee
  */
 public class VendingMachineController {
-    
-    private UserIO io = new UserIOConsoleImpl();
+
     VendingMachineServiceLayer service;
-    
-    public VendingMachineController(VendingMachineServiceLayer service) {
+    VendingMachineView view;
+
+    public VendingMachineController(VendingMachineServiceLayer service, VendingMachineView view) {
         this.service = service;
-        
+        this.view = view;
+
     }
-    
-    public void run() throws VendingMachineDaoException, InsufficientFundsException, NoItemInventoryException {
+
+    public void run() throws IOException, VendingMachineDaoException, InsufficientFundsException, NoItemInventoryException, InputErrorException {
         boolean keepGoing = true;
-        printMenu();
+        boolean outOfStock;
+        view.printMenu(service.getAllItems());
         while (keepGoing) {
-            
-           
+
             try {
                 //add funds to the machine
-                io.print("Select a menu option: ");
-                io.print("1. Deposit Money");
-                io.print("2. Exit");
-                
-                int menuSelection = io.readInt("Enter your choice: ", 1, 2);
-                
+                int menuSelection = view.enterExit();
+
                 switch (menuSelection) {
                     case 1:
                         depositFunds();
-                        Inventory itemDispensed = service.dispenseItem(getItemSelection());
-                        io.print("Succesfully dispensed "+ itemDispensed.getItemName());
-                        io.print("Balance: "+ service.getBalance());
-                        
+                        itemDispensed();
                         break;
 
                     // add change post purchase as the exit message
                     case 2:
                         keepGoing = false;
-                        io.print("Returning balance: " + service.returnAmount());
+                        returnBalance();
                         break;
-                    
+
                 }
-            } catch (InsufficientFundsException | NoItemInventoryException e) {
-                io.print(e.getMessage());
-                printMenu();
-                io.print("Balance: "+ service.getBalance());
+            } catch (NoItemInventoryException | InsufficientFundsException e) {
+
+                view.printErrorMessage(e);
+
             }
-            
+
         }
-        
+
     }
 
-    // add to view 
-    public void printMenu() throws VendingMachineDaoException {
-        io.print("Vending Machine: ");
-        
-        List<Inventory> inventoryList = service.getAllItems();
-        
-        for (Inventory item : inventoryList) {
-            
-            if (item.getItemCount() > 0) {
-                io.print(item.getId() + " " + "Item: " + item.getItemName() + " " + "Cost: " + item.getItemCost() + " " + "Stock: " + item.getItemCount());
-            }
-            
-        }
-        
-    }
-    
     public String getItemSelection() throws VendingMachineDaoException {
-        String itemChoice = io.readString("Enter your Item Choice:");
-        return itemChoice;
+        return view.getItemSelection();
+
     }
-    
-    public void depositFunds() {
-        BigDecimal funds = new BigDecimal(io.readString("Deposit Money:"));
+
+    public void depositFunds() throws InputErrorException {
+        BigDecimal funds = view.depositMoney();
         service.depositFunds(funds);
     }
-    
+
+    public void returnBalance() throws VendingMachineDaoException, IOException {
+        BigDecimal balance = service.getBalance();
+        view.returnBalance(balance);
+    }
+
+    public void itemDispensed() throws VendingMachineDaoException, NoItemInventoryException, InsufficientFundsException, IOException {
+        Inventory itemDispensed = service.dispenseItem(getItemSelection());
+        BigDecimal returnBalance = service.getBalance();
+        view.succesfullyDispensedBanner(itemDispensed, returnBalance);
+
+    }
+
 }

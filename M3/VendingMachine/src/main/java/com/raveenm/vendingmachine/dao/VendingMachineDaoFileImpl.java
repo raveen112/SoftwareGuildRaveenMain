@@ -60,13 +60,14 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
         return currentInventory;
 
     }
+
     @Override
-    public Inventory getSingleItem(String id) throws VendingMachineDaoException{
+    public Inventory getSingleItem(String id) throws VendingMachineDaoException {
         readInventory();
         Inventory singleItem = this.inventory.values().stream().filter(p -> p.getId().equals(id)).findAny().get();
         return singleItem;
     }
-    
+
     @Override
     public List<Inventory> getAllItems() throws VendingMachineDaoException {
         readInventory();
@@ -117,11 +118,10 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
         writeInventory();
         return item;
     }
-    
+
     @Override
-    public int getStock(Inventory item){
+    public int getStock(Inventory item) {
         return item.getItemCount();
     }
-    
-    
+
 }

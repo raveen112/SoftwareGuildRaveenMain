@@ -5,9 +5,11 @@
  */
 package com.raveenm.vendingmachine.service;
 
+import com.raveenm.vendingmachine.dao.VendingMachineAuditDao;
 import com.raveenm.vendingmachine.dao.VendingMachineDao;
 import com.raveenm.vendingmachine.dao.VendingMachineDaoException;
 import com.raveenm.vendingmachine.dto.Inventory;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -21,8 +23,11 @@ public class VendingMachineServiceLayerFileImpl implements VendingMachineService
     BigDecimal fundsDeposited = new BigDecimal("0").setScale(2, RoundingMode.UP);
     VendingMachineDao dao;
 
-    public VendingMachineServiceLayerFileImpl(VendingMachineDao dao) {              // 1. constructor for dao
+    private VendingMachineAuditDao auditDao;
+
+    public VendingMachineServiceLayerFileImpl(VendingMachineDao dao, VendingMachineAuditDao auditDao) {              // 1. constructor for dao
         this.dao = dao;
+        this.auditDao = auditDao;
     }
 
     public List<Inventory> getAllItems() throws VendingMachineDaoException {  // 2. Dao to get all available items, remove items 
@@ -31,39 +36,44 @@ public class VendingMachineServiceLayerFileImpl implements VendingMachineService
         return availableItems;
 
     }
+
     @Override
     public void depositFunds(BigDecimal funds) {
 
-        this.fundsDeposited =this.fundsDeposited.add(funds);
+        this.fundsDeposited = this.fundsDeposited.add(funds);
         // funds held in the funds
 
     }
+
     // debug 
-    public BigDecimal getBalance(){
+    public BigDecimal getBalance() {
         return this.fundsDeposited;
     }
-    
+
     //deducting the funds inputted by the cost; balance is saved
-    public void deductFunds(Inventory item){
-        BigDecimal deduction= item.getItemCost();
+    public void deductFunds(Inventory item) {
+        BigDecimal deduction = item.getItemCost();
         this.fundsDeposited = this.fundsDeposited.subtract(deduction);
-        
+
     }
-    
+
     //return customers change
-    public BigDecimal returnAmount(){
+    public BigDecimal returnAmount() throws VendingMachineDaoException, IOException {
         BigDecimal amountReturned = this.fundsDeposited;
-        fundsDeposited =new BigDecimal("0").setScale(2, RoundingMode.UP);
+        fundsDeposited = new BigDecimal("0").setScale(2, RoundingMode.UP);
+        auditDao.writeAuditEntry("Change " + amountReturned + "Returned.");
         return amountReturned;
+
     }
-            
-   
+
     @Override
-    public Inventory dispenseItem(String id) throws VendingMachineDaoException, NoItemInventoryException, InsufficientFundsException {
+    public Inventory dispenseItem(String id) throws VendingMachineDaoException, NoItemInventoryException, InsufficientFundsException, IOException {
         Inventory itemToPurchase = dao.getSingleItem(id);
         checkInventory(itemToPurchase);
         checkFundAmount(itemToPurchase);
-        dao.dispenseItem(id);
+        Inventory dispensedItem = dao.dispenseItem(id);
+
+        auditDao.writeAuditEntry(("Item: " + dispensedItem.getItemName() + " from " + dispensedItem.getId() + " DISPENSED"));
         this.deductFunds(itemToPurchase);
         return itemToPurchase;
 
@@ -83,15 +93,6 @@ public class VendingMachineServiceLayerFileImpl implements VendingMachineService
             throw new InsufficientFundsException("Insufficient funds for this purchase");
         }
 
-        
     }
-    
 
-    
-    
-    
-    
- 
-    
-    
 }

@@ -5,10 +5,12 @@
  */
 package com.raveenm.vendingmachine.dao;
 
+import java.io.IOException;
+
 /**
  *
  * @author ravee
  */
 public interface VendingMachineAuditDao {
-    
+    public void writeAuditEntry(String entry) throws VendingMachineDaoException, IOException;
 }
