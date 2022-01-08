@@ -15,9 +15,7 @@ import com.raveenm.vendingmachine.service.InsufficientFundsException;
 import com.raveenm.vendingmachine.service.NoItemInventoryException;
 import com.raveenm.vendingmachine.service.VendingMachineServiceLayer;
 import com.raveenm.vendingmachine.service.VendingMachineServiceLayerFileImpl;
-import com.raveenm.vendingmachine.ui.InputErrorException;
 import com.raveenm.vendingmachine.ui.VendingMachineView;
-import java.io.IOException;
 
 /**
  *
@@ -25,7 +23,7 @@ import java.io.IOException;
  */
 public class App {
 
-    public static void main(String[] args) throws VendingMachineDaoException, InsufficientFundsException, NoItemInventoryException,InputErrorException,IOException  {
+    public static void main(String[] args) throws VendingMachineDaoException, InsufficientFundsException, NoItemInventoryException {
         VendingMachineDao dao = new VendingMachineDaoFileImpl();
         VendingMachineAuditDao auditDao = new VendingMachineAuditDaoFileImpl();
         VendingMachineServiceLayer service = new VendingMachineServiceLayerFileImpl(dao, auditDao);

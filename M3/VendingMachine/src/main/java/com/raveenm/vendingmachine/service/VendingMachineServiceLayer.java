@@ -5,11 +5,8 @@
  */
 package com.raveenm.vendingmachine.service;
 
-import com.raveenm.vendingmachine.dao.VendingMachineDao;
 import com.raveenm.vendingmachine.dao.VendingMachineDaoException;
-import com.raveenm.vendingmachine.dao.VendingMachineDaoFileImpl;
 import com.raveenm.vendingmachine.dto.Inventory;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -20,8 +17,8 @@ import java.util.List;
 public interface VendingMachineServiceLayer {
     
     public List<Inventory> getAllItems() throws VendingMachineDaoException;
-    public Inventory dispenseItem(String id) throws VendingMachineDaoException, NoItemInventoryException, InsufficientFundsException, IOException;
+    public Inventory dispenseItem(String id) throws VendingMachineDaoException, NoItemInventoryException, InsufficientFundsException;
     public void depositFunds(BigDecimal funds);
-    public BigDecimal getBalance() throws VendingMachineDaoException, IOException;
-    public BigDecimal returnAmount() throws VendingMachineDaoException, IOException;
+    public BigDecimal getBalance() throws VendingMachineDaoException;
+    public BigDecimal returnAmount() throws VendingMachineDaoException;
 }

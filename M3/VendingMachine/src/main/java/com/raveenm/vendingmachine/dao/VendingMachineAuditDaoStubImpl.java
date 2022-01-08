@@ -9,6 +9,10 @@ package com.raveenm.vendingmachine.dao;
  *
  * @author ravee
  */
-public interface VendingMachineAuditDao {
-    public void writeAuditEntry(String entry) throws VendingMachineDaoException;
+public class VendingMachineAuditDaoStubImpl implements VendingMachineAuditDao {
+
+    @Override
+    public void writeAuditEntry(String entry) throws VendingMachineDaoException {
+        //do nothing . . .
+    }
 }

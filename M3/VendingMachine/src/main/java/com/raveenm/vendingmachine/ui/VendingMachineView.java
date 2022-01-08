@@ -8,10 +8,7 @@ package com.raveenm.vendingmachine.ui;
 import com.raveenm.vendingmachine.dao.VendingMachineDaoException;
 import com.raveenm.vendingmachine.dto.Inventory;
 import com.raveenm.vendingmachine.service.Funds;
-import com.raveenm.vendingmachine.service.InsufficientFundsException;
-import com.raveenm.vendingmachine.service.NoItemInventoryException;
 import com.raveenm.vendingmachine.service.VendingMachineServiceLayer;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -37,11 +34,9 @@ public class VendingMachineView {
         return itemChoice;
     }
 
-    
-     public void printMenu(List <Inventory> inventoryList) {
+    public void printMenu(List<Inventory> inventoryList) {
         io.print("Vending Machine: ");
 
-        
         for (Inventory item : inventoryList) {
 
             if (item.getItemCount() > 0) {
@@ -51,16 +46,13 @@ public class VendingMachineView {
         }
 
     }
-     
-     public void printErrorMessage(Exception e){
-                io.print(e.getMessage());
-     }
-     
-     
-    
-     
+
+    public void printErrorMessage(Exception e) {
+        io.print(e.getMessage());
+    }
+
     public void returnBalance(BigDecimal returnAmount) {
-        io.print("===Change===" + "\n");
+        io.print("=== Change ===" + "\n");
         BigDecimal[] changeRemainder = returnAmount.divideAndRemainder(Funds.ONE_DOLLAR.getVALUE());
         returnAmount = changeRemainder[1];
         io.print(Funds.ONE_DOLLAR.getNAME() + " : " + changeRemainder[0]);

@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -27,12 +28,25 @@ import java.util.Scanner;
 public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
     private Map<String, Inventory> inventory = new HashMap<>();
+    private Map<Inventory, Integer> inventoryStock = new HashMap<>(); //trial
+
+    private String FILE_NAME ;
     public static final String DELIMITER = "::";
 
+    public VendingMachineDaoFileImpl(String fileName) {
+        FILE_NAME = fileName;
+
+    }
+
+    public VendingMachineDaoFileImpl() {
+        FILE_NAME = "items.txt";
+    }
+
+    // make tests for read 
     private void readInventory() throws VendingMachineDaoException {
         Scanner scanner;
         try {
-            scanner = new Scanner(new BufferedReader(new FileReader("items.txt")));
+            scanner = new Scanner(new BufferedReader(new FileReader(FILE_NAME)));
 
         } catch (FileNotFoundException e) {
             throw new VendingMachineDaoException("Could not load data!", e);
@@ -73,6 +87,10 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
         readInventory();
         List<Inventory> inventoryList = new ArrayList<>(inventory.values());
         return inventoryList;
+//        return inventoryStock.keySet()
+//                .stream()
+//                .filter((i) -> inventoryStock.get(i) != 0)
+//                .collect(Collectors.toList());
 
     }
 
@@ -91,7 +109,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
         PrintWriter out;
 
         try {
-            out = new PrintWriter(new FileWriter("items.txt"));
+            out = new PrintWriter(new FileWriter(FILE_NAME));
         } catch (IOException e) {
             throw new VendingMachineDaoException("Could not save inventory data.", e);
         }
@@ -111,8 +129,10 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
     }
 
+    //add test for update 
     @Override
     public Inventory dispenseItem(String id) throws VendingMachineDaoException {
+        readInventory();
         Inventory item = this.inventory.get(id);
         item.setItemCount(this.inventory.get(id).getItemCount() - 1);             //minus inventory by 1 for every call
         writeInventory();

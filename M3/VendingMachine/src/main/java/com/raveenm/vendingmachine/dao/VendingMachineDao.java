@@ -6,8 +6,6 @@
 package com.raveenm.vendingmachine.dao;
 
 import com.raveenm.vendingmachine.dto.Inventory;
-import com.raveenm.vendingmachine.service.NoItemInventoryException;
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -24,4 +22,6 @@ public interface VendingMachineDao {
     public Inventory getSingleItem(String id) throws VendingMachineDaoException;
 
     public int getStock(Inventory item);
+
+    
 }

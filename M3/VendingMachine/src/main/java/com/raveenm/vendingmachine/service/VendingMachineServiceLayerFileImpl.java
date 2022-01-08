@@ -9,7 +9,6 @@ import com.raveenm.vendingmachine.dao.VendingMachineAuditDao;
 import com.raveenm.vendingmachine.dao.VendingMachineDao;
 import com.raveenm.vendingmachine.dao.VendingMachineDaoException;
 import com.raveenm.vendingmachine.dto.Inventory;
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -30,6 +29,7 @@ public class VendingMachineServiceLayerFileImpl implements VendingMachineService
         this.auditDao = auditDao;
     }
 
+    // add test: all items must be marshalled 
     public List<Inventory> getAllItems() throws VendingMachineDaoException {  // 2. Dao to get all available items, remove items 
         List<Inventory> availableItems = dao.getAllItems();                         // sort through availableItems array and remove when -- 0                   
 
@@ -45,11 +45,12 @@ public class VendingMachineServiceLayerFileImpl implements VendingMachineService
 
     }
 
-    // debug 
+    // add test 
     public BigDecimal getBalance() {
         return this.fundsDeposited;
     }
 
+    // add test: check balance calculations
     //deducting the funds inputted by the cost; balance is saved
     public void deductFunds(Inventory item) {
         BigDecimal deduction = item.getItemCost();
@@ -57,8 +58,9 @@ public class VendingMachineServiceLayerFileImpl implements VendingMachineService
 
     }
 
+    // add test 
     //return customers change
-    public BigDecimal returnAmount() throws VendingMachineDaoException, IOException {
+    public BigDecimal returnAmount() throws VendingMachineDaoException {
         BigDecimal amountReturned = this.fundsDeposited;
         fundsDeposited = new BigDecimal("0").setScale(2, RoundingMode.UP);
         auditDao.writeAuditEntry("Change " + amountReturned + "Returned.");
@@ -66,16 +68,19 @@ public class VendingMachineServiceLayerFileImpl implements VendingMachineService
 
     }
 
+    // add test 
+    // calls the dao methods, deduct and dispensed item with the -1 logic 
     @Override
-    public Inventory dispenseItem(String id) throws VendingMachineDaoException, NoItemInventoryException, InsufficientFundsException, IOException {
+    public Inventory dispenseItem(String id) throws VendingMachineDaoException, NoItemInventoryException, InsufficientFundsException {
         Inventory itemToPurchase = dao.getSingleItem(id);
+        //order of exceptions changes the service layer test exception 
         checkInventory(itemToPurchase);
         checkFundAmount(itemToPurchase);
         Inventory dispensedItem = dao.dispenseItem(id);
 
         auditDao.writeAuditEntry(("Item: " + dispensedItem.getItemName() + " from " + dispensedItem.getId() + " DISPENSED"));
-        this.deductFunds(itemToPurchase);
-        return itemToPurchase;
+        this.deductFunds(dispensedItem);
+        return dispensedItem;
 
     }
 

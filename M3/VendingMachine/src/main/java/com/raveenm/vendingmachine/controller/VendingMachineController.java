@@ -10,14 +10,8 @@ import com.raveenm.vendingmachine.dto.Inventory;
 import com.raveenm.vendingmachine.service.InsufficientFundsException;
 import com.raveenm.vendingmachine.service.NoItemInventoryException;
 import com.raveenm.vendingmachine.service.VendingMachineServiceLayer;
-import com.raveenm.vendingmachine.service.VendingMachineServiceLayerFileImpl;
-import com.raveenm.vendingmachine.ui.InputErrorException;
-import com.raveenm.vendingmachine.ui.UserIO;
-import com.raveenm.vendingmachine.ui.UserIOConsoleImpl;
 import com.raveenm.vendingmachine.ui.VendingMachineView;
-import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  *
@@ -34,7 +28,7 @@ public class VendingMachineController {
 
     }
 
-    public void run() throws IOException, VendingMachineDaoException, InsufficientFundsException, NoItemInventoryException, InputErrorException {
+    public void run() throws VendingMachineDaoException, InsufficientFundsException, NoItemInventoryException {
         boolean keepGoing = true;
         boolean outOfStock;
         view.printMenu(service.getAllItems());
@@ -72,17 +66,17 @@ public class VendingMachineController {
 
     }
 
-    public void depositFunds() throws InputErrorException {
+    public void depositFunds() {
         BigDecimal funds = view.depositMoney();
         service.depositFunds(funds);
     }
 
-    public void returnBalance() throws VendingMachineDaoException, IOException {
+    public void returnBalance() throws VendingMachineDaoException {
         BigDecimal balance = service.getBalance();
         view.returnBalance(balance);
     }
 
-    public void itemDispensed() throws VendingMachineDaoException, NoItemInventoryException, InsufficientFundsException, IOException {
+    public void itemDispensed() throws VendingMachineDaoException, NoItemInventoryException, InsufficientFundsException {
         Inventory itemDispensed = service.dispenseItem(getItemSelection());
         BigDecimal returnBalance = service.getBalance();
         view.succesfullyDispensedBanner(itemDispensed, returnBalance);

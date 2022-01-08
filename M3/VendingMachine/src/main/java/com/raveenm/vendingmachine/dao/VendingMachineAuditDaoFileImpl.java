@@ -9,9 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -31,7 +28,7 @@ public class VendingMachineAuditDaoFileImpl implements VendingMachineAuditDao {
     }
 
     @Override
-    public void writeAuditEntry(String entry) throws VendingMachineDaoException, IOException {
+    public void writeAuditEntry(String entry) throws VendingMachineDaoException {
         PrintWriter out;
 
         try {
