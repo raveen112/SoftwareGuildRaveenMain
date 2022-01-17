@@ -12,7 +12,9 @@ import java.math.RoundingMode;
  * @author ravee
  */
 public enum Funds {
-
+    
+    //enum to return change in coins
+    
     ONE_DOLLAR(new BigDecimal("1.00").setScale(2, RoundingMode.UP), "$1"),
     TWENTY_FIVE_CENTS(new BigDecimal("0.25").setScale(2, RoundingMode.UP), "25c"),
     TEN_CENTS(new BigDecimal("0.10").setScale(2, RoundingMode.UP), "10c"),

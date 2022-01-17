@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="0.038" tests="6" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="1.374" tests="6" errors="6" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="11.0.12+7"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Eclipse Foundation\jdk-11.0.12.7-hotspot\bin"/>
-    <property name="maven.multiModuleProjectDirectory" value="C:\Users\ravee\Desktop\raveens-classroom\classwork-repository-raveen112\M2\ClassRoster2"/>
+    <property name="maven.multiModuleProjectDirectory" value="C:\Users\ravee\Desktop\raveens-classroom\classwork-repository-raveen112\M3\ClassRoster2"/>
     <property name="java.vm.vendor" value="Eclipse Foundation"/>
     <property name="java.vendor.url" value="https://adoptium.net/"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -14,9 +14,8 @@
     <property name="user.script" value=""/>
     <property name="user.country" value="CA"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
-    <property name="test" value="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="C:\Users\ravee\Desktop\raveens-classroom\classwork-repository-raveen112\M2\ClassRoster2"/>
+    <property name="user.dir" value="C:\Users\ravee\Desktop\raveens-classroom\classwork-repository-raveen112\M3\ClassRoster2"/>
     <property name="java.vm.compressedOopsMode" value="32-bit"/>
     <property name="java.runtime.version" value="11.0.12+7"/>
     <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
@@ -46,7 +45,7 @@
     <property name="java.class.path" value="C:\Program Files\NetBeans-12.0\netbeans\java\maven\bin\..\boot\plexus-classworlds-2.6.0.jar"/>
     <property name="java.vm.specification.version" value="11"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=com.raveenm.classroster.service.ClassRosterServiceLayerImplTest -Dmaven.ext.class.path=C:\Program Files\NetBeans-12.0\netbeans\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 test-compile surefire:test"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=C:\Program Files\NetBeans-12.0\netbeans\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 clean install"/>
     <property name="java.home" value="C:\Program Files\Eclipse Foundation\jdk-11.0.12.7-hotspot"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
@@ -64,10 +63,88 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="testCreateDuplicateIdStudent" classname="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="0.016"/>
-  <testcase name="testGetStudent" classname="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="0.003"/>
-  <testcase name="testGetAllStudents" classname="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="0.001"/>
-  <testcase name="testCreateStudentInvalidData" classname="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="0"/>
-  <testcase name="testRemoveStudent" classname="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="0.001"/>
-  <testcase name="testCreateValidStudent" classname="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="0.001"/>
+  <testcase name="testCreateDuplicateIdStudent" classname="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="0.009">
+    <error message="Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name &apos;classRosterDaoStub&apos; defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl" type="org.springframework.beans.factory.CannotLoadBeanClassException"><![CDATA[org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name 'classRosterDaoStub' defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+	at com.raveenm.classroster.service.ClassRosterServiceLayerImplTest.<init>(ClassRosterServiceLayerImplTest.java:35)
+Caused by: java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+	at com.raveenm.classroster.service.ClassRosterServiceLayerImplTest.<init>(ClassRosterServiceLayerImplTest.java:35)
+]]></error>
+    <system-err><![CDATA[Jan. 14, 2022 9:13:16 P.M. org.springframework.context.support.ClassPathXmlApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@55b53d44: startup date [Fri Jan 14 21:13:16 EST 2022]; root of context hierarchy
+Jan. 14, 2022 9:13:16 P.M. org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [applicationContext.xml]
+Jan. 14, 2022 9:13:17 P.M. org.springframework.context.support.ClassPathXmlApplicationContext refresh
+WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name 'classRosterDaoStub' defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+]]></system-err>
+  </testcase>
+  <testcase name="testGetStudent" classname="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="0">
+    <error message="Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name &apos;classRosterDaoStub&apos; defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl" type="org.springframework.beans.factory.CannotLoadBeanClassException"><![CDATA[org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name 'classRosterDaoStub' defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+	at com.raveenm.classroster.service.ClassRosterServiceLayerImplTest.<init>(ClassRosterServiceLayerImplTest.java:35)
+Caused by: java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+	at com.raveenm.classroster.service.ClassRosterServiceLayerImplTest.<init>(ClassRosterServiceLayerImplTest.java:35)
+]]></error>
+    <system-err><![CDATA[Jan. 14, 2022 9:13:17 P.M. org.springframework.context.support.ClassPathXmlApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@6dab9b6d: startup date [Fri Jan 14 21:13:17 EST 2022]; root of context hierarchy
+Jan. 14, 2022 9:13:17 P.M. org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [applicationContext.xml]
+Jan. 14, 2022 9:13:17 P.M. org.springframework.context.support.ClassPathXmlApplicationContext refresh
+WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name 'classRosterDaoStub' defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+]]></system-err>
+  </testcase>
+  <testcase name="testGetAllStudents" classname="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="0">
+    <error message="Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name &apos;classRosterDaoStub&apos; defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl" type="org.springframework.beans.factory.CannotLoadBeanClassException"><![CDATA[org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name 'classRosterDaoStub' defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+	at com.raveenm.classroster.service.ClassRosterServiceLayerImplTest.<init>(ClassRosterServiceLayerImplTest.java:35)
+Caused by: java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+	at com.raveenm.classroster.service.ClassRosterServiceLayerImplTest.<init>(ClassRosterServiceLayerImplTest.java:35)
+]]></error>
+    <system-err><![CDATA[Jan. 14, 2022 9:13:17 P.M. org.springframework.context.support.ClassPathXmlApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@4ed5eb72: startup date [Fri Jan 14 21:13:17 EST 2022]; root of context hierarchy
+Jan. 14, 2022 9:13:17 P.M. org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [applicationContext.xml]
+Jan. 14, 2022 9:13:17 P.M. org.springframework.context.support.ClassPathXmlApplicationContext refresh
+WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name 'classRosterDaoStub' defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+]]></system-err>
+  </testcase>
+  <testcase name="testCreateStudentInvalidData" classname="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="0">
+    <error message="Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name &apos;classRosterDaoStub&apos; defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl" type="org.springframework.beans.factory.CannotLoadBeanClassException"><![CDATA[org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name 'classRosterDaoStub' defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+	at com.raveenm.classroster.service.ClassRosterServiceLayerImplTest.<init>(ClassRosterServiceLayerImplTest.java:35)
+Caused by: java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+	at com.raveenm.classroster.service.ClassRosterServiceLayerImplTest.<init>(ClassRosterServiceLayerImplTest.java:35)
+]]></error>
+    <system-err><![CDATA[Jan. 14, 2022 9:13:17 P.M. org.springframework.context.support.ClassPathXmlApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@4f9a2c08: startup date [Fri Jan 14 21:13:17 EST 2022]; root of context hierarchy
+Jan. 14, 2022 9:13:17 P.M. org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [applicationContext.xml]
+Jan. 14, 2022 9:13:17 P.M. org.springframework.context.support.ClassPathXmlApplicationContext refresh
+WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name 'classRosterDaoStub' defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+]]></system-err>
+  </testcase>
+  <testcase name="testRemoveStudent" classname="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="0">
+    <error message="Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name &apos;classRosterDaoStub&apos; defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl" type="org.springframework.beans.factory.CannotLoadBeanClassException"><![CDATA[org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name 'classRosterDaoStub' defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+	at com.raveenm.classroster.service.ClassRosterServiceLayerImplTest.<init>(ClassRosterServiceLayerImplTest.java:35)
+Caused by: java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+	at com.raveenm.classroster.service.ClassRosterServiceLayerImplTest.<init>(ClassRosterServiceLayerImplTest.java:35)
+]]></error>
+    <system-err><![CDATA[Jan. 14, 2022 9:13:17 P.M. org.springframework.context.support.ClassPathXmlApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@53fd0d10: startup date [Fri Jan 14 21:13:17 EST 2022]; root of context hierarchy
+Jan. 14, 2022 9:13:17 P.M. org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [applicationContext.xml]
+Jan. 14, 2022 9:13:17 P.M. org.springframework.context.support.ClassPathXmlApplicationContext refresh
+WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name 'classRosterDaoStub' defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+]]></system-err>
+  </testcase>
+  <testcase name="testCreateValidStudent" classname="com.raveenm.classroster.service.ClassRosterServiceLayerImplTest" time="0">
+    <error message="Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name &apos;classRosterDaoStub&apos; defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl" type="org.springframework.beans.factory.CannotLoadBeanClassException"><![CDATA[org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name 'classRosterDaoStub' defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+	at com.raveenm.classroster.service.ClassRosterServiceLayerImplTest.<init>(ClassRosterServiceLayerImplTest.java:35)
+Caused by: java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+	at com.raveenm.classroster.service.ClassRosterServiceLayerImplTest.<init>(ClassRosterServiceLayerImplTest.java:35)
+]]></error>
+    <system-err><![CDATA[Jan. 14, 2022 9:13:17 P.M. org.springframework.context.support.ClassPathXmlApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@531f4093: startup date [Fri Jan 14 21:13:17 EST 2022]; root of context hierarchy
+Jan. 14, 2022 9:13:17 P.M. org.springframework.beans.factory.xml.XmlBeanDefinitionReader loadBeanDefinitions
+INFO: Loading XML bean definitions from class path resource [applicationContext.xml]
+Jan. 14, 2022 9:13:17 P.M. org.springframework.context.support.ClassPathXmlApplicationContext refresh
+WARNING: Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.CannotLoadBeanClassException: Cannot find class [com.raveenm.classroster.service.ClassRoserDaoStubImpl] for bean with name 'classRosterDaoStub' defined in class path resource [applicationContext.xml]; nested exception is java.lang.ClassNotFoundException: com.raveenm.classroster.service.ClassRoserDaoStubImpl
+]]></system-err>
+  </testcase>
 </testsuite>

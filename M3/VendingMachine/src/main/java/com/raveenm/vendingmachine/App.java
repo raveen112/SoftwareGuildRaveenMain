@@ -16,6 +16,8 @@ import com.raveenm.vendingmachine.service.NoItemInventoryException;
 import com.raveenm.vendingmachine.service.VendingMachineServiceLayer;
 import com.raveenm.vendingmachine.service.VendingMachineServiceLayerFileImpl;
 import com.raveenm.vendingmachine.ui.VendingMachineView;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -24,13 +26,16 @@ import com.raveenm.vendingmachine.ui.VendingMachineView;
 public class App {
 
     public static void main(String[] args) throws VendingMachineDaoException, InsufficientFundsException, NoItemInventoryException {
-        VendingMachineDao dao = new VendingMachineDaoFileImpl();
-        VendingMachineAuditDao auditDao = new VendingMachineAuditDaoFileImpl();
-        VendingMachineServiceLayer service = new VendingMachineServiceLayerFileImpl(dao, auditDao);
-        VendingMachineView view = new VendingMachineView();
-        VendingMachineController controller = new VendingMachineController(service, view);
+//        VendingMachineDao dao = new VendingMachineDaoFileImpl();
+//        VendingMachineAuditDao auditDao = new VendingMachineAuditDaoFileImpl();
+//        VendingMachineServiceLayer service = new VendingMachineServiceLayerFileImpl(dao, auditDao);
+//        VendingMachineView view = new VendingMachineView();
+//        VendingMachineController controller = new VendingMachineController(service, view);
         
-        controller.run();
+
+            ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+            VendingMachineController controller = ctx.getBean("vendingMachineController", VendingMachineController.class);
+            controller.run();
     }
 
 }

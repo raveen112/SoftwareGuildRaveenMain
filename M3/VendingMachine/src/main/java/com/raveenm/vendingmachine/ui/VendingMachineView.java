@@ -51,6 +51,8 @@ public class VendingMachineView {
         io.print(e.getMessage());
     }
 
+    // Change calculation logic
+    // Call the enum from the dto  
     public void returnBalance(BigDecimal returnAmount) {
         io.print("=== Change ===" + "\n");
         BigDecimal[] changeRemainder = returnAmount.divideAndRemainder(Funds.ONE_DOLLAR.getVALUE());

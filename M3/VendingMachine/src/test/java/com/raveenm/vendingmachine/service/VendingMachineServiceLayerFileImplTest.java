@@ -16,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -26,10 +28,13 @@ public class VendingMachineServiceLayerFileImplTest {
     private VendingMachineServiceLayer service;
 
     public VendingMachineServiceLayerFileImplTest() {
-        VendingMachineAuditDao auditDao = new VendingMachineAuditDaoStubImpl();
-        VendingMachineDao dao = new VendingMachineDaoStubImpl();
+//        VendingMachineAuditDao auditDao = new VendingMachineAuditDaoStubImpl();
+//        VendingMachineDao dao = new VendingMachineDaoStubImpl();
+//
+//        service = new VendingMachineServiceLayerFileImpl(dao, auditDao);
 
-        service = new VendingMachineServiceLayerFileImpl(dao, auditDao);
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        service = ctx.getBean("vendingMachineService", VendingMachineServiceLayer.class);
     }
 
     //

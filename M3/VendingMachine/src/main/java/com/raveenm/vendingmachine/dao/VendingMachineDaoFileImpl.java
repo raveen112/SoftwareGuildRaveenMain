@@ -75,6 +75,7 @@ public class VendingMachineDaoFileImpl implements VendingMachineDao {
 
     }
 
+    // used streams to filter the inventory values
     @Override
     public Inventory getSingleItem(String id) throws VendingMachineDaoException {
         readInventory();
