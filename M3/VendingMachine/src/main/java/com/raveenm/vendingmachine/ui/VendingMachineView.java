@@ -7,7 +7,7 @@ package com.raveenm.vendingmachine.ui;
 
 import com.raveenm.vendingmachine.dao.VendingMachineDaoException;
 import com.raveenm.vendingmachine.dto.Inventory;
-import com.raveenm.vendingmachine.service.Funds;
+import com.raveenm.vendingmachine.dto.Funds;
 import com.raveenm.vendingmachine.service.VendingMachineServiceLayer;
 import java.math.BigDecimal;
 import java.util.List;
@@ -29,7 +29,10 @@ public class VendingMachineView {
         return io.readInt("Enter your choice: ", 1, 2);
     }
 
+    
     public String getItemSelection() throws VendingMachineDaoException {
+        
+        
         String itemChoice = io.readString("Enter your Item Choice:");
         return itemChoice;
     }
@@ -98,6 +101,11 @@ public class VendingMachineView {
         return inputedCash;
     }
 
+    public void displayBalance(BigDecimal returnBalance){
+        io.print("== Balance : " + returnBalance + " ==" + "\n");
+                
+    }   
+    
     public void succesfullyDispensedBanner(Inventory itemDispensed, BigDecimal returnBalance) {
         io.print("== Succesfully dispensed " + itemDispensed.getItemName() + "=== " + "\n");
         io.print(("=== Balance: " + returnBalance + " ====" + "\n"));

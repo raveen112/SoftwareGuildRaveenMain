@@ -62,6 +62,8 @@ public class VendingMachineController {
     }
 
     public String getItemSelection() throws VendingMachineDaoException {
+        BigDecimal balance = service.getBalance();
+        view.displayBalance(balance);
         return view.getItemSelection();
 
     }
