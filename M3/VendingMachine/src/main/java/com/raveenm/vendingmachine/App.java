@@ -6,16 +6,9 @@
 package com.raveenm.vendingmachine;
 
 import com.raveenm.vendingmachine.controller.VendingMachineController;
-import com.raveenm.vendingmachine.dao.VendingMachineAuditDao;
-import com.raveenm.vendingmachine.dao.VendingMachineAuditDaoFileImpl;
-import com.raveenm.vendingmachine.dao.VendingMachineDao;
 import com.raveenm.vendingmachine.dao.VendingMachineDaoException;
-import com.raveenm.vendingmachine.dao.VendingMachineDaoFileImpl;
 import com.raveenm.vendingmachine.service.InsufficientFundsException;
 import com.raveenm.vendingmachine.service.NoItemInventoryException;
-import com.raveenm.vendingmachine.service.VendingMachineServiceLayer;
-import com.raveenm.vendingmachine.service.VendingMachineServiceLayerFileImpl;
-import com.raveenm.vendingmachine.ui.VendingMachineView;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package com.raveenm.flooringmastery.dto;
+import java.math.BigDecimal;
 
 /**
  *
@@ -11,4 +12,14 @@ package com.raveenm.flooringmastery.dto;
  */
 public class Material {
     
+    String productType;
+    BigDecimal costPerSquareFoot;
+    BigDecimal laborCostPerSquareFoot;
+
+
+    public Material(String productType, BigDecimal costPerSquareFoot, BigDecimal laborCostPerSquareFoot) {
+        this.productType = productType;
+        this.costPerSquareFoot = costPerSquareFoot;
+        this.laborCostPerSquareFoot = laborCostPerSquareFoot;
+    }
 }

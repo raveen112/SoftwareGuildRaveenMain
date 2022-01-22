@@ -6,7 +6,6 @@
 package com.raveenm.flooringmastery.dto;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 /**
  *
@@ -20,89 +19,43 @@ public class Order {
     String state;
     BigDecimal taxRate;
     String productType;
-    BigDecimal area;
     BigDecimal costPerSquareFoot;
     BigDecimal laborCostPerSquareFoot;
     BigDecimal materialCost;
     BigDecimal laborCost;
     BigDecimal taxFinal;
     BigDecimal totalCost;
-    LocalDate orderDate;
 
     public Order(int orderNumber,
             String customerName,
             String state,
             BigDecimal taxRate,
             String productType,
-            BigDecimal area,
             BigDecimal costPerSquareFoot,
-            BigDecimal laborCostPerSquareFoot ,
-            BigDecimal materialCost ,
-            BigDecimal laborCost ,
-            BigDecimal taxFinal ,
-            BigDecimal totalCost ,
-            LocalDate orderDate) {
+            BigDecimal laborCostPerSquareFoot,
+            BigDecimal materialCost,
+            BigDecimal laborCost,
+            BigDecimal taxFinal,
+            BigDecimal totalCost) {
 
+        
         this.orderNumber = orderNumber;
         this.customerName = customerName;
         this.state = state;
-        this.taxRate = taxRate;
+        this.taxRate = taxRate ;
         this.productType = productType;
-        this.area = area;
-        this.costPerSquareFoot = costPerSquareFoot;
-        this.laborCostPerSquareFoot = laborCostPerSquareFoot;
+        this.costPerSquareFoot =costPerSquareFoot ;
+        this.laborCostPerSquareFoot =laborCostPerSquareFoot ;
         this.materialCost = materialCost;
         this.laborCost = laborCost;
         this.taxFinal = taxFinal;
         this.totalCost = totalCost;
-        this.orderDate = orderDate;
     }
-
-    public BigDecimal getArea() {
-        return area;
-    }
-
-    public Order(String customerName, String state, BigDecimal taxRate, String productType, BigDecimal area, LocalDate orderDate) {
-
-        this.orderDate = orderDate;
-        this.customerName = customerName;
-        this.state = state;
-        this.productType = productType;
-        this.area = area;
-
-    }
-//options:
+    
+    //options:
     // 1. secondary overloaded constructor will have the values of the costs calculated here
     // 2. calculations in the service layer, set to object from the service layer
-
-    //Setters are for Service layer
-    public void setTaxRate(BigDecimal taxRate) {
-        this.taxRate = taxRate;
-    }
-
-    public void setCostPerSquareFoot(BigDecimal costPerSquareFoot) {
-        this.costPerSquareFoot = costPerSquareFoot;
-    }
-
-    public void setLaborCostPerSquareFoot(BigDecimal laborCostPerSquareFoot) {
-        this.laborCostPerSquareFoot = laborCostPerSquareFoot;
-    }
-
-    public void setMaterialCost(BigDecimal materialCost) {
-        this.materialCost = materialCost;
-    }
-
-    public void setLaborCost(BigDecimal laborCost) {
-        this.laborCost = laborCost;
-    }
-
-    public void setTaxFinal(BigDecimal taxFinal) {
-        this.taxFinal = taxFinal;
-    }
-
-    public void setTotalCost(BigDecimal totalCost) {
-        this.totalCost = totalCost;
-    }
+    
 
     public int getOrderNumber() {
         return orderNumber;
