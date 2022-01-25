@@ -5,18 +5,15 @@
  */
 package com.raveenm.flooringmastery.dao;
 
-import com.raveenm.flooringmastery.dto.Tax;
+import com.raveenm.flooringmastery.dto.Product;
 import java.util.List;
 
 /**
  *
  * @author ravee
  */
-public interface FlooringMasteryTaxDao {
+public interface FlooringMasteryProductDao {
+    List<Product> getallProductTypes()throws OrderPersistenceException;
+    Product getProduct(String productType)throws OrderPersistenceException;
     
-    
-    Tax getStateTax(String stateAbbreviation) throws OrderPersistenceException;
-    
-    
-    List<Tax> getAllStateTaxes() throws OrderPersistenceException;
 }

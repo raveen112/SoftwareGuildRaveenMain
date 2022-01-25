@@ -5,10 +5,31 @@
  */
 package com.raveenm.flooringmastery.service;
 
+import com.raveenm.flooringmastery.dao.FlooringMasteryDaoException;
+import com.raveenm.flooringmastery.dao.OrderPersistenceException;
+import com.raveenm.flooringmastery.dto.Order;
+import com.raveenm.flooringmastery.dto.Product;
+import com.raveenm.flooringmastery.dto.Tax;
+import java.time.LocalDate;
+import java.util.List;
+
 /**
  *
  * @author ravee
  */
 public interface FlooringMasteryService {
+
+    //OrderDao methods
+    List<Order> getAllOrders(LocalDate queryDate) throws FlooringMasteryDaoException;
+    Order addOrder(Order placeOrder);
+
+   //TaxDao methods
+    Tax getStateTax(String stateAbbreviation)throws OrderPersistenceException;
+    List<Tax> getAllStateTaxes()throws OrderPersistenceException;
     
+    //ProductDao 
+    List<Product> getallProductTypes()throws OrderPersistenceException;
+    Product getProductType(String productType)throws OrderPersistenceException;
+    
+    Order getOrderSummary(Order customerOrderFinal) throws StateNotFoundException, ProductNotFoundException, InsufficientSquareFootageException, OrderPersistenceException;
 }

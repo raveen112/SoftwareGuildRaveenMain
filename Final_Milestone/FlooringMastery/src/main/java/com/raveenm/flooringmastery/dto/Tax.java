@@ -16,13 +16,29 @@ public class Tax {
     //add constructor
     String stateAbbreviation;
     String stateName;
-    BigDecimal taxRate;
+    BigDecimal rawTax;
 
     public Tax(String stateAbbreviation, String stateName, BigDecimal taxRate) {
         this.stateAbbreviation = stateAbbreviation;
         this.stateName = stateName;
-        this.taxRate = taxRate;
+        this.rawTax = taxRate;
     }
+
+    public String getStateName() {
+        return stateName;
+    }
+
+    
+
+    public BigDecimal getRawTax() {
+        return rawTax;
+    }
+
+    public String getStateAbbreviation() {
+        return stateAbbreviation;
+    }
+
+    
 
 }
 

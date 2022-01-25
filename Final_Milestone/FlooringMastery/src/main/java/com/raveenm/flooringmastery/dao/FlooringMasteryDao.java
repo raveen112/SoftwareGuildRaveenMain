@@ -13,6 +13,6 @@ import java.util.List;
  * @author ravee
  */
 public interface FlooringMasteryDao {
-   public List<Order> getAllOrders(LocalDate queryDate);
-   public Order addOrder(Order placeOrder);
+    List<Order> getAllOrders(LocalDate queryDate) throws FlooringMasteryDaoException;
+    Order addOrder(Order placeOrder);
 }

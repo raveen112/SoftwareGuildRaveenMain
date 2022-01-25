@@ -6,6 +6,7 @@
 package com.raveenm.flooringmastery.controller;
 
 import com.raveenm.flooringmastery.dao.FlooringMasteryDao;
+import com.raveenm.flooringmastery.dao.FlooringMasteryDaoException;
 import com.raveenm.flooringmastery.dao.FlooringMasteryDaoFileImpl;
 import com.raveenm.flooringmastery.dto.Order;
 import com.raveenm.flooringmastery.ui.UserIO;
@@ -23,8 +24,8 @@ public class FlooringMasteryController {
 
     private UserIO io = new UserIOConsoleImpl();
     FlooringMasteryDaoFileImpl dao = new FlooringMasteryDaoFileImpl();
-
-    public void run() {
+    
+    public void run() throws FlooringMasteryDaoException {
 
         boolean keepGoing = true;
         int menuSelection = 0;
@@ -44,17 +45,18 @@ public class FlooringMasteryController {
                 case 1:
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
                     Scanner sc = new Scanner(System.in);
-                    System.out.println("Enter a date to see orders (MMddyyyy): ");
+                    io.readString("Enter a date to see orders (MMddyyyy): ");
                     LocalDate queryDate = LocalDate.parse(sc.nextLine(), formatter);
 
-                    List<Order> testOrders = dao.(queryDate);
+                    List<Order> testOrders = dao.getAllOrders(queryDate);
 
                     for (Order order : testOrders) {
                         System.out.println(order.getOrderNumber() + " " + order.getCustomerName() + " " + order.getProductType());
                     }
 
-            }
+            
             break;
+
         
     
 
@@ -76,6 +78,7 @@ public class FlooringMasteryController {
 
         }
     io.print (
+            
 
 "GOOD BYE");
     

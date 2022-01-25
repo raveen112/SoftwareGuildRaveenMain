@@ -70,6 +70,7 @@ public class Order {
         this.productType = productType;
         this.area = area;
 
+
     }
 //options:
     // 1. secondary overloaded constructor will have the values of the costs calculated here
@@ -107,6 +108,15 @@ public class Order {
     public int getOrderNumber() {
         return orderNumber;
     }
+
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
 
     public String getCustomerName() {
         return customerName;

@@ -10,14 +10,26 @@ import java.math.BigDecimal;
  *
  * @author ravee
  */
-public class Material {
+public class Product {
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public BigDecimal getCostPerSquareFoot() {
+        return costPerSquareFoot;
+    }
+
+    public BigDecimal getLaborCostPerSquareFoot() {
+        return laborCostPerSquareFoot;
+    }
     
     String productType;
     BigDecimal costPerSquareFoot;
     BigDecimal laborCostPerSquareFoot;
 
 
-    public Material(String productType, BigDecimal costPerSquareFoot, BigDecimal laborCostPerSquareFoot) {
+    public Product(String productType, BigDecimal costPerSquareFoot, BigDecimal laborCostPerSquareFoot) {
         this.productType = productType;
         this.costPerSquareFoot = costPerSquareFoot;
         this.laborCostPerSquareFoot = laborCostPerSquareFoot;

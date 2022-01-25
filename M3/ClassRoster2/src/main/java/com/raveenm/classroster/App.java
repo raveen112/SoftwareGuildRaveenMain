@@ -38,6 +38,7 @@ public class App {
         ClassRosterController controller
                 = ctx.getBean("controller", ClassRosterController.class);
         controller.run();
+        
     }
 
 }

@@ -48,6 +48,7 @@ public class ClassRosterDaoFileImpl implements ClassRosterDao {
         studentFromFile.setFirstName(studentTokens[1]);
         studentFromFile.setLastName(studentTokens[2]);
         studentFromFile.setCohort(studentTokens[3]);
+        
 
         return studentFromFile;
     }

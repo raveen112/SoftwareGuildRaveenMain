@@ -9,6 +9,9 @@ import com.raveenm.flooringmastery.dto.Order;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -33,10 +36,6 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
     // 6. addOrder
     // 7. editOrder
     // 1. loadOrders
-  
-    
-  
-    
 
     // Unmarshall from txt file 
     private Order unmarshallOrder(String orderString, LocalDate dateStamp) {
@@ -54,7 +53,6 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         BigDecimal laborCost = new BigDecimal(fieldArray[9]).setScale(2, RoundingMode.HALF_UP);
         BigDecimal taxFinal = new BigDecimal(fieldArray[10]).setScale(2, RoundingMode.HALF_UP);
         BigDecimal totalCost = new BigDecimal(fieldArray[11]).setScale(2, RoundingMode.HALF_UP);
-        
 
         return new Order(orderNumber,
                 customerName,
@@ -67,7 +65,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
                 materialCost,
                 laborCost,
                 taxFinal,
-                totalCost, 
+                totalCost,
                 dateStamp);
     }
 
@@ -79,8 +77,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         Scanner scanner;
         // to go through the file directory
         String fileName = "Orders/Orders_" + dateString + ".txt";
-        
-        
+
         try {
             scanner = new Scanner(new BufferedReader(new FileReader(fileName)));
 
@@ -102,6 +99,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
     // 3. list all items
     public List<Order> getAllOrders(LocalDate queryDate) throws FlooringMasteryDaoException {
 
+        allOrders.clear();
         loadOrders(queryDate);
         return this.allOrders;
 
@@ -122,14 +120,62 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         lineEntry += order.getLaborCost() + DELIMITER;
         lineEntry += order.getTaxFinal() + DELIMITER;
         lineEntry += order.getTotalCost() + DELIMITER;
-        
 
         return lineEntry;
 
     }
 
+    //writeOrder() need to check if file exists
+    private void writeOrders(LocalDate queryDate) throws FlooringMasteryDaoException {
+        PrintWriter out;
+        String fileName;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
+        String dateString = queryDate.format(formatter);
+        fileName = "Orders/Orders_" + dateString + ".txt";
+        try {
+            out = new PrintWriter(new FileWriter(fileName));
+        } catch (IOException e) {
+            throw new FlooringMasteryDaoException("Could not save inventory data.", e);
+        }
+
+        String itemList;
+
+        for (Order currentOrder : allOrders) {
+            // turn a inventory into a String
+            itemList = marshallOrder(currentOrder);
+            // write the inventory  object to the file
+            out.println(itemList);
+            // force PrintWriter to write line to the file
+            out.flush();
+        }
+
+        out.close();
+
+    }
+
     public Order addOrder(Order placeOrder) {
-        return null;        
+        int orderNumber = 1;
+        int maxOrderNumber = 0;
+        try {
+            List<Order> orders = getAllOrders(placeOrder.getOrderDate());
+            for (Order order : orders) {
+                int orderNum = order.getOrderNumber();
+                if (orderNum > maxOrderNumber) {
+                    maxOrderNumber = orderNum;
+                }
+            }
+            orderNumber = maxOrderNumber + 1;
+            placeOrder.setOrderNumber(orderNumber);
+
+        } catch (FlooringMasteryDaoException e) {
+            placeOrder.setOrderNumber(orderNumber);
+        }
+
+        allOrders.add(placeOrder);
+
+        return placeOrder;
+
     }
 
     // writeOrder() need to check if file exists
