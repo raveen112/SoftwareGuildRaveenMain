@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 public class FlooringMasteryProductDaoFileImpl implements FlooringMasteryProductDao {
 
-    private HashMap<String, Product> products;
+    private HashMap<String, Product> products = new HashMap<>();
     private final String PRODUCT_FILE;
     private String DELIMITER = ",";
 

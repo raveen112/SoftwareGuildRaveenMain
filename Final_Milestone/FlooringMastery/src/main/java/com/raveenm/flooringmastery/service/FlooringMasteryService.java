@@ -21,7 +21,9 @@ public interface FlooringMasteryService {
 
     //OrderDao methods
     List<Order> getAllOrders(LocalDate queryDate) throws FlooringMasteryDaoException;
-    Order addOrder(Order placeOrder);
+    Order addOrder(Order placeOrder) throws FlooringMasteryDaoException;
+    Order editOrder(Order editOrder) throws FlooringMasteryDaoException;
+    Order removeOrder(Order removeOrder) throws FlooringMasteryDaoException;
 
    //TaxDao methods
     Tax getStateTax(String stateAbbreviation)throws OrderPersistenceException;
@@ -31,5 +33,5 @@ public interface FlooringMasteryService {
     List<Product> getallProductTypes()throws OrderPersistenceException;
     Product getProductType(String productType)throws OrderPersistenceException;
     
-    Order getOrderSummary(Order customerOrderFinal) throws StateNotFoundException, ProductNotFoundException, InsufficientSquareFootageException, OrderPersistenceException;
+    Order getOrderSummary(Order customerOrderFinal) throws InvalidDateException, InvalidCustomerNameException, StateNotFoundException, ProductNotFoundException, InsufficientSquareFootageException, OrderPersistenceException;
 }

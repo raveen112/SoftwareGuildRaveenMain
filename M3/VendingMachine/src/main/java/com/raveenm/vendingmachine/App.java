@@ -18,7 +18,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class App {
 
-    public static void main(String[] args) throws VendingMachineDaoException, InsufficientFundsException, NoItemInventoryException {
+    public static void main(String[] args) {
 //        VendingMachineDao dao = new VendingMachineDaoFileImpl();
 //        VendingMachineAuditDao auditDao = new VendingMachineAuditDaoFileImpl();
 //        VendingMachineServiceLayer service = new VendingMachineServiceLayerFileImpl(dao, auditDao);

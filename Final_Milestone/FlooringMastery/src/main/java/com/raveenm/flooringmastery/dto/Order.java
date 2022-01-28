@@ -62,7 +62,7 @@ public class Order {
         return area;
     }
 
-    public Order(String customerName, String state, BigDecimal taxRate, String productType, BigDecimal area, LocalDate orderDate) {
+    public Order(String customerName, String state, String productType, BigDecimal area, LocalDate orderDate) {
 
         this.orderDate = orderDate;
         this.customerName = customerName;
@@ -144,6 +144,22 @@ public class Order {
 
     public BigDecimal getMaterialCost() {
         return materialCost;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    public void setArea(BigDecimal area) {
+        this.area = area;
     }
 
     public BigDecimal getLaborCost() {

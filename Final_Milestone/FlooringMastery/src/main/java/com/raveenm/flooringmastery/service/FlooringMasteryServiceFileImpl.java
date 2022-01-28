@@ -7,11 +7,8 @@ package com.raveenm.flooringmastery.service;
 
 import com.raveenm.flooringmastery.dao.FlooringMasteryDao;
 import com.raveenm.flooringmastery.dao.FlooringMasteryDaoException;
-import com.raveenm.flooringmastery.dao.FlooringMasteryDaoFileImpl;
 import com.raveenm.flooringmastery.dao.FlooringMasteryProductDao;
-import com.raveenm.flooringmastery.dao.FlooringMasteryProductDaoFileImpl;
 import com.raveenm.flooringmastery.dao.FlooringMasteryTaxDao;
-import com.raveenm.flooringmastery.dao.FlooringMasteryTaxDaoFileImpl;
 import com.raveenm.flooringmastery.dao.OrderPersistenceException;
 import com.raveenm.flooringmastery.dto.Order;
 import com.raveenm.flooringmastery.dto.Product;
@@ -25,19 +22,17 @@ import java.math.RoundingMode;
  *
  * @author ravee
  */
-public class FlooringMasteryServiceFileImpl implements FlooringMasteryService  {
+public class FlooringMasteryServiceFileImpl implements FlooringMasteryService {
 
     FlooringMasteryDao dao;
     FlooringMasteryTaxDao taxDao;
     FlooringMasteryProductDao productDao;
 
-    public FlooringMasteryServiceFileImpl(FlooringMasteryDaoFileImpl dao, FlooringMasteryTaxDaoFileImpl taxDao, FlooringMasteryProductDaoFileImpl productDao) {
+    public FlooringMasteryServiceFileImpl(FlooringMasteryDao dao, FlooringMasteryTaxDao taxDao, FlooringMasteryProductDao productDao) {
         this.dao = dao;
         this.taxDao = taxDao;
         this.productDao = productDao;
     }
-
-    
 
     // check for valid state abbreviations
     private void validateStateTaxes(Order customerOrder) throws StateNotFoundException, OrderPersistenceException {
@@ -68,7 +63,7 @@ public class FlooringMasteryServiceFileImpl implements FlooringMasteryService  {
     }
 
     // validate the square footage restraint (>100 sq. ft)
-    private void validateSquareFootage(Order customerOrder) throws InsufficientSquareFootageException, OrderPersistenceException{
+    private void validateSquareFootage(Order customerOrder) throws InsufficientSquareFootageException, OrderPersistenceException {
         BigDecimal orderArea = customerOrder.getArea();
         BigDecimal lowerLimit = new BigDecimal("100");
         if (orderArea.compareTo(lowerLimit) == -1) {
@@ -76,45 +71,93 @@ public class FlooringMasteryServiceFileImpl implements FlooringMasteryService  {
 
         }
 
-       
+    }
+
+    //validate future date (readFutureLocalDate) = add to IO as well
+    // private void validateCustomerName(Order customerOrder) throws 
+    // only returns a valid customer name
+    private boolean isValidCustomerName(Order customerNameOrder) {
+        String customerName = customerNameOrder.getCustomerName().toUpperCase().strip();
+        String[] allCharacters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
+            "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
+            " ", ",", ".",
+            "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"};
+
+        if (customerName.isBlank()) {
+            return false;
+        }
+
+        for (int i = 0; i < customerName.length(); i++) {
+            boolean isAMatch = false;
+
+            for (int j = 0; j < allCharacters.length; j++) {
+
+                if (allCharacters[j].charAt(0) == (customerName.charAt(i))) {
+                    isAMatch = true;
+                    break;
+                }
+
+            }
+            if (!isAMatch) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void validateCustomerName(Order customerOrderName) throws InvalidCustomerNameException {
+        String customerName = customerOrderName.getCustomerName();
+        if (!isValidCustomerName(customerOrderName)) {
+            throw new InvalidCustomerNameException("Please enter a valid customer name");
+        }
+    }
+
+    private void validateDate(Order customerOrder) throws InvalidDateException{
+        LocalDate currentDate = LocalDate.now();
+        LocalDate orderDate = customerOrder.getOrderDate();
+        
+        if(!currentDate.isBefore(orderDate)){
+            throw new InvalidDateException("Please enter a future date.");
+        }
+        
     }
     
-    //validate future date (readFutureLocalDate) = add to IO as well
-
-    // private void validateCustomerName(Order customerOrder) throws  
     @Override
-    public Order getOrderSummary(Order customerOrderFinal) throws StateNotFoundException, ProductNotFoundException, InsufficientSquareFootageException, OrderPersistenceException {
+    public Order getOrderSummary(Order customerOrderFinal) throws InvalidDateException, InvalidCustomerNameException, StateNotFoundException, ProductNotFoundException, InsufficientSquareFootageException, OrderPersistenceException {
         // call getter methods for all the calculations
         validateSquareFootage(customerOrderFinal);
         validateProductType(customerOrderFinal);
         validateStateTaxes(customerOrderFinal);
+        validateCustomerName(customerOrderFinal);
+        validateDate(customerOrderFinal);
 
         Product orderProduct = productDao.getProduct(customerOrderFinal.getProductType());
         Tax orderTax = taxDao.getStateTax(customerOrderFinal.getState());
-        customerOrderFinal.setMaterialCost(calculateMaterialCost(customerOrderFinal, orderProduct));
-        customerOrderFinal.setLaborCost(calculateLaborCost(customerOrderFinal, orderProduct));
+        customerOrderFinal.setLaborCostPerSquareFoot(orderProduct.getLaborCostPerSquareFoot());
+        customerOrderFinal.setCostPerSquareFoot(orderProduct.getCostPerSquareFoot());
+        customerOrderFinal.setMaterialCost(calculateMaterialCost(customerOrderFinal));
+        customerOrderFinal.setLaborCost(calculateLaborCost(customerOrderFinal));
         customerOrderFinal.setTaxRate(orderTax.getRawTax());
         customerOrderFinal.setTaxFinal(calculateTax(customerOrderFinal));
         customerOrderFinal.setTotalCost(calculateTotalCost(customerOrderFinal));
 
-        // add return 
         return customerOrderFinal;
     }
 
-    private BigDecimal calculateMaterialCost(Order order, Product product) {
+    private BigDecimal calculateMaterialCost(Order order) {
 
-        return order.getArea().multiply(product.getCostPerSquareFoot()).setScale(2, RoundingMode.HALF_UP);
+        return order.getArea().multiply(order.getCostPerSquareFoot()).setScale(2, RoundingMode.HALF_UP);
 
     }
 
-    private BigDecimal calculateLaborCost(Order order, Product product) {
-        return order.getArea().multiply(product.getLaborCostPerSquareFoot()).setScale(2, RoundingMode.HALF_UP);
+    private BigDecimal calculateLaborCost(Order order) {
+        return order.getArea().multiply(order.getLaborCostPerSquareFoot()).setScale(2, RoundingMode.HALF_UP);
     }
 
     private BigDecimal calculateTax(Order order) {
         BigDecimal materialLaborSum = order.getMaterialCost().add(order.getLaborCost());
-        BigDecimal taxRate = order.getTaxRate();
-        BigDecimal finalTax = materialLaborSum.add(taxRate);
+        BigDecimal taxRate = order.getTaxRate().divide(new BigDecimal("100"));
+        BigDecimal finalTax = materialLaborSum.multiply(taxRate);
 
         return finalTax;
     }
@@ -130,7 +173,7 @@ public class FlooringMasteryServiceFileImpl implements FlooringMasteryService  {
     }
 
     @Override
-    public Order addOrder(Order placeOrder) {
+    public Order addOrder(Order placeOrder) throws FlooringMasteryDaoException {
         return dao.addOrder(placeOrder);
     }
 
@@ -140,7 +183,7 @@ public class FlooringMasteryServiceFileImpl implements FlooringMasteryService  {
     }
 
     @Override
-    public List<Tax> getAllStateTaxes()throws OrderPersistenceException{
+    public List<Tax> getAllStateTaxes() throws OrderPersistenceException {
         return taxDao.getAllStateTaxes();
     }
 
@@ -152,6 +195,16 @@ public class FlooringMasteryServiceFileImpl implements FlooringMasteryService  {
     @Override
     public Product getProductType(String productType) throws OrderPersistenceException {
         return productDao.getProduct(productType);
+    }
+
+    @Override
+    public Order editOrder(Order editOrder) throws FlooringMasteryDaoException {
+        return dao.editOrder(editOrder);
+    }
+
+    @Override
+    public Order removeOrder(Order removeOrder) throws FlooringMasteryDaoException {
+        return dao.removeOrder(removeOrder);
     }
 
 }

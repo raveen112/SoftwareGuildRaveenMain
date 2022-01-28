@@ -77,13 +77,15 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         Scanner scanner;
         // to go through the file directory
         String fileName = "Orders/Orders_" + dateString + ".txt";
-
+        //clear orders so it doesnt reprint in the text file
+        allOrders.clear();
         try {
             scanner = new Scanner(new BufferedReader(new FileReader(fileName)));
 
         } catch (FileNotFoundException e) {
             throw new FlooringMasteryDaoException("Orders not found for this date");
         }
+
         String currentLine;
         Order currentOrder;
         scanner.nextLine();
@@ -94,12 +96,13 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
             allOrders.add(currentOrder);
         }
         scanner.close();
+
     }
 
+    // getSingleOrder method
     // 3. list all items
     public List<Order> getAllOrders(LocalDate queryDate) throws FlooringMasteryDaoException {
 
-        allOrders.clear();
         loadOrders(queryDate);
         return this.allOrders;
 
@@ -115,17 +118,16 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         lineEntry += order.getProductType() + DELIMITER;
         lineEntry += order.getArea() + DELIMITER;
         lineEntry += order.getCostPerSquareFoot() + DELIMITER;
-        lineEntry += order.getCostPerSquareFoot() + DELIMITER;
+        lineEntry += order.getLaborCostPerSquareFoot() + DELIMITER;
         lineEntry += order.getMaterialCost() + DELIMITER;
         lineEntry += order.getLaborCost() + DELIMITER;
         lineEntry += order.getTaxFinal() + DELIMITER;
-        lineEntry += order.getTotalCost() + DELIMITER;
+        lineEntry += order.getTotalCost();
 
         return lineEntry;
 
     }
 
-    //writeOrder() need to check if file exists
     private void writeOrders(LocalDate queryDate) throws FlooringMasteryDaoException {
         PrintWriter out;
         String fileName;
@@ -139,6 +141,8 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
             throw new FlooringMasteryDaoException("Could not save inventory data.", e);
         }
 
+        String headerLine = "OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total";
+        out.println(headerLine);
         String itemList;
 
         for (Order currentOrder : allOrders) {
@@ -154,18 +158,19 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
 
     }
 
-    public Order addOrder(Order placeOrder) {
+    @Override
+    public Order addOrder(Order placeOrder) throws FlooringMasteryDaoException {
         int orderNumber = 1;
-        int maxOrderNumber = 0;
+
         try {
             List<Order> orders = getAllOrders(placeOrder.getOrderDate());
-            for (Order order : orders) {
-                int orderNum = order.getOrderNumber();
-                if (orderNum > maxOrderNumber) {
-                    maxOrderNumber = orderNum;
-                }
+
+            if (!orders.isEmpty()) {
+                int lastIndex = allOrders.size() - 1;
+                // takes the highest number of orders and adds 1 to the order list
+                orderNumber = allOrders.get(lastIndex).getOrderNumber() + 1;
             }
-            orderNumber = maxOrderNumber + 1;
+
             placeOrder.setOrderNumber(orderNumber);
 
         } catch (FlooringMasteryDaoException e) {
@@ -173,11 +178,47 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         }
 
         allOrders.add(placeOrder);
-
+        writeOrders(placeOrder.getOrderDate());
         return placeOrder;
 
     }
 
-    // writeOrder() need to check if file exists
-    // validate in service layer and view
+    // edit single order
+    @Override
+    public Order editOrder(Order editOrder) throws FlooringMasteryDaoException {
+        int orderNumber = editOrder.getOrderNumber();
+        loadOrders(editOrder.getOrderDate());
+
+        for (int i = 0; i < allOrders.size(); i++) {
+            // goes through array list of orders
+            if (allOrders.get(i).getOrderNumber() == editOrder.getOrderNumber()) {
+                allOrders.set(i, editOrder);
+                writeOrders(editOrder.getOrderDate());
+                return editOrder;
+            }
+
+        }
+
+        return null;
+
+    }
+
+    //remove order
+    @Override
+    public Order removeOrder(Order removeOrder) throws FlooringMasteryDaoException {
+        int orderNumber = removeOrder.getOrderNumber();
+        loadOrders(removeOrder.getOrderDate());
+        int indexOrder = 0;
+
+        //locating order number in list
+        for (int i = 0; i < allOrders.size(); i++) {
+            if (removeOrder.getOrderNumber() == allOrders.get(i).getOrderNumber()) {
+                indexOrder = i;
+            }
+
+        }
+        
+        return allOrders.remove(indexOrder);
+
+    }
 }

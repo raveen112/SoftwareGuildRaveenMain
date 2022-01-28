@@ -38,8 +38,8 @@ public class FlooringMasteryTaxDaoFileImpl implements FlooringMasteryTaxDao {
     }
 
     public Tax getStateTax(String stateAbbreviation) throws OrderPersistenceException {
-        loadTaxes(); 
-       return stateTaxes.get(stateAbbreviation);
+        loadTaxes();
+        return stateTaxes.get(stateAbbreviation);
 
     }
 
@@ -67,8 +67,8 @@ public class FlooringMasteryTaxDaoFileImpl implements FlooringMasteryTaxDao {
     private Tax unmarshallTaxes(String taxString) {
         String[] fieldArray = taxString.split(DELIMITER);
         String stateAbbreviation = fieldArray[0];
-        String stateName = fieldArray[2];
-        BigDecimal taxRate = new BigDecimal(fieldArray[3]).setScale(2, RoundingMode.HALF_UP);
+        String stateName = fieldArray[1];
+        BigDecimal taxRate = new BigDecimal(fieldArray[2]).setScale(2, RoundingMode.HALF_UP);
 
         return new Tax(stateAbbreviation, stateName, taxRate);
     }

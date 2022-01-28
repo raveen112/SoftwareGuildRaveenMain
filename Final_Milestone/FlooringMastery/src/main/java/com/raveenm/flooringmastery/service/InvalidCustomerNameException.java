@@ -3,20 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-import com.raveenm.flooringmastery.service.*;
+package com.raveenm.flooringmastery.service;
 
 /**
  *
  * @author ravee
  */
-public class InsufficientSquareFootageException extends Exception {
+public class InvalidCustomerNameException extends Exception {
 
-    public InsufficientSquareFootageException(String message) {
+    public InvalidCustomerNameException(String message) {
         super(message);
     }
 
-    public InsufficientSquareFootageException(String message, Throwable cause) {
+    public InvalidCustomerNameException(String message, Throwable cause) {
         super(message, cause);
     }
 }

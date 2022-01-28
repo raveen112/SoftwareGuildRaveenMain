@@ -28,35 +28,39 @@ public class VendingMachineController {
 
     }
 
-    public void run() throws VendingMachineDaoException, InsufficientFundsException, NoItemInventoryException {
+    public void run() {
         boolean keepGoing = true;
         boolean outOfStock;
-        view.printMenu(service.getAllItems());
-        while (keepGoing) {
+        try {
+            view.printMenu(service.getAllItems());
+            while (keepGoing) {
 
-            try {
-                //add funds to the machine
-                int menuSelection = view.enterExit();
+                try {
+                    //add funds to the machine
+                    int menuSelection = view.enterExit();
 
-                switch (menuSelection) {
-                    case 1:
-                        depositFunds();
-                        itemDispensed();
-                        break;
+                    switch (menuSelection) {
+                        case 1:
+                            depositFunds();
+                            itemDispensed();
+                            break;
 
-                    // add change post purchase as the exit message
-                    case 2:
-                        keepGoing = false;
-                        returnBalance();
-                        break;
+                        // add change post purchase as the exit message
+                        case 2:
+                            keepGoing = false;
+                            returnBalance();
+                            break;
+
+                    }
+                } catch (NoItemInventoryException | InsufficientFundsException | VendingMachineDaoException e) {
+
+                    view.printErrorMessage(e);
 
                 }
-            } catch (NoItemInventoryException | InsufficientFundsException e) {
-
-                view.printErrorMessage(e);
 
             }
-
+        } catch (VendingMachineDaoException e) {
+            view.printErrorMessage(e);
         }
 
     }
