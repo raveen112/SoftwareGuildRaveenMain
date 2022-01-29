@@ -5,6 +5,7 @@
  */
 package com.raveenm.flooringmastery;
 
+import com.raveenm.flooringmastery.controller.FlooringMasteryController;
 import com.raveenm.flooringmastery.dao.FlooringMasteryDao;
 import com.raveenm.flooringmastery.dao.FlooringMasteryDaoException;
 import com.raveenm.flooringmastery.dao.FlooringMasteryDaoFileImpl;
@@ -21,6 +22,9 @@ import com.raveenm.flooringmastery.service.InvalidCustomerNameException;
 import com.raveenm.flooringmastery.service.InvalidDateException;
 import com.raveenm.flooringmastery.service.ProductNotFoundException;
 import com.raveenm.flooringmastery.service.StateNotFoundException;
+import com.raveenm.flooringmastery.ui.FlooringMasteryView;
+import com.raveenm.flooringmastery.ui.UserIO;
+import com.raveenm.flooringmastery.ui.UserIOConsoleImpl;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -33,24 +37,29 @@ import java.time.format.DateTimeFormatter;
  */
 public class App {
 
-    public static void main(String[] args) throws FlooringMasteryDaoException, StateNotFoundException, ProductNotFoundException, InsufficientSquareFootageException, OrderPersistenceException, InvalidCustomerNameException, InvalidDateException {
+    public static void main(String[] args) {
 
         FlooringMasteryDao dao = new FlooringMasteryDaoFileImpl();
+        UserIO io = new UserIOConsoleImpl();
         FlooringMasteryProductDao productDao = new FlooringMasteryProductDaoFileImpl();
         FlooringMasteryTaxDao taxDao = new FlooringMasteryTaxDaoFileImpl();
         FlooringMasteryService service = new FlooringMasteryServiceFileImpl(dao, taxDao, productDao);
-
-        String name = "Acme, Inc.";
-        String state = "CA";
-        String product = "Tile";
-        BigDecimal area = new BigDecimal("249").setScale(2, RoundingMode.UP);
-                
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
-        LocalDate date = LocalDate.parse("01272022", formatter);
-                
-        Order testOrder = new Order(name, state, product, area, date);
-        Order processedOrder = service.getOrderSummary(testOrder);
-        Order addOrder = service.addOrder(processedOrder);
+        FlooringMasteryView view = new FlooringMasteryView(io);
+        FlooringMasteryController controller = new FlooringMasteryController(view, service);
+        
+        controller.run();
+        
+//        String name = "Acme, Inc.";
+//        String state = "CA";
+//        String product = "Tile";
+//        BigDecimal area = new BigDecimal("249").setScale(2, RoundingMode.UP);
+//                
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
+//        LocalDate date = LocalDate.parse("01272022", formatter);
+//                
+//        Order testOrder = new Order(name, state, product, area, date);
+//        Order processedOrder = service.getOrderSummary(testOrder);
+//        Order addOrder = service.addOrder(processedOrder);
         
         
         

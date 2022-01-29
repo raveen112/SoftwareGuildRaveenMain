@@ -5,8 +5,11 @@
  */
 package com.raveenm.flooringmastery.ui;
 
+import com.raveenm.flooringmastery.service.InvalidDateException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
@@ -117,7 +120,7 @@ public class UserIOConsoleImpl implements UserIO {
 
     // BigDecimal for FlooringMastery
     @Override
-    public BigDecimal readBigDecimal(String prompt, BigDecimal min) {
+    public BigDecimal readBigDecimalMin(String prompt, BigDecimal min) {
         boolean isInvalid = true;
         BigDecimal num = new BigDecimal("100");
         while (isInvalid) {
@@ -139,6 +142,65 @@ public class UserIOConsoleImpl implements UserIO {
         return num;
 
     }
+
+    @Override
+    public BigDecimal readBigDecimal(String prompt) {
+        boolean isInvalid = true;
+        BigDecimal num = new BigDecimal("0");
+        while (isInvalid) {
+            try {
+                this.print(prompt);
+                num = userInput.nextBigDecimal();
+                userInput.nextLine();
+                isInvalid = false;
+            } catch (NumberFormatException e) {
+                userInput.nextLine();
+            }
+        }
+        num = num.setScale(2, RoundingMode.HALF_UP);
+        return num;
+    }
+
+    @Override
+    public LocalDate readFutureLocalDate(String prompt) {
+        boolean isInvalid = true;
+        LocalDate currentDate = LocalDate.now();
+        LocalDate queryDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
+        while (isInvalid) {
+            try {
+                print(prompt);
+                queryDate = LocalDate.parse(userInput.nextLine(), formatter);
+
+                if (!currentDate.isBefore(queryDate)) {
+                    print("Please enter a future date! -_-");
+                } else {
+                    isInvalid = false;
+                }
+            } catch (NumberFormatException e) {
+                print("Enter the valid date");
+            }
+        }
+        return queryDate;
+    }
     
-    
+    @Override
+    public LocalDate readLocalDate(String prompt) {
+        boolean isInvalid = true;
+        LocalDate queryDate = LocalDate.now();
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
+        while (isInvalid) {
+            try {
+                print(prompt);
+                queryDate = LocalDate.parse(userInput.nextLine(), formatter);
+                isInvalid = false;
+
+            } catch (NumberFormatException e) {
+                print("Enter the valid date.");
+
+            }
+        }
+        return queryDate;
+    }
 }

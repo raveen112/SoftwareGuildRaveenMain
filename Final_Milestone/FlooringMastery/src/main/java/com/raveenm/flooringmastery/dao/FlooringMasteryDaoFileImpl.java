@@ -98,6 +98,11 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         scanner.close();
 
     }
+    
+    @Override
+    public Order getSingleOrder(int orderID) throws FlooringMasteryDaoException{
+        return allOrders.get(orderID);
+    }
 
     // getSingleOrder method
     // 3. list all items

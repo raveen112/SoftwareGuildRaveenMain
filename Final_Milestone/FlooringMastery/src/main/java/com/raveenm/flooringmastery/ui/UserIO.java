@@ -6,6 +6,7 @@
 package com.raveenm.flooringmastery.ui;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 /**
  *
@@ -32,5 +33,11 @@ public interface UserIO {
 
     String readString(String prompt); 
     
-    BigDecimal readBigDecimal(String prompt, BigDecimal min);
+    BigDecimal readBigDecimalMin(String prompt, BigDecimal min);
+    
+    BigDecimal readBigDecimal(String prompt);
+    
+    LocalDate readFutureLocalDate(String prompt);
+    
+    LocalDate readLocalDate(String prompt);
 }

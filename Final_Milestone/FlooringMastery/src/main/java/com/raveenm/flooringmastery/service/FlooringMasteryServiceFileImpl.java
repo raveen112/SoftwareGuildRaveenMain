@@ -34,6 +34,10 @@ public class FlooringMasteryServiceFileImpl implements FlooringMasteryService {
         this.productDao = productDao;
     }
 
+    public FlooringMasteryServiceFileImpl() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     // check for valid state abbreviations
     private void validateStateTaxes(Order customerOrder) throws StateNotFoundException, OrderPersistenceException {
 

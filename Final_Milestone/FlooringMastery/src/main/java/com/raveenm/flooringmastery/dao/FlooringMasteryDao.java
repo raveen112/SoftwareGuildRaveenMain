@@ -11,6 +11,8 @@ import java.util.List;
 public interface FlooringMasteryDao {
 
     List<Order> getAllOrders(LocalDate queryDate) throws FlooringMasteryDaoException;
+    
+    Order getSingleOrder(int orderID) throws FlooringMasteryDaoException;
 
     Order addOrder(Order placeOrder) throws FlooringMasteryDaoException;
 
