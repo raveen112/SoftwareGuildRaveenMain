@@ -28,8 +28,6 @@ public class Tax {
         return stateName;
     }
 
-    
-
     public BigDecimal getRawTax() {
         return rawTax;
     }
@@ -38,14 +36,9 @@ public class Tax {
         return stateAbbreviation;
     }
 
-    
-
 }
 
-
-
 //add constructor
-
 // only getters for TAX
 //StateAbbreviation – String
 //StateName – String

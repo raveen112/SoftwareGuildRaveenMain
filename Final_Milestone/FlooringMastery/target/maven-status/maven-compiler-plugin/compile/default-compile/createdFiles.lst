@@ -3,6 +3,7 @@ com\raveenm\flooringmastery\App.class
 com\raveenm\flooringmastery\controller\FlooringMasteryController.class
 com\raveenm\flooringmastery\dto\Product.class
 com\raveenm\flooringmastery\dao\FlooringMasteryDao.class
+com\raveenm\flooringmastery\service\OrdersNotFoundException.class
 com\raveenm\flooringmastery\service\FlooringMasteryService.class
 com\raveenm\flooringmastery\ui\UserIOConsoleImpl.class
 com\raveenm\flooringmastery\service\InsufficientSquareFootageException.class

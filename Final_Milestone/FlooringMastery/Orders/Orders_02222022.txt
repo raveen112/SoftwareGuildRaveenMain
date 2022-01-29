@@ -1,2 +1,2 @@
 OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
-1,Nancy,TX,4.45,Wood,435.00,5.15,4.75,2240.25,2066.25,191.639250,4498.139250
+1,Kerry Washington,CA,25.00,Laminate,931.00,1.75,2.10,1629.25,1955.10,896.0875,4480.4375

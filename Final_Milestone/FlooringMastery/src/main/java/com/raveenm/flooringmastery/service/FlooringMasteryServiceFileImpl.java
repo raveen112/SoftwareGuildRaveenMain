@@ -172,8 +172,12 @@ public class FlooringMasteryServiceFileImpl implements FlooringMasteryService {
 
     // Pass through methods 
     @Override
-    public List<Order> getAllOrders(LocalDate queryDate) throws FlooringMasteryDaoException {
-        return dao.getAllOrders(queryDate);
+    public List<Order> getAllOrders(LocalDate queryDate) throws FlooringMasteryDaoException, OrdersNotFoundException {
+        List<Order> orders = dao.getAllOrders(queryDate);
+        if(orders.isEmpty()){
+            throw new OrdersNotFoundException("Orders not found for this date.");
+        }
+        return orders;
     }
 
     @Override

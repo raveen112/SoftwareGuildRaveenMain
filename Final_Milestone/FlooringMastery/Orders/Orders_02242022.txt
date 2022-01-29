@@ -1,2 +1,0 @@
-OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
-1,John,TX,4.45,Wood,102.00,5.15,4.75,525.30,484.50,44.936100,1054.736100

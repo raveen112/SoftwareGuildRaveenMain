@@ -20,7 +20,7 @@ import java.util.List;
 public interface FlooringMasteryService {
 
     //OrderDao methods
-    List<Order> getAllOrders(LocalDate queryDate) throws FlooringMasteryDaoException;
+    List<Order> getAllOrders(LocalDate queryDate) throws FlooringMasteryDaoException, OrdersNotFoundException;
     Order addOrder(Order placeOrder) throws FlooringMasteryDaoException;
     Order editOrder(Order editOrder) throws FlooringMasteryDaoException;
     Order removeOrder(Order removeOrder) throws FlooringMasteryDaoException;

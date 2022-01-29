@@ -222,8 +222,9 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
             }
 
         }
-        
-        return allOrders.remove(indexOrder);
+        Order removedOrder = allOrders.remove(indexOrder);
+        writeOrders(removedOrder.getOrderDate());
+        return removedOrder;
 
     }
 }

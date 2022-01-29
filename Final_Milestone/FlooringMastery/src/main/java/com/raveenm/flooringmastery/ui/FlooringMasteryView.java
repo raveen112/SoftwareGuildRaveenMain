@@ -48,21 +48,36 @@ public class FlooringMasteryView {
         LocalDate queryDate = io.readLocalDate("Enter a date to see orders (MMddyyyy): ");
         return queryDate;
     }
+    
+    public LocalDate getFutureOrderDate(String prompt){
+        LocalDate queryDate = io.readFutureLocalDate(prompt);
+        return queryDate;
+    }
 
     public void displayOrders(List<Order> orders) {
         // print banner
         for (Order order : orders) {
-            io.print("Order Number: " + order.getOrderNumber());
-            io.print("Customer Name: " + order.getCustomerName());
-            io.print("Tax Rate: " + order.getTaxRate());
+            print("Order Number: " + order.getOrderNumber());
+            print("Customer Name: " + order.getCustomerName());
+            print("State: " + order.getState());
+            print("Area: " + order.getArea());
+            print("Material Cost: " + order.getMaterialCost());
+            print("Product Type: " + order.getProductType());
+            print("Labor Cost: " + order.getLaborCost());
+            print("Labor Cost Per Sq. FT: " + order.getLaborCostPerSquareFoot());
+            print("Tax amount: " + order.getTaxFinal());
+            print("Tax rate: " + order.getTaxRate());
+            print("Cost Per Sq FT: " + order.getCostPerSquareFoot());
+            print("TOTAL AMOUNT DUE: " + order.getTotalCost());
         }
+
     }
 
     // pre validation for user name(chars, num and strings) and area(100sqft)
     // state and material list for validation of existing state and products
     public Order getOrderDetails(List<Product> products, List<Tax> stateTax) {
 
-        LocalDate orderDate = io.readFutureLocalDate("Enter future to add order: ");
+        LocalDate orderDate = io.readFutureLocalDate("Enter future date to add order: ");
         String customerName = io.readString("Enter customer name: ");
         String stateName = io.readString("Enter State Abbreviation: ");
         String productType = io.readString("Enter product type: ");
@@ -72,10 +87,19 @@ public class FlooringMasteryView {
     }
 
     public void printOrderSummary(Order order) {
-        print("Labor Cost Per Sq. FT" + order.getLaborCostPerSquareFoot());
-        print("Tax amount: " + order.getTaxFinal());
-        print("Cost Per Sq FT: " + order.getCostPerSquareFoot());
 
+        print("Order Number: " + order.getOrderNumber());
+        print("Customer Name: " + order.getCustomerName());
+        print("State: " + order.getState());
+        print("Area: " + order.getArea());
+        print("Material Cost: " + order.getMaterialCost());
+        print("Product Type: " + order.getProductType());
+        print("Labor Cost: " + order.getLaborCost());
+        print("Labor Cost Per Sq. FT: " + order.getLaborCostPerSquareFoot());
+        print("Tax amount: " + order.getTaxFinal());
+        print("Tax rate: " + order.getTaxRate());
+        print("Cost Per Sq FT: " + order.getCostPerSquareFoot());
+        print("TOTAL AMOUNT DUE: " + order.getTotalCost());
     }
 
     public boolean getConfirmation(String prompt) {
@@ -88,4 +112,47 @@ public class FlooringMasteryView {
         }
 
     }
+
+    public Order getEditedOrderDetails(List<Order> orders) {
+        Order orderToEdit = null;
+        int orderNumberToEdit;
+
+        while (orderToEdit == null) {
+            orderNumberToEdit = io.readInt("Enter Order Number to Edit? ");
+            for (Order editOrder : orders) {
+                if (editOrder.getOrderNumber() == orderNumberToEdit) {
+                    orderToEdit = editOrder;
+                }
+            }
+        }
+        print("Current Customer Name:"+ orderToEdit.getCustomerName());
+        String editedCustomerName = io.readString("Enter New Name: ");
+        if(editedCustomerName.isBlank()){
+            editedCustomerName = orderToEdit.getCustomerName();
+        }
+        print("Current State: " + orderToEdit.getState());
+        String editedState = io.readString("Enter New State: ");
+        if(editedState.isBlank()){
+            editedState = orderToEdit.getState();
+        }
+        print("Current Product Type: " + orderToEdit.getProductType());
+        String editedProductType =  io.readString("Enter New Product Type: ");
+        if(editedProductType.isBlank()){
+            editedProductType = orderToEdit.getProductType();
+        }
+        
+        print("Current Area: "+ orderToEdit.getArea());
+        BigDecimal editedArea = io.readBigDecimalMin("Enter New Area: ", new BigDecimal("100"));
+        
+        orderToEdit.setCustomerName(editedCustomerName);
+        orderToEdit.setState(editedState);
+        orderToEdit.setProductType(editedProductType);
+        orderToEdit.setArea(editedArea);
+        
+        return orderToEdit;
+        
+    }
+
+   
+
 }
