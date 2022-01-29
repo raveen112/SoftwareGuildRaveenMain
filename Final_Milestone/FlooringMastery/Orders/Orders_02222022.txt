@@ -1,0 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+1,Nancy,TX,4.45,Wood,435.00,5.15,4.75,2240.25,2066.25,191.639250,4498.139250
