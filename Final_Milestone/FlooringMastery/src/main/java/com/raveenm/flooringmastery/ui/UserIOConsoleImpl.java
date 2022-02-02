@@ -10,6 +10,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -132,7 +134,7 @@ public class UserIOConsoleImpl implements UserIO {
                     isInvalid = false;
                 }
 
-            } catch (NumberFormatException e) {
+            } catch (InputMismatchException e) {
                 userInput.nextLine();
 
             }
@@ -153,7 +155,7 @@ public class UserIOConsoleImpl implements UserIO {
                 num = userInput.nextBigDecimal();
                 userInput.nextLine();
                 isInvalid = false;
-            } catch (NumberFormatException e) {
+            } catch (InputMismatchException e) {
                 userInput.nextLine();
             }
         }
@@ -177,7 +179,7 @@ public class UserIOConsoleImpl implements UserIO {
                 } else {
                     isInvalid = false;
                 }
-            } catch (NumberFormatException e) {
+            } catch (DateTimeParseException e) {
                 print("Enter the valid date");
             }
         }
@@ -196,7 +198,7 @@ public class UserIOConsoleImpl implements UserIO {
                 queryDate = LocalDate.parse(userInput.nextLine(), formatter);
                 isInvalid = false;
 
-            } catch (NumberFormatException e) {
+            } catch (DateTimeParseException e) {
                 print("Enter the valid date.");
 
             }

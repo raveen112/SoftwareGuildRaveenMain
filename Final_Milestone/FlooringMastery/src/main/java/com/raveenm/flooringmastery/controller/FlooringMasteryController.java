@@ -18,7 +18,6 @@ import com.raveenm.flooringmastery.service.OrdersNotFoundException;
 import com.raveenm.flooringmastery.service.ProductNotFoundException;
 import com.raveenm.flooringmastery.service.StateNotFoundException;
 import com.raveenm.flooringmastery.ui.FlooringMasteryView;
-import com.raveenm.flooringmastery.ui.UserIOConsoleImpl;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -47,63 +46,101 @@ public class FlooringMasteryController {
                 // Initialized here since the tax and product files are immutable 
                 List<Product> products = service.getallProductTypes();
                 List<Tax> stateTax = service.getAllStateTaxes();
+                List<String> orderDatesExisting;
 
                 menuSelection = view.menuSelection();
 
                 switch (menuSelection) {
+
                     //display orders
                     case 1:
+                        view.displayDashesBanner();
+                        orderDatesExisting = service.getExistingDates();
+                        view.displayExistingDates(orderDatesExisting);
                         LocalDate queryDate = view.getOrderDate();
                         view.displayOrders(service.getAllOrders(queryDate));
+                        view.successfullyDisplayedAll();
                         break;
 
                     // add order
                     case 2:
+
                         Order orderToAdd = view.getOrderDetails(products, stateTax);
                         Order finalOrder = service.getOrderSummary(orderToAdd);
+                        view.displayDashesBanner();
                         view.printOrderSummary(finalOrder);
+                        view.displayDashesBanner();
                         if (view.getConfirmation("Are you sure you want to place the order?")) {
                             service.addOrder(finalOrder);
+                            view.displaySuccessfullyPlacedBanner();
                         }
 
                         break;
                     // edit order        
                     case 3:
+                        view.displayDashesBanner();
+
+                        orderDatesExisting = service.getExistingDates();
+                        view.displayExistingDates(orderDatesExisting);
                         LocalDate orderDate = view.getFutureOrderDate("Enter a future (post today) date: ");
                         List<Order> allOrders = service.getAllOrders(orderDate);
 
                         Order orderToEdit = view.getEditedOrderDetails(allOrders);
                         orderToEdit = service.getOrderSummary(orderToEdit);
+                        view.displayDashesBanner();
                         view.printOrderSummary(orderToEdit);
-                        if (view.getConfirmation("Are you sure you want to edit this order?")) {
+                        view.displayDashesBanner();
+                        if (view.getConfirmation("Are you sure you want to EDIT this order?")) {
                             service.editOrder(orderToEdit);
+                            view.displaySuccessfullyEditedBanner();
                         }
-                            break;
-                            // remove order    
+                        break;
+
+                    // remove order      
+                    case 4:
+                        //  view.displayRemoveOrderBanner();
+                        orderDatesExisting = service.getExistingDates();
+                        view.displayExistingDates(orderDatesExisting);
                         
-                case 4:
-                    
+                        LocalDate orderToRemoveDate = view.getOrderDate();
+                        allOrders = service.getAllOrders(orderToRemoveDate);
+
+                        Order orderToRemove = view.getOrderToRemove(allOrders);
+                        orderToRemove = service.removeOrder(orderToRemove);
+                        view.displayDashesBanner();
+                        view.printOrderSummary(orderToRemove);
+                        view.displayDashesBanner();
+                        if (view.getConfirmation("Are you sure you want to REMOVE this order?")) {
+                            service.removeOrder(orderToRemove);
+                            view.displaySuccessfullyRemovedBanner();
+                        }
+
                         break;
-                // export all data;
-                case 5:
-                        keepGoing = false;
+
+                    // export all data;
+                    case 5:
+                        exportOrders();
                         break;
-                default:
+                    case 6:
+
                         keepGoing = false;
+
+                }
+
+            } catch (FlooringMasteryDaoException | OrderPersistenceException | InvalidDateException | InvalidCustomerNameException | StateNotFoundException | ProductNotFoundException | InsufficientSquareFootageException | OrdersNotFoundException e) {
+                view.print(e.getMessage());
             }
 
-        }catch(FlooringMasteryDaoException | OrderPersistenceException | InvalidDateException | InvalidCustomerNameException |StateNotFoundException| ProductNotFoundException | InsufficientSquareFootageException | OrdersNotFoundException e){
-            view.print(e.getMessage());
         }
-
-            }
-
-        }
-    
-
-
 
     }
+
+    private void exportOrders() throws FlooringMasteryDaoException {
+        service.exportOrders();
+    }
+
+}
+
 //     public Order editOrder(Order order, Tax tax, Product product ){
 //        Order editedOrder;
 //        
@@ -116,7 +153,6 @@ public class FlooringMasteryController {
 //        String newCustomerName = getNewCustomer(oldCustomerName);
 //        Product oldProductType = order.getProductType();
 //    }
-
 //    private String getNewCustomer(String currentName) {
 //        String newCustomerName;
 //
@@ -125,5 +161,4 @@ public class FlooringMasteryController {
 //            return currentName;
 //        }
 //        return newCustomerName;
-    
 

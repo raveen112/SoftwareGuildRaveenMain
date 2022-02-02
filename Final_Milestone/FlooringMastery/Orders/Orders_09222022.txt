@@ -1,2 +1,2 @@
 OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
-1,Kerry Washington,CA,25.00,Laminate,931.00,1.75,2.10,1629.25,1955.10,896.0875,4480.4375
+1,Yellow,TX,4.45,Laminate,1441.00,1.75,2.10,2521.75,3026.10,246.879325,5794.729325

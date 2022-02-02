@@ -7,6 +7,7 @@ package com.raveenm.flooringmastery.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  *
@@ -16,6 +17,79 @@ public class Order {
 
     // constructor to create an order
     int orderNumber;
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + this.orderNumber;
+        hash = 83 * hash + Objects.hashCode(this.customerName);
+        hash = 83 * hash + Objects.hashCode(this.state);
+        hash = 83 * hash + Objects.hashCode(this.taxRate);
+        hash = 83 * hash + Objects.hashCode(this.productType);
+        hash = 83 * hash + Objects.hashCode(this.area);
+        hash = 83 * hash + Objects.hashCode(this.costPerSquareFoot);
+        hash = 83 * hash + Objects.hashCode(this.laborCostPerSquareFoot);
+        hash = 83 * hash + Objects.hashCode(this.materialCost);
+        hash = 83 * hash + Objects.hashCode(this.laborCost);
+        hash = 83 * hash + Objects.hashCode(this.taxFinal);
+        hash = 83 * hash + Objects.hashCode(this.totalCost);
+        hash = 83 * hash + Objects.hashCode(this.orderDate);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Order other = (Order) obj;
+        if (this.orderNumber != other.orderNumber) {
+            return false;
+        }
+        if (!Objects.equals(this.customerName, other.customerName)) {
+            return false;
+        }
+        if (!Objects.equals(this.state, other.state)) {
+            return false;
+        }
+        if (!Objects.equals(this.productType, other.productType)) {
+            return false;
+        }
+        if (!Objects.equals(this.taxRate, other.taxRate)) {
+            return false;
+        }
+        if (!Objects.equals(this.area, other.area)) {
+            return false;
+        }
+        if (!Objects.equals(this.costPerSquareFoot, other.costPerSquareFoot)) {
+            return false;
+        }
+        if (!Objects.equals(this.laborCostPerSquareFoot, other.laborCostPerSquareFoot)) {
+            return false;
+        }
+        if (!Objects.equals(this.materialCost, other.materialCost)) {
+            return false;
+        }
+        if (!Objects.equals(this.laborCost, other.laborCost)) {
+            return false;
+        }
+        if (!Objects.equals(this.taxFinal, other.taxFinal)) {
+            return false;
+        }
+        if (!Objects.equals(this.totalCost, other.totalCost)) {
+            return false;
+        }
+        if (!Objects.equals(this.orderDate, other.orderDate)) {
+            return false;
+        }
+        return true;
+    }
     String customerName;
     String state;
     BigDecimal taxRate;

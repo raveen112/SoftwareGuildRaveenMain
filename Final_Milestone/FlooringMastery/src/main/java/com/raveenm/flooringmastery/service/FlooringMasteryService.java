@@ -33,5 +33,8 @@ public interface FlooringMasteryService {
     List<Product> getallProductTypes()throws OrderPersistenceException;
     Product getProductType(String productType)throws OrderPersistenceException;
     
+    String exportOrders() throws FlooringMasteryDaoException;
+    List<String> getExistingDates();
+    
     Order getOrderSummary(Order customerOrderFinal) throws InvalidDateException, InvalidCustomerNameException, StateNotFoundException, ProductNotFoundException, InsufficientSquareFootageException, OrderPersistenceException;
 }

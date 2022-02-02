@@ -7,6 +7,7 @@ package com.raveenm.flooringmastery.dao;
 
 import com.raveenm.flooringmastery.dto.Order;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -98,9 +99,9 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         scanner.close();
 
     }
-    
+
     @Override
-    public Order getSingleOrder(int orderID) throws FlooringMasteryDaoException{
+    public Order getSingleOrder(int orderID) throws FlooringMasteryDaoException {
         return allOrders.get(orderID);
     }
 
@@ -156,10 +157,55 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
             // write the inventory  object to the file
             out.println(itemList);
             // force PrintWriter to write line to the file
-            out.flush();
+
+        }
+        out.flush();
+        out.close();
+
+    }
+
+    @Override
+    public String exportAllData() throws FlooringMasteryDaoException {
+        String exportFile = "export_orders.txt";
+        File ordersFolder = new File("Orders/");
+        File[] orderFiles = ordersFolder.listFiles();
+        Scanner exportInput;
+        PrintWriter exportOutput;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
+        try {
+            exportOutput = new PrintWriter(new FileWriter(exportFile));
+        } catch (IOException e) {
+            throw new FlooringMasteryDaoException("Error occured while writing to file", e);
         }
 
-        out.close();
+        for (File file : orderFiles) {
+            String fileName = file.getName();
+            String stringDate = fileName.substring(7, 15);
+            LocalDate ordersDate = LocalDate.parse(stringDate, formatter);
+            try {
+                exportInput = new Scanner(new BufferedReader(new FileReader("Orders/" + fileName)));
+            } catch (FileNotFoundException e) {
+                throw new FlooringMasteryDaoException("Could not find data file for date " + ordersDate, e);
+            }
+            if (exportInput.hasNextLine()) {
+                exportOutput.println(ordersDate);
+                exportOutput.println();
+            } else {
+                // avoid printing blank lines for files with no orders
+                continue;
+            }
+
+            while (exportInput.hasNextLine()) {
+                String orderRecord = exportInput.nextLine();
+                exportOutput.println(orderRecord);
+                exportOutput.flush();
+            }
+
+            exportOutput.println();
+
+        }
+        exportOutput.close();
+        return exportFile;
 
     }
 
@@ -211,20 +257,55 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
     //remove order
     @Override
     public Order removeOrder(Order removeOrder) throws FlooringMasteryDaoException {
+
         int orderNumber = removeOrder.getOrderNumber();
-        loadOrders(removeOrder.getOrderDate());
-        int indexOrder = 0;
+        LocalDate orderDate = removeOrder.getOrderDate();
+        loadOrders(orderDate);
+        int indexOrder;
+        List<Order> newOrderList = new ArrayList<>();
+        for (Order order : allOrders) {
 
-        //locating order number in list
-        for (int i = 0; i < allOrders.size(); i++) {
-            if (removeOrder.getOrderNumber() == allOrders.get(i).getOrderNumber()) {
-                indexOrder = i;
+            if (!(removeOrder.getOrderNumber() == order.getOrderNumber())) {
+                newOrderList.add(order);
             }
-
         }
-        Order removedOrder = allOrders.remove(indexOrder);
-        writeOrders(removedOrder.getOrderDate());
-        return removedOrder;
+        this.allOrders = newOrderList;
+        //locating order number in list
 
+        writeOrders(orderDate);
+
+        if (this.allOrders.isEmpty()) {
+            deleteEmptyFile(orderDate);
+        }
+
+        return removeOrder;
+
+    }
+    
+    //to delete files without any orders
+    private void deleteEmptyFile(LocalDate date) {
+        String fileName;
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
+        String dateString = date.format(formatter);
+        fileName = "Orders/Orders_" + dateString + ".txt";
+
+        File fileToDelete = new File(fileName);
+        fileToDelete.delete();
+    }
+    
+    // to display existing dates before selection
+    @Override
+    public List<String> getExistingDates() {
+        List<String> orderDates = new ArrayList<>();
+        File ordersFolder = new File("Orders/");
+        File[] orderFiles = ordersFolder.listFiles();
+
+        for (File file : orderFiles) {
+            String fileName = file.getName();
+            String stringDate = fileName.substring(7, 15);
+            orderDates.add(stringDate);
+        }
+        return orderDates;
     }
 }

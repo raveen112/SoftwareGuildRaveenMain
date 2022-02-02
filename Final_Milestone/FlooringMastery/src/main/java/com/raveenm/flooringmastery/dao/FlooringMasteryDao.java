@@ -19,5 +19,8 @@ public interface FlooringMasteryDao {
     Order editOrder(Order editOrder) throws FlooringMasteryDaoException;
 
     Order removeOrder(Order removeOrder) throws FlooringMasteryDaoException;
+    
+    String exportAllData() throws FlooringMasteryDaoException; 
 
+    List<String> getExistingDates();
 }

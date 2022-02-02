@@ -214,5 +214,14 @@ public class FlooringMasteryServiceFileImpl implements FlooringMasteryService {
     public Order removeOrder(Order removeOrder) throws FlooringMasteryDaoException {
         return dao.removeOrder(removeOrder);
     }
+    
+    @Override
+    public String exportOrders() throws FlooringMasteryDaoException{
+        return dao.exportAllData();
+    }
 
+    @Override
+    public List<String> getExistingDates(){
+        return dao.getExistingDates();
+    }
 }
