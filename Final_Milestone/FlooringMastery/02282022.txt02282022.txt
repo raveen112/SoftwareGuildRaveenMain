@@ -1,3 +1,0 @@
-OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
-1,Justin Timberu,GA,6.00,Carpet,2143.00,2.25,2.10,4821.75,4500.30,559.32,9881.37
-2,Justin Timberu,GA,6.00,Carpet,2143.00,2.25,2.10,4821.75,4500.30,559.32,9881.37

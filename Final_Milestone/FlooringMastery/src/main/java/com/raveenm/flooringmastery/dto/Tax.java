@@ -7,12 +7,46 @@ package com.raveenm.flooringmastery.dto;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 /**
  *
  * @author ravee
  */
 public class Tax {
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.stateAbbreviation);
+        hash = 97 * hash + Objects.hashCode(this.stateName);
+        hash = 97 * hash + Objects.hashCode(this.rawTax);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Tax other = (Tax) obj;
+        if (!Objects.equals(this.stateAbbreviation, other.stateAbbreviation)) {
+            return false;
+        }
+        if (!Objects.equals(this.stateName, other.stateName)) {
+            return false;
+        }
+        if (!Objects.equals(this.rawTax, other.rawTax)) {
+            return false;
+        }
+        return true;
+    }
 
     //add constructor
     String stateAbbreviation;

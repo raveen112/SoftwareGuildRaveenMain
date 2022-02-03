@@ -26,6 +26,7 @@ public class FlooringMasteryProductDaoFileImpl implements FlooringMasteryProduct
     private final String PRODUCT_FILE;
     private String DELIMITER = ",";
 
+    
     public FlooringMasteryProductDaoFileImpl() {
         this.PRODUCT_FILE = "Data/Products.txt";
     }
@@ -79,8 +80,5 @@ public class FlooringMasteryProductDaoFileImpl implements FlooringMasteryProduct
         return products.values().stream().collect(Collectors.toList());
     }
 
-//    @Override
-//    public Material addProduct(Material product) {
-//        return products.put(product.getProductType(), product);
-//    }
+
 }
