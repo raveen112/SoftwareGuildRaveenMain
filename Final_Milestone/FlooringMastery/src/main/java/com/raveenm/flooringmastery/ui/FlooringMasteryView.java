@@ -139,7 +139,6 @@ public class FlooringMasteryView {
 
     public void printOrderSummary(Order order) {
 
-        print("Order Number: " + order.getOrderNumber());
         print("Customer Name: " + order.getCustomerName());
         print("State: " + order.getState());
         print("Area: " + order.getArea());
@@ -244,8 +243,8 @@ public class FlooringMasteryView {
         print("<><><><><><><><><><><><><><><><><><><><>");
     }
 
-    public void displaySuccessfullyPlacedBanner() {
-        print("\n Successfully placed order!");
+    public void displaySuccessfullyPlacedBanner(int orderNumber) {
+        print("\n Successfully placed order #" + orderNumber);
         print("<><><><><><><><><><><><><><><><><><><><>");
     }
 

@@ -70,9 +70,10 @@ public class FlooringMasteryController {
                         view.displayDashesBanner();
                         view.printOrderSummary(finalOrder);
                         view.displayDashesBanner();
+
                         if (view.getConfirmation("Are you sure you want to place the order?")) {
-                            service.addOrder(finalOrder);
-                            view.displaySuccessfullyPlacedBanner();
+                            Order addedOrder = service.addOrder(finalOrder);
+                            view.displaySuccessfullyPlacedBanner(addedOrder.getOrderNumber());
                         }
 
                         break;
@@ -101,7 +102,7 @@ public class FlooringMasteryController {
                         //  view.displayRemoveOrderBanner();
                         orderDatesExisting = service.getExistingDates();
                         view.displayExistingDates(orderDatesExisting);
-                        
+
                         LocalDate orderToRemoveDate = view.getOrderDate();
                         allOrders = service.getAllOrders(orderToRemoveDate);
 

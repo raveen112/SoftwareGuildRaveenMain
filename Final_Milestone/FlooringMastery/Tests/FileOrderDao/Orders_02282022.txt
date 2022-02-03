@@ -1,0 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+1,Yahoo Answers,WA,9.25,Wood,3712.00,5.15,4.75,19116.80,17632.00,3399.26,40148.06

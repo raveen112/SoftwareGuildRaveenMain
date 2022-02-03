@@ -6,6 +6,7 @@
 package com.raveenm.flooringmastery.dto;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -122,13 +123,13 @@ public class Order {
         this.state = state;
         this.taxRate = taxRate;
         this.productType = productType;
-        this.area = area;
-        this.costPerSquareFoot = costPerSquareFoot;
-        this.laborCostPerSquareFoot = laborCostPerSquareFoot;
-        this.materialCost = materialCost;
-        this.laborCost = laborCost;
-        this.taxFinal = taxFinal;
-        this.totalCost = totalCost;
+        this.area = area.setScale(2, RoundingMode.HALF_UP);
+        this.costPerSquareFoot = costPerSquareFoot.setScale(2, RoundingMode.HALF_UP);
+        this.laborCostPerSquareFoot = laborCostPerSquareFoot.setScale(2, RoundingMode.HALF_UP);
+        this.materialCost = materialCost.setScale(2, RoundingMode.HALF_UP);
+        this.laborCost = laborCost.setScale(2, RoundingMode.HALF_UP);
+        this.taxFinal = taxFinal.setScale(2, RoundingMode.HALF_UP);
+        this.totalCost = totalCost.setScale(2, RoundingMode.HALF_UP);
         this.orderDate = orderDate;
     }
 
@@ -142,7 +143,7 @@ public class Order {
         this.customerName = customerName;
         this.state = state;
         this.productType = productType;
-        this.area = area;
+        this.area = area.setScale(2, RoundingMode.HALF_UP);
 
 
     }
@@ -152,31 +153,31 @@ public class Order {
 
     //Setters are for Service layer
     public void setTaxRate(BigDecimal taxRate) {
-        this.taxRate = taxRate;
+        this.taxRate = taxRate.setScale(2, RoundingMode.HALF_UP);
     }
 
     public void setCostPerSquareFoot(BigDecimal costPerSquareFoot) {
-        this.costPerSquareFoot = costPerSquareFoot;
+        this.costPerSquareFoot = costPerSquareFoot.setScale(2, RoundingMode.HALF_UP);;
     }
 
     public void setLaborCostPerSquareFoot(BigDecimal laborCostPerSquareFoot) {
-        this.laborCostPerSquareFoot = laborCostPerSquareFoot;
+        this.laborCostPerSquareFoot = laborCostPerSquareFoot.setScale(2, RoundingMode.HALF_UP);;
     }
 
     public void setMaterialCost(BigDecimal materialCost) {
-        this.materialCost = materialCost;
+        this.materialCost = materialCost.setScale(2, RoundingMode.HALF_UP);;
     }
 
     public void setLaborCost(BigDecimal laborCost) {
-        this.laborCost = laborCost;
+        this.laborCost = laborCost.setScale(2, RoundingMode.HALF_UP);;
     }
 
     public void setTaxFinal(BigDecimal taxFinal) {
-        this.taxFinal = taxFinal;
+        this.taxFinal = taxFinal.setScale(2, RoundingMode.HALF_UP);;
     }
 
     public void setTotalCost(BigDecimal totalCost) {
-        this.totalCost = totalCost;
+        this.totalCost = totalCost.setScale(2, RoundingMode.HALF_UP);;
     }
 
     public int getOrderNumber() {
@@ -233,19 +234,19 @@ public class Order {
     }
 
     public void setArea(BigDecimal area) {
-        this.area = area;
+        this.area = area.setScale(2, RoundingMode.HALF_UP);
     }
 
     public BigDecimal getLaborCost() {
-        return laborCost;
+        return laborCost.setScale(2, RoundingMode.HALF_UP);
     }
 
     public BigDecimal getTaxFinal() {
-        return taxFinal;
+        return taxFinal.setScale(2, RoundingMode.HALF_UP);
     }
 
     public BigDecimal getTotalCost() {
-        return totalCost;
+        return totalCost.setScale(2, RoundingMode.HALF_UP);
     }
 
 }

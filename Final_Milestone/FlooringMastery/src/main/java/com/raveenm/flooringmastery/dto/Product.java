@@ -5,6 +5,7 @@
  */
 package com.raveenm.flooringmastery.dto;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  *
@@ -31,7 +32,7 @@ public class Product {
 
     public Product(String productType, BigDecimal costPerSquareFoot, BigDecimal laborCostPerSquareFoot) {
         this.productType = productType;
-        this.costPerSquareFoot = costPerSquareFoot;
-        this.laborCostPerSquareFoot = laborCostPerSquareFoot;
+        this.costPerSquareFoot = costPerSquareFoot.setScale(2, RoundingMode.HALF_UP);
+        this.laborCostPerSquareFoot = laborCostPerSquareFoot.setScale(2, RoundingMode.HALF_UP);
     }
 }

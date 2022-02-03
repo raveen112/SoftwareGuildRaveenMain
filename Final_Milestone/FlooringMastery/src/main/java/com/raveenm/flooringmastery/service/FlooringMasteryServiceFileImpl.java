@@ -5,6 +5,7 @@
  */
 package com.raveenm.flooringmastery.service;
 
+import com.raveenm.flooringmastery.dao.FlooringMasteryAuditDao;
 import com.raveenm.flooringmastery.dao.FlooringMasteryDao;
 import com.raveenm.flooringmastery.dao.FlooringMasteryDaoException;
 import com.raveenm.flooringmastery.dao.FlooringMasteryProductDao;
@@ -24,9 +25,11 @@ import java.math.RoundingMode;
  */
 public class FlooringMasteryServiceFileImpl implements FlooringMasteryService {
 
+    
     FlooringMasteryDao dao;
     FlooringMasteryTaxDao taxDao;
     FlooringMasteryProductDao productDao;
+    
 
     public FlooringMasteryServiceFileImpl(FlooringMasteryDao dao, FlooringMasteryTaxDao taxDao, FlooringMasteryProductDao productDao) {
         this.dao = dao;
@@ -34,9 +37,6 @@ public class FlooringMasteryServiceFileImpl implements FlooringMasteryService {
         this.productDao = productDao;
     }
 
-    public FlooringMasteryServiceFileImpl() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     // check for valid state abbreviations
     private void validateStateTaxes(Order customerOrder) throws StateNotFoundException, OrderPersistenceException {

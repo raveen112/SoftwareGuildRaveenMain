@@ -1,0 +1,16 @@
+-------------------------------------------------------------------------------
+Test set: com.raveenm.flooringmastery.dao.FlooringMasteryDaoFileImplTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.103 sec <<< FAILURE! - in com.raveenm.flooringmastery.dao.FlooringMasteryDaoFileImplTest
+testDeleteOrders  Time elapsed: 0.045 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: The test case is a prototype.
+	at com.raveenm.flooringmastery.dao.FlooringMasteryDaoFileImplTest.testDeleteOrders(FlooringMasteryDaoFileImplTest.java:87)
+
+testGetAllOrders  Time elapsed: 0.002 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: The test case is a prototype.
+	at com.raveenm.flooringmastery.dao.FlooringMasteryDaoFileImplTest.testGetAllOrders(FlooringMasteryDaoFileImplTest.java:77)
+
+testEditOrders  Time elapsed: 0.002 sec  <<< FAILURE!
+org.opentest4j.AssertionFailedError: The test case is a prototype.
+	at com.raveenm.flooringmastery.dao.FlooringMasteryDaoFileImplTest.testEditOrders(FlooringMasteryDaoFileImplTest.java:82)
+

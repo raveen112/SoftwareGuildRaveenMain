@@ -6,6 +6,7 @@
 package com.raveenm.flooringmastery.dto;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  *
@@ -21,7 +22,7 @@ public class Tax {
     public Tax(String stateAbbreviation, String stateName, BigDecimal taxRate) {
         this.stateAbbreviation = stateAbbreviation;
         this.stateName = stateName;
-        this.rawTax = taxRate;
+        this.rawTax = taxRate.setScale(2, RoundingMode.HALF_UP);
     }
 
     public String getStateName() {

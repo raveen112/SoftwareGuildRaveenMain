@@ -29,6 +29,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
 
     List<Order> allOrders = new ArrayList<>();
     String DELIMITER = ",";
+    private final String FILE_NAME_PREFIX;
     // 5. marshall
     // 2. unmarshall
     // 3. getAllOrders
@@ -37,6 +38,15 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
     // 6. addOrder
     // 7. editOrder
     // 1. loadOrders
+
+    public FlooringMasteryDaoFileImpl() {
+        FILE_NAME_PREFIX = "Orders/Order_";
+    }
+
+    public FlooringMasteryDaoFileImpl(String prefixFileName) {
+        FILE_NAME_PREFIX = prefixFileName;
+
+    }
 
     // Unmarshall from txt file 
     private Order unmarshallOrder(String orderString, LocalDate dateStamp) {
@@ -77,7 +87,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         String dateString = dateStamp.format(formatter);
         Scanner scanner;
         // to go through the file directory
-        String fileName = "Orders/Orders_" + dateString + ".txt";
+        String fileName = FILE_NAME_PREFIX + dateString + ".txt";
         //clear orders so it doesnt reprint in the text file
         allOrders.clear();
         try {
@@ -140,7 +150,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
         String dateString = queryDate.format(formatter);
-        fileName = "Orders/Orders_" + dateString + ".txt";
+        fileName = FILE_NAME_PREFIX + dateString + ".txt";
         try {
             out = new PrintWriter(new FileWriter(fileName));
         } catch (IOException e) {
@@ -261,11 +271,11 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         int orderNumber = removeOrder.getOrderNumber();
         LocalDate orderDate = removeOrder.getOrderDate();
         loadOrders(orderDate);
-        int indexOrder;
+        // loads into a new array 
         List<Order> newOrderList = new ArrayList<>();
         for (Order order : allOrders) {
 
-            if (!(removeOrder.getOrderNumber() == order.getOrderNumber())) {
+            if (!(orderNumber == order.getOrderNumber())) {
                 newOrderList.add(order);
             }
         }
@@ -273,7 +283,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         //locating order number in list
 
         writeOrders(orderDate);
-
+        // deletes file if empty after removing contents before header
         if (this.allOrders.isEmpty()) {
             deleteEmptyFile(orderDate);
         }
@@ -281,19 +291,19 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         return removeOrder;
 
     }
-    
+
     //to delete files without any orders
     private void deleteEmptyFile(LocalDate date) {
         String fileName;
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
         String dateString = date.format(formatter);
-        fileName = "Orders/Orders_" + dateString + ".txt";
+        fileName = FILE_NAME_PREFIX + dateString + ".txt";
 
         File fileToDelete = new File(fileName);
         fileToDelete.delete();
     }
-    
+
     // to display existing dates before selection
     @Override
     public List<String> getExistingDates() {
