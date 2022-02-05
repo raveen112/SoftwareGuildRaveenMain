@@ -154,7 +154,7 @@ public class FlooringMasteryView {
 
     public boolean getConfirmation(String prompt) {
         String userAnswer = io.readString(prompt);
-        if (userAnswer.equalsIgnoreCase("Y")) {
+        if (userAnswer.equalsIgnoreCase("Yes")) {
             return true;
 
         } else {
@@ -248,8 +248,8 @@ public class FlooringMasteryView {
         print("<><><><><><><><><><><><><><><><><><><><>");
     }
 
-    public void displaySuccessfullyRemovedBanner() {
-        print("\n Successfully Removed Order!");
+    public void displaySuccessfullyRemovedBanner(int removedNumber) {
+        print("\n Successfully Removed Order " +removedNumber +"!");
         print("<><><><><><><><><><><><><><><><><><><><>");
     }
 

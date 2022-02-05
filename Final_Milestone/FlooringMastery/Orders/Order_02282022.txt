@@ -1,0 +1,2 @@
+OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
+1,Terry Crews,TX,4.45,Wood,839.00,5.15,4.75,4320.85,3985.25,369.62,8675.72
