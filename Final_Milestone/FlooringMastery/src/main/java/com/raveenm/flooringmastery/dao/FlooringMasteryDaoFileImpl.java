@@ -110,11 +110,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
 
     }
 
-    @Override
-    public Order getSingleOrder(int orderID) throws FlooringMasteryDaoException {
-        return allOrders.get(orderID);
-    }
-
+    
     // getSingleOrder method
     // 3. list all items
     public List<Order> getAllOrders(LocalDate queryDate) throws FlooringMasteryDaoException {
@@ -313,7 +309,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
 
         for (File file : orderFiles) {
             String fileName = file.getName();
-            String stringDate = fileName.substring(7, 15);
+            String stringDate = fileName.substring(6, 14);
             orderDates.add(stringDate);
         }
         return orderDates;

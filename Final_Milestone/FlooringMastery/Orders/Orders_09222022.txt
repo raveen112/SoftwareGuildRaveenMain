@@ -1,2 +1,0 @@
-OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
-1,Yellow,TX,4.45,Laminate,1441.00,1.75,2.10,2521.75,3026.10,246.879325,5794.729325

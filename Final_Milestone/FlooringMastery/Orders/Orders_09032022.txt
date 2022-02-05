@@ -1,2 +1,0 @@
-OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
-1,Jack Black,TX,4.45,Wood,633.00,5.15,4.75,3259.95,3006.75,278.868150,6545.568150
