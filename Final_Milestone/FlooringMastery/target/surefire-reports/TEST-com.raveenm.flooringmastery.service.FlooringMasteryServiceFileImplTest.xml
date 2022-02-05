@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.03" tests="14" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.154" tests="14" errors="14" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="java.vm.version" value="11.0.12+7"/>
@@ -46,7 +46,7 @@
     <property name="log4j2.formatMsgNoLookups" value="true"/>
     <property name="java.vm.specification.version" value="11"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=C:\Program Files\NetBeans-12.0\netbeans\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 install"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dmaven.ext.class.path=C:\Program Files\NetBeans-12.0\netbeans\java\maven-nblib\netbeans-eventspy.jar -Dfile.encoding=UTF-8 clean install"/>
     <property name="java.home" value="C:\Program Files\Eclipse Foundation\jdk-11.0.12.7-hotspot"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
@@ -64,18 +64,102 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="testInvalidDateGetSummary" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001"/>
-  <testcase name="testGetAllTaxes" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001"/>
-  <testcase name="testInvalidStateGetSummary" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001"/>
-  <testcase name="testGetEditOrder" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.003"/>
-  <testcase name="testInvalidSqFootagetGetSummary" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001"/>
-  <testcase name="testAddOrder" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0"/>
-  <testcase name="testGetProduct" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001"/>
-  <testcase name="testGetAllOrders" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001"/>
-  <testcase name="testGetOrderSummary" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001"/>
-  <testcase name="testInvalidCustomerNameGetSummary" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0"/>
-  <testcase name="testGetTax" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0"/>
-  <testcase name="testGetAllProducts" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0"/>
-  <testcase name="testInvalidProductGetSummary" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0"/>
-  <testcase name="testGetRemoveOrder" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0"/>
+  <testcase name="testInvalidDateGetSummary" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.005">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
+  <testcase name="testGetAllTaxes" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
+  <testcase name="testInvalidStateGetSummary" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
+  <testcase name="testGetEditOrder" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
+  <testcase name="testInvalidSqFootagetGetSummary" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
+  <testcase name="testAddOrder" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
+  <testcase name="testGetProduct" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
+  <testcase name="testGetAllOrders" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
+  <testcase name="testGetOrderSummary" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
+  <testcase name="testInvalidCustomerNameGetSummary" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
+  <testcase name="testGetTax" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
+  <testcase name="testGetAllProducts" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
+  <testcase name="testInvalidProductGetSummary" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0.001">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
+  <testcase name="testGetRemoveOrder" classname="com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest" time="0">
+    <error message="IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist" type="org.springframework.beans.factory.BeanDefinitionStoreException"><![CDATA[org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [applicationContext.txt]; nested exception is java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+Caused by: java.io.FileNotFoundException: class path resource [applicationContext.txt] cannot be opened because it does not exist
+	at com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImplTest.<init>(FlooringMasteryServiceFileImplTest.java:42)
+]]></error>
+  </testcase>
 </testsuite>

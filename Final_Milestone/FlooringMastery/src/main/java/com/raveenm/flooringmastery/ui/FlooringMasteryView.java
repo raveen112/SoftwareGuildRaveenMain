@@ -249,7 +249,7 @@ public class FlooringMasteryView {
     }
 
     public void displaySuccessfullyRemovedBanner(int removedNumber) {
-        print("\n Successfully Removed Order " +removedNumber +"!");
+        print("\n Successfully Removed Order " +removedNumber +" !");
         print("<><><><><><><><><><><><><><><><><><><><>");
     }
 

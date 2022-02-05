@@ -70,16 +70,16 @@ public class FlooringMasteryController {
                     // remove order      
                     case 4:
                         removeOrder();
-
                         break;
-                        
+
                     // export all data;
                     case 5:
                         exportOrders();
                         break;
+                        
                     case 6:
-
                         keepGoing = false;
+                        exitMessage();
 
                 }
 
@@ -174,5 +174,9 @@ public class FlooringMasteryController {
         }
     }
 
-}
+    private void exitMessage() {
+        view.displayDashesBanner();
+        view.print("\n Thank you! Have a good day ahead!");
+    }
 
+}

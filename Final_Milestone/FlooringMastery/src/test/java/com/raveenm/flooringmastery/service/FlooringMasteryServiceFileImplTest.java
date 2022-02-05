@@ -5,13 +5,7 @@
  */
 package com.raveenm.flooringmastery.service;
 
-import com.raveenm.flooringmastery.dao.FlooringMasteryDao;
 import com.raveenm.flooringmastery.dao.FlooringMasteryDaoException;
-import com.raveenm.flooringmastery.dao.FlooringMasteryOrderDaoStubImpl;
-import com.raveenm.flooringmastery.dao.FlooringMasteryProductDao;
-import com.raveenm.flooringmastery.dao.FlooringMasteryProductDaoStubImpl;
-import com.raveenm.flooringmastery.dao.FlooringMasteryTaxDao;
-import com.raveenm.flooringmastery.dao.FlooringMasteryTaxDaoStubImpl;
 import com.raveenm.flooringmastery.dao.OrderPersistenceException;
 import com.raveenm.flooringmastery.dto.Order;
 import com.raveenm.flooringmastery.dto.Product;
@@ -22,6 +16,8 @@ import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -32,10 +28,13 @@ public class FlooringMasteryServiceFileImplTest {
     FlooringMasteryService service;
 
     public FlooringMasteryServiceFileImplTest() {
-        FlooringMasteryDao orderDao = new FlooringMasteryOrderDaoStubImpl();
-        FlooringMasteryProductDao productDao = new FlooringMasteryProductDaoStubImpl();
-        FlooringMasteryTaxDao taxDao = new FlooringMasteryTaxDaoStubImpl();
-        service = new FlooringMasteryServiceFileImpl(orderDao, taxDao, productDao);
+//        FlooringMasteryDao orderDao = new FlooringMasteryOrderDaoStubImpl();
+//        FlooringMasteryProductDao productDao = new FlooringMasteryProductDaoStubImpl();
+//        FlooringMasteryTaxDao taxDao = new FlooringMasteryTaxDaoStubImpl();
+//        service = new FlooringMasteryServiceFileImpl(orderDao, taxDao, productDao);
+
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.txt");
+        service = ctx.getBean("service", FlooringMasteryService.class);
     }
 
     @Test

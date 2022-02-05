@@ -17,6 +17,8 @@ import com.raveenm.flooringmastery.service.FlooringMasteryServiceFileImpl;
 import com.raveenm.flooringmastery.ui.FlooringMasteryView;
 import com.raveenm.flooringmastery.ui.UserIO;
 import com.raveenm.flooringmastery.ui.UserIOConsoleImpl;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  *
@@ -26,16 +28,21 @@ public class App {
 
     public static void main(String[] args) {
 
-        FlooringMasteryDao dao = new FlooringMasteryDaoFileImpl();
-        UserIO io = new UserIOConsoleImpl();
-        FlooringMasteryProductDao productDao = new FlooringMasteryProductDaoFileImpl();
-        FlooringMasteryTaxDao taxDao = new FlooringMasteryTaxDaoFileImpl();
-        FlooringMasteryService service = new FlooringMasteryServiceFileImpl(dao, taxDao, productDao);
-        FlooringMasteryView view = new FlooringMasteryView(io);
-        FlooringMasteryController controller = new FlooringMasteryController(view, service);
-        
-        controller.run();
-        
+//        FlooringMasteryDao dao = new FlooringMasteryDaoFileImpl();
+//        UserIO io = new UserIOConsoleImpl();
+//        FlooringMasteryProductDao productDao = new FlooringMasteryProductDaoFileImpl();
+//        FlooringMasteryTaxDao taxDao = new FlooringMasteryTaxDaoFileImpl();
+//        FlooringMasteryService service = new FlooringMasteryServiceFileImpl(dao, taxDao, productDao);
+//        FlooringMasteryView view = new FlooringMasteryView(io);
+//        FlooringMasteryController controller = new FlooringMasteryController(view, service);
+//        
+//        controller.run();
+//        
+           ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+           FlooringMasteryController controller = ctx.getBean("controller", FlooringMasteryController.class);
+           controller.run();
+
+
 //        String name = "Acme, Inc.";
 //        String state = "CA";
 //        String product = "Tile";
