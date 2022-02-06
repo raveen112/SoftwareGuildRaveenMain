@@ -1,2 +1,0 @@
-OrderNumber,CustomerName,State,TaxRate,ProductType,Area,CostPerSquareFoot,LaborCostPerSquareFoot,MaterialCost,LaborCost,Tax,Total
-1,Polly Parton,KY,6.00,Laminate,903.00,1.75,2.10,1580.25,1896.30,208.59,3685.14

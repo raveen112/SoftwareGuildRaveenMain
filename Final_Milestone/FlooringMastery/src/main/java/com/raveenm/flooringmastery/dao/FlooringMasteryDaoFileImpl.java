@@ -29,6 +29,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
 
     List<Order> allOrders = new ArrayList<>();
     String DELIMITER = ",";
+    String SPACER = "\n";
     private final String FILE_NAME_PREFIX;
     // 5. marshall
     // 2. unmarshall
@@ -50,20 +51,30 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
 
     // Unmarshall from txt file 
     private Order unmarshallOrder(String orderString, LocalDate dateStamp) {
-        // change DTO to create an order split
+
+        final int NUM_FIELDS = 12;
         String[] fieldArray = orderString.split(DELIMITER);
-        int orderNumber = Integer.parseInt(fieldArray[0]);
-        String customerName = fieldArray[1];
-        String state = fieldArray[2];
-        BigDecimal taxRate = new BigDecimal(fieldArray[3]).setScale(2, RoundingMode.HALF_UP);
-        String productType = fieldArray[4];
-        BigDecimal area = new BigDecimal(fieldArray[5]).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal costPerSquareFoot = new BigDecimal(fieldArray[6]).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal laborCostPerSquareFoot = new BigDecimal(fieldArray[7]).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal materialCost = new BigDecimal(fieldArray[8]).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal laborCost = new BigDecimal(fieldArray[9]).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal taxFinal = new BigDecimal(fieldArray[10]).setScale(2, RoundingMode.HALF_UP);
-        BigDecimal totalCost = new BigDecimal(fieldArray[11]).setScale(2, RoundingMode.HALF_UP);
+        int lastIndexOfName = fieldArray.length - NUM_FIELDS + 1;
+        int index = 0;
+        int orderNumber = Integer.parseInt(fieldArray[index++]);
+        String customerName = "";
+        do {
+            if (index == lastIndexOfName) {
+                customerName += fieldArray[index++];
+            } else {
+                customerName += fieldArray[index++] + DELIMITER;
+            }
+        } while (index <= lastIndexOfName);
+        String state = fieldArray[index++];
+        BigDecimal taxRate = new BigDecimal(fieldArray[index++]).setScale(2, RoundingMode.HALF_UP);
+        String productType = fieldArray[index++];
+        BigDecimal area = new BigDecimal(fieldArray[index++]).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal costPerSquareFoot = new BigDecimal(fieldArray[index++]).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal laborCostPerSquareFoot = new BigDecimal(fieldArray[index++]).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal materialCost = new BigDecimal(fieldArray[index++]).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal laborCost = new BigDecimal(fieldArray[index++]).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal taxFinal = new BigDecimal(fieldArray[index++]).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal totalCost = new BigDecimal(fieldArray[index]).setScale(2, RoundingMode.HALF_UP);
 
         return new Order(orderNumber,
                 customerName,
@@ -110,7 +121,6 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
 
     }
 
-    
     // getSingleOrder method
     // 3. list all items
     public List<Order> getAllOrders(LocalDate queryDate) throws FlooringMasteryDaoException {
@@ -123,6 +133,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
     private String marshallOrder(Order order) {
         String lineEntry = "";
 
+        
         lineEntry += order.getOrderNumber() + DELIMITER;
         lineEntry += order.getCustomerName() + DELIMITER;
         lineEntry += order.getState() + DELIMITER;
@@ -134,7 +145,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         lineEntry += order.getMaterialCost() + DELIMITER;
         lineEntry += order.getLaborCost() + DELIMITER;
         lineEntry += order.getTaxFinal() + DELIMITER;
-        lineEntry += order.getTotalCost();
+        lineEntry += order.getTotalCost()+ SPACER;
 
         return lineEntry;
 

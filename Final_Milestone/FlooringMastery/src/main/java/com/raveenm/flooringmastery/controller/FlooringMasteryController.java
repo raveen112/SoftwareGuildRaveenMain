@@ -164,7 +164,7 @@ public class FlooringMasteryController {
         List<Order> allOrders = service.getAllOrders(orderToRemoveDate);
 
         Order orderToRemove = view.getOrderToRemove(allOrders);
-        orderToRemove = service.removeOrder(orderToRemove);
+        
         view.displayDashesBanner();
         view.printOrderSummary(orderToRemove);
         view.displayDashesBanner();
