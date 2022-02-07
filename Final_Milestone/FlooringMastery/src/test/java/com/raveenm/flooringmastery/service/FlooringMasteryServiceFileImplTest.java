@@ -33,7 +33,7 @@ public class FlooringMasteryServiceFileImplTest {
 //        FlooringMasteryTaxDao taxDao = new FlooringMasteryTaxDaoStubImpl();
 //        service = new FlooringMasteryServiceFileImpl(orderDao, taxDao, productDao);
 
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.txt");
+        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         service = ctx.getBean("service", FlooringMasteryService.class);
     }
 

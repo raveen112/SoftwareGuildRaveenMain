@@ -29,7 +29,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
 
     List<Order> allOrders = new ArrayList<>();
     String DELIMITER = ",";
-    String SPACER = "\n";
+  
     private final String FILE_NAME_PREFIX;
     // 5. marshall
     // 2. unmarshall
@@ -51,7 +51,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
 
     // Unmarshall from txt file 
     private Order unmarshallOrder(String orderString, LocalDate dateStamp) {
-
+        
         final int NUM_FIELDS = 12;
         String[] fieldArray = orderString.split(DELIMITER);
         int lastIndexOfName = fieldArray.length - NUM_FIELDS + 1;
@@ -145,7 +145,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
         lineEntry += order.getMaterialCost() + DELIMITER;
         lineEntry += order.getLaborCost() + DELIMITER;
         lineEntry += order.getTaxFinal() + DELIMITER;
-        lineEntry += order.getTotalCost()+ SPACER;
+        lineEntry += order.getTotalCost();
 
         return lineEntry;
 

@@ -18,6 +18,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 /**
  *
@@ -170,7 +172,7 @@ public class FlooringMasteryServiceFileImpl implements FlooringMasteryService {
         return order.getMaterialCost().add(order.getLaborCost().add(order.getTaxFinal()));
     }
 
-    // Pass through methods 
+   
     @Override
     public List<Order> getAllOrders(LocalDate queryDate) throws FlooringMasteryDaoException, OrdersNotFoundException {
         List<Order> orders = dao.getAllOrders(queryDate);
@@ -180,6 +182,7 @@ public class FlooringMasteryServiceFileImpl implements FlooringMasteryService {
         return orders;
     }
 
+     // Pass through methods 
     @Override
     public Order addOrder(Order placeOrder) throws FlooringMasteryDaoException {
         return dao.addOrder(placeOrder);
@@ -221,7 +224,34 @@ public class FlooringMasteryServiceFileImpl implements FlooringMasteryService {
     }
 
     @Override
-    public List<String> getExistingDates(){
-        return dao.getExistingDates();
+    public List<String> getExistingDates() throws OrdersNotFoundException{
+        List<String> existingDates = dao.getExistingDates();
+        if(existingDates.isEmpty()){
+            throw new OrdersNotFoundException ("No orders exist!");
+        }
+        
+        return existingDates;
+    }
+    
+    @Override 
+    public List<String> getFutureExisitingDates() throws OrdersNotFoundException{
+        List<String> existingDates= dao.getExistingDates();
+        List<String> futureExistingDates = new ArrayList<>();
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
+        LocalDate dateToday = LocalDate.now();
+        LocalDate currentDate ;
+        for(String existingDate: existingDates){
+            currentDate = LocalDate.parse(existingDate, formatter);
+            if(currentDate.isAfter(dateToday)){
+                futureExistingDates.add(existingDate);
+            }
+            
+        }
+        
+        if(futureExistingDates.isEmpty()){
+            throw new OrdersNotFoundException("No future orders exist.");
+        }
+        return futureExistingDates;
     }
 }

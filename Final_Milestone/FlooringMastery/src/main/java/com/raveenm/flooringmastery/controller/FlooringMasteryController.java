@@ -19,6 +19,7 @@ import com.raveenm.flooringmastery.service.ProductNotFoundException;
 import com.raveenm.flooringmastery.service.StateNotFoundException;
 import com.raveenm.flooringmastery.ui.FlooringMasteryView;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,7 +47,7 @@ public class FlooringMasteryController {
                 // Initialized here since the tax and product files are immutable 
                 List<Product> products = service.getallProductTypes();
                 List<Tax> stateTax = service.getAllStateTaxes();
-                List<String> orderDatesExisting;
+                List<String> orderDatesExisting = new ArrayList<>();
 
                 menuSelection = view.menuSelection();
 
@@ -54,36 +55,37 @@ public class FlooringMasteryController {
 
                     //display orders
                     case 1:
-                        displayAllOrders();
+                        displayAllOrders(orderDatesExisting);
                         break;
 
                     // add order
                     case 2:
 
-                        addOrder();
+                        addOrder(products, stateTax);
                         break;
                     // edit order        
                     case 3:
-                        editOrder();
+                        editOrder(products, stateTax);
                         break;
 
                     // remove order      
                     case 4:
-                        removeOrder();
+                        removeOrder(products, stateTax, orderDatesExisting);
                         break;
 
                     // export all data;
                     case 5:
                         exportOrders();
                         break;
-                        
+
                     case 6:
                         keepGoing = false;
                         exitMessage();
 
                 }
 
-            } catch (FlooringMasteryDaoException | OrderPersistenceException | InvalidDateException | InvalidCustomerNameException | StateNotFoundException | ProductNotFoundException | InsufficientSquareFootageException | OrdersNotFoundException e) {
+            } catch (FlooringMasteryDaoException | OrderPersistenceException | InvalidDateException | InvalidCustomerNameException 
+                    | StateNotFoundException | ProductNotFoundException | InsufficientSquareFootageException | OrdersNotFoundException e) {
                 view.print(e.getMessage());
             }
 
@@ -95,9 +97,8 @@ public class FlooringMasteryController {
         service.exportOrders();
     }
 
-    private void displayAllOrders() throws FlooringMasteryDaoException, OrdersNotFoundException {
+    private void displayAllOrders(List<String> orderDatesExisting) throws FlooringMasteryDaoException, OrdersNotFoundException {
 
-        List<String> orderDatesExisting;
         view.displayDashesBanner();
         orderDatesExisting = service.getExistingDates();
         view.displayExistingDates(orderDatesExisting);
@@ -107,17 +108,15 @@ public class FlooringMasteryController {
 
     }
 
-    public void addOrder() throws OrderPersistenceException, StateNotFoundException,
+    public void addOrder(List<Product> products, List<Tax> stateTax) throws OrderPersistenceException, StateNotFoundException,
             ProductNotFoundException, InsufficientSquareFootageException, InvalidDateException,
             FlooringMasteryDaoException, InvalidCustomerNameException {
 
-        List<Product> products = service.getallProductTypes();
-        List<Tax> stateTax = service.getAllStateTaxes();
+        products = service.getallProductTypes();
+        stateTax = service.getAllStateTaxes();
         Order orderToAdd = view.getOrderDetails(products, stateTax);
         Order finalOrder = service.getOrderSummary(orderToAdd);
-        view.displayDashesBanner();
         view.printOrderSummary(finalOrder);
-        view.displayDashesBanner();
 
         if (view.getConfirmation("Are you sure you want to place the order?")) {
             Order addedOrder = service.addOrder(finalOrder);
@@ -125,49 +124,46 @@ public class FlooringMasteryController {
         }
     }
 
-    public void editOrder() throws FlooringMasteryDaoException, InvalidDateException,
+    public void editOrder(List<Product> products, List<Tax> taxes) throws FlooringMasteryDaoException, InvalidDateException,
             InvalidCustomerNameException,
             StateNotFoundException, ProductNotFoundException, InsufficientSquareFootageException,
             OrderPersistenceException, OrdersNotFoundException {
 
-        List<Product> products = service.getallProductTypes();
-        List<Tax> stateTax = service.getAllStateTaxes();
+        products = service.getallProductTypes();
+        taxes = service.getAllStateTaxes();
         List<String> orderDatesExisting;
         view.displayDashesBanner();
 
-        orderDatesExisting = service.getExistingDates();
+        orderDatesExisting = service.getFutureExisitingDates();
         view.displayExistingDates(orderDatesExisting);
         LocalDate orderDate = view.getFutureOrderDate("Enter a future (post today) date: ");
         List<Order> allOrders = service.getAllOrders(orderDate);
 
-        Order orderToEdit = view.getEditedOrderDetails(allOrders);
+        Order orderToEdit = view.getEditedOrderDetails(allOrders, products, taxes);
         orderToEdit = service.getOrderSummary(orderToEdit);
-        view.displayDashesBanner();
         view.printOrderSummary(orderToEdit);
-        view.displayDashesBanner();
+
         if (view.getConfirmation("Are you sure you want to EDIT this order?")) {
             service.editOrder(orderToEdit);
-            view.displaySuccessfullyEditedBanner();
+            view.displaySuccessfullyEditedBanner(orderToEdit.getOrderNumber());
         }
     }
 
-    public void removeOrder() throws OrderPersistenceException, FlooringMasteryDaoException, OrdersNotFoundException {
+    public void removeOrder(List<Product> products, List<Tax> stateTax, List<String> orderDatesExisting) throws OrderPersistenceException, FlooringMasteryDaoException, OrdersNotFoundException {
 
-        List<Product> products = service.getallProductTypes();
-        List<Tax> stateTax = service.getAllStateTaxes();
-        List<String> orderDatesExisting;
+        products = service.getallProductTypes();
+        stateTax = service.getAllStateTaxes();
 
-        orderDatesExisting = service.getExistingDates();
+        orderDatesExisting = service.getFutureExisitingDates();
         view.displayExistingDates(orderDatesExisting);
 
         LocalDate orderToRemoveDate = view.getOrderDate();
         List<Order> allOrders = service.getAllOrders(orderToRemoveDate);
 
         Order orderToRemove = view.getOrderToRemove(allOrders);
-        
-        view.displayDashesBanner();
+
         view.printOrderSummary(orderToRemove);
-        view.displayDashesBanner();
+
         if (view.getConfirmation("Are you sure you want to REMOVE this order?")) {
             service.removeOrder(orderToRemove);
             view.displaySuccessfullyRemovedBanner(orderToRemove.getOrderNumber());
