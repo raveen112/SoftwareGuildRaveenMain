@@ -65,7 +65,7 @@ public class FlooringMasteryController {
                         break;
                     // edit order        
                     case 3:
-                        editOrder(products, stateTax);
+                        editOrder(products, stateTax, orderDatesExisting);
                         break;
 
                     // remove order      
@@ -124,14 +124,14 @@ public class FlooringMasteryController {
         }
     }
 
-    public void editOrder(List<Product> products, List<Tax> taxes) throws FlooringMasteryDaoException, InvalidDateException,
+    public void editOrder(List<Product> products, List<Tax> taxes, List<String> orderDatesExisting) throws FlooringMasteryDaoException, InvalidDateException,
             InvalidCustomerNameException,
             StateNotFoundException, ProductNotFoundException, InsufficientSquareFootageException,
             OrderPersistenceException, OrdersNotFoundException {
 
         products = service.getallProductTypes();
         taxes = service.getAllStateTaxes();
-        List<String> orderDatesExisting;
+        
         view.displayDashesBanner();
 
         orderDatesExisting = service.getFutureExisitingDates();
