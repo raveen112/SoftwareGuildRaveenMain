@@ -30,8 +30,6 @@ public class App {
            ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
            FlooringMasteryController controller = ctx.getBean("controller", FlooringMasteryController.class);
            controller.run();
-        
-        
 
     }
 }

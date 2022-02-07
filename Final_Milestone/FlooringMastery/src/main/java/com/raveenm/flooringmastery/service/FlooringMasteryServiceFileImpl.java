@@ -5,7 +5,6 @@
  */
 package com.raveenm.flooringmastery.service;
 
-import com.raveenm.flooringmastery.dao.FlooringMasteryAuditDao;
 import com.raveenm.flooringmastery.dao.FlooringMasteryDao;
 import com.raveenm.flooringmastery.dao.FlooringMasteryDaoException;
 import com.raveenm.flooringmastery.dao.FlooringMasteryProductDao;
@@ -79,7 +78,7 @@ public class FlooringMasteryServiceFileImpl implements FlooringMasteryService {
 
     }
 
-    //validate future date (readFutureLocalDate) = add to IO as well
+    // validate future date (readFutureLocalDate) = add to IO as well
     // private void validateCustomerName(Order customerOrder) throws 
     // only returns a valid customer name
     private boolean isValidCustomerName(Order customerNameOrder) {

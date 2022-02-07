@@ -1,13 +1,11 @@
 package com.raveenm.flooringmastery.dao;
 
-import com.raveenm.flooringmastery.dto.Product;
 import com.raveenm.flooringmastery.dto.Tax;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;

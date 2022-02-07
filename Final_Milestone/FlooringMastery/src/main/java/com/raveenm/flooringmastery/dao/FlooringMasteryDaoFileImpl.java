@@ -52,6 +52,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
     // Unmarshall from txt file 
     private Order unmarshallOrder(String orderString, LocalDate dateStamp) {
         
+        //validation for "," and "."
         final int NUM_FIELDS = 12;
         String[] fieldArray = orderString.split(DELIMITER);
         int lastIndexOfName = fieldArray.length - NUM_FIELDS + 1;
@@ -197,7 +198,7 @@ public class FlooringMasteryDaoFileImpl implements FlooringMasteryDao {
 
         for (File file : orderFiles) {
             String fileName = file.getName();
-            String stringDate = fileName.substring(7, 15);
+            String stringDate = fileName.substring(6, 14);
             LocalDate ordersDate = LocalDate.parse(stringDate, formatter);
             try {
                 exportInput = new Scanner(new BufferedReader(new FileReader("Orders/" + fileName)));
