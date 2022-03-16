@@ -5,8 +5,9 @@ CREATE DATABASE HotelReservation;
 USE HotelReservation;
 
 CREATE TABLE guest (
-	guest_id INT PRIMARY KEY auto_increment,
-    `name` VARCHAR(100) NOT NULL,
+guest_id INT PRIMARY KEY auto_increment,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
     address VARCHAR(100) NOT NULL,
     city VARCHAR(100) NOT NULL,
     state VARCHAR(3) NOT NULL,
@@ -14,21 +15,30 @@ CREATE TABLE guest (
     contact_number VARCHAR(30) NOT NULL
 );
 
+CREATE TABLE roomType (
+	room_type_id INT NOT NULL PRIMARY KEY auto_increment,
+    room_type CHAR(10),
+    standard_occupancy INT NOT NULL,
+    max_occupancy INT NOT NULL,
+    extra_person INT,
+    base_price DECIMAL(6,2) NOT NULL
+);
+
+
 CREATE TABLE room (
 	room_id INT NOT NULL PRIMARY KEY auto_increment,
     room_number CHAR(10) NOT NULL,
-    room_type CHAR(10) NOT NULL,
-    ada_status CHAR(4) NOT NULL,
-    standard_occupancy INT NOT NULL,
-    max_occupancy INT NOT NULL,
-    base_price INT NOT NULL,
-    extra_Person INT
+    ada_status BOOL NOT NULL,
+    room_type_id INT,
+    CONSTRAINT fk_room_roomType
+		FOREIGN KEY(room_type_id) 
+			REFERENCES roomType(room_type_id) ON DELETE CASCADE
 );
+
 
 CREATE TABLE reservations(
 	reservation_id INT NOT NULL PRIMARY KEY auto_increment,
     guest_id INT,
-    guest_name VARCHAR(50) NOT NULL,
     adults INT NOT NULL,
     children INT NOT NULL,
     start_date DATE NOT NULL,
@@ -41,7 +51,8 @@ CREATE TABLE reservations(
 
 CREATE TABLE amenities(
 	amenities_id INT NOT NULL PRIMARY KEY auto_increment,
-    type VARCHAR(20) NOT NULL
+    type VARCHAR(20) NOT NULL,
+    additional_cost  DECIMAL (6,2) NOT NULL
 );
 
 -- Amenities room bridge table

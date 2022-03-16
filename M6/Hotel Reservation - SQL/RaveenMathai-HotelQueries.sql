@@ -1,7 +1,8 @@
 -- 1. Write a query that returns a list of reservations that end in July 2023, including 
 --    the name of the guest, the room number(s), and the reservation dates.
 
--- SELECT guest_name AS `Name`, room_number, start_date, end_date FROM reservations r
+-- SELECT CONCAT(first_name, " " ,last_name) AS `Name`, room_number, start_date, end_date FROM reservations r
+-- LEFT JOIN guest g ON r.guest_id = g.guest_id
 -- LEFT JOIN roomReservation re ON r.reservation_id = re.reservation_id
 -- LEFT JOIN room ro ON re.room_id = ro.room_id
 -- WHERE r.end_date >= '2023-07-01' AND r.end_date <= '2023-07-31' ;
@@ -17,15 +18,17 @@
 -- 2. Write a query that returns a list of all reservations for rooms with a jacuzzi, 
 --    displaying the guest's name, the room number, and the dates of the reservation.
 
--- SELECT guest_name AS `Name`, room_number, start_date, end_date FROM reservations r
+-- SELECT CONCAT(first_name, " " ,last_name) as `Name`, room_number, start_date, end_date FROM reservations r
+-- LEFT JOIN guest g ON r.guest_id = g.guest_id
 -- INNER JOIN roomReservation rr ON r.reservation_id = rr.reservation_id 
 -- INNER JOIN room d ON rr.room_id = d.room_id
+-- INNER JOIN roomType rt ON d.room_type_id = rt.room_type_id
 -- INNER JOIN amenitiesRooms ar ON d.room_id = ar.room_id
 -- INNER JOIN amenities a ON a.amenities_id = ar.amenities_id
 -- WHERE `type` = "Jacuzzi";
 
 -- (11 rows)
--- Name			room_number		start_date		end_date
+-- Name				room_number		start_date		end_date
 -- Karie Yang			201			3/6/2023		3/7/2023
 -- Bettyann Seery		203			2/5/2023		2/10/2023
 -- Karie Yang			203			9/13/2023		9/15/2023
@@ -45,10 +48,11 @@
 --    reservation, and how many people were included in the reservation. 
 --    (Choose a guest's name from the existing data.)
 
--- SELECT guest_name AS `name`, room_number, start_date AS ReservationDate, adults, children FROM reservations r
+-- SELECT CONCAT(first_name, " " ,last_name) as `Name`, room_number, start_date AS ReservationDate, adults, children FROM reservations r
+-- LEFT JOIN guest g ON r.guest_id = g.guest_id
 -- INNER JOIN roomReservation rr ON r.reservation_id = rr.reservation_id 
 -- INNER JOIN room d ON rr.room_id = d.room_id
--- WHERE guest_name = 'Mack Simmer';
+-- WHERE CONCAT(first_name, " " ,last_name) = 'Mack Simmer';
  
  -- (4 rows --  Mack Simmer)
 -- name		room_number		ReservationDate		adults		children
@@ -88,13 +92,13 @@
 -- 	304			14				185
 -- 	305			3				350
 -- 	305			19				350
--- 	306			NULL				NULL
+-- 	306			NULL			NULL
 -- 	307			5				525
 -- 	308			1				300
 -- 	401			11				1200
 -- 	401			17				1260
 -- 	401			22				1200
--- 	402			NULL				NULL
+-- 	402			NULL			NULL
 
 -- -------------------------------------------------------------------------------
 
@@ -102,17 +106,19 @@
 --    and that are reserved on any date in April 2023.
 
 -- SELECT room_number, 
--- guest_name,
+-- CONCAT(first_name, " " ,last_name) AS `Name`,
 -- max_occupancy,
 -- start_date FROM reservations r
+-- LEFT JOIN guest g ON r.guest_id = g.guest_id
 -- INNER JOIN roomReservation re ON r.reservation_id = re.reservation_id
 -- INNER JOIN room d ON re.room_id = d.room_id
+-- INNER JOIN roomType rt ON d.room_type_id = rt.room_type_id
 -- WHERE MONTH(start_date) = 4 AND max_occupancy >=3
 -- GROUP BY room_number;
 
 -- (1 row)
 -- room_number   	 guest_name  	 max_occupancy   	 start_date
--- 	301		Walter Holaway   4			 2023-04-09
+-- 	301		Walter Holaway   			4			 2023-04-09
 
 -- --------------------------------------------------------------------------
 
@@ -120,7 +126,7 @@
 --    sorted starting with the guest with the most reservations and then by the guest's last name.
 
 -- SELECT 
--- SUBSTRING_INDEX(g.`name` ," " , -1) AS LastName,
+-- Last_name,
 -- COUNT(r.reservation_id) AS total_reservations
 -- FROM guest g
 -- INNER JOIN reservations r ON g.guest_id = r.guest_id
@@ -145,7 +151,7 @@
 -- 7. Write a query that displays the name, address, and phone number of a guest based on their 
 --    phone number. (Choose a phone number from the existing data.)
 
--- SELECT contact_number AS PhoneNumber, `name` AS `Name` , address AS Address from GUEST
+-- SELECT contact_number AS PhoneNumber, CONCAT(first_name, " " ,last_name) AS `Name` , address AS Address from GUEST
 -- WHERE contact_number  = '(478) 277-9632';
 
 -- (1 row)
