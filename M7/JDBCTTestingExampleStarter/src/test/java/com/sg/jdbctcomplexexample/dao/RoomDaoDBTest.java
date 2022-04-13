@@ -94,19 +94,19 @@ public class RoomDaoDBTest {
         assertEquals(room, fromDao);
     }
 
-    /**
-     * Test of updateRoom method, of class RoomDaoDB.
-     */
-    @Test
-    public void testUpdateRoom() {
-        
-    }
-
-    /**
-     * Test of deleteRoomById method, of class RoomDaoDB.
-     */
-    @Test
-    public void testDeleteRoomById() {
-    }
+//    /**
+//     * Test of updateRoom method, of class RoomDaoDB.
+//     */
+//    @Test
+//    public void testUpdateRoom() {
+//        
+//    }
+//
+//    /**
+//     * Test of deleteRoomById method, of class RoomDaoDB.
+//     */
+//    @Test
+//    public void testDeleteRoomById() {
+//    }
 
 }
