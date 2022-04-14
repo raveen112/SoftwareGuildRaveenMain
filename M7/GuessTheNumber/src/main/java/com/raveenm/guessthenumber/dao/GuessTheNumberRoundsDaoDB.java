@@ -18,23 +18,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author ravee
  */
+@Repository
 public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
 
-    private final JdbcTemplate jdbcTemplate;
-
     @Autowired
-    public GuessTheNumberRoundsDaoDB(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    JdbcTemplate jdbcTemplate;
 
+ 
     @Override
     public Round addRound(Round round) {
-        final String sql = "INSERT INTO round(guess,game_id,result,time,result) VALUES (?,?,?,?);";
+        final String sql = "INSERT INTO round(guess,game_id,result,time,result) VALUES (?,?,?,?,?);";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update((Connection conn) -> {

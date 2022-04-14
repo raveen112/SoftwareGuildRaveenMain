@@ -30,14 +30,10 @@ public class GuessTheNumberGameDaoDB implements GuessTheNumberGameDao {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    public GuessTheNumberGameDaoDB(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
-
     @Override
+    @Transactional  
     public Game addGame(Game game) {
-        final String sql = "INSERT INTO game(status, answer) VALUES(?,?)";
+        final String sql = "INSERT INTO game(status, answer) VALUES(?,?);";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update((Connection conn) -> {
 
@@ -46,7 +42,7 @@ public class GuessTheNumberGameDaoDB implements GuessTheNumberGameDao {
                     Statement.RETURN_GENERATED_KEYS);
 
             statement.setString(1, game.getStatus());
-            statement.setString(1, game.getAnswer());
+            statement.setString(2, game.getAnswer());
             return statement;
 
         }, keyHolder);
@@ -57,14 +53,14 @@ public class GuessTheNumberGameDaoDB implements GuessTheNumberGameDao {
 
     @Override
     public List<Game> getAllGames() {
-        final String sql = "SELECT * FROM games;";
+        final String sql = "SELECT * FROM game;";
         return jdbcTemplate.query(sql, new GameMapper());
     }
 
     @Override
     public Game getGameById(int id) {
 
-        final String sql = "SELECT * FROM game WHERE game_id = ?";
+        final String sql = "SELECT * FROM game WHERE game_id = ?;";
         return jdbcTemplate.queryForObject(sql, new GameMapper(), id);
 
     }
@@ -84,8 +80,9 @@ public class GuessTheNumberGameDaoDB implements GuessTheNumberGameDao {
     }
 
     @Override
+    @Transactional
     public boolean deleteGame(int id) {
-        final String sqlFK = "DELETE FROM round WHERE game_id = ?";
+        final String sqlFK = "DELETE FROM round WHERE game_id = ?;";
         jdbcTemplate.update(sqlFK, id);
         final String sql = "DELETE FROM game WHERE game_id = ?;";
         return jdbcTemplate.update(sql, id) > 0;

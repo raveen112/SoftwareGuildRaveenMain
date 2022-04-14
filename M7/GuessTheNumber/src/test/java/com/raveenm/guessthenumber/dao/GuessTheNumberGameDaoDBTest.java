@@ -9,12 +9,9 @@ import com.raveenm.guessthenumber.TestApplicationConfiguration;
 import com.raveenm.guessthenumber.model.Game;
 import com.raveenm.guessthenumber.model.Round;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,6 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  *
  * @author ravee
  */
+@RunWith(SpringRunner.class)
 @SpringBootTest
 public class GuessTheNumberGameDaoDBTest {
 
@@ -33,7 +31,7 @@ public class GuessTheNumberGameDaoDBTest {
     @Autowired
     GuessTheNumberRoundsDao roundDao;
 
-    @BeforeEach
+    @Before
     public void setUp() {
 
         List<Round> rounds = roundDao.getAllRounds();
@@ -57,10 +55,11 @@ public class GuessTheNumberGameDaoDBTest {
         game.setAnswer("2142");
         game.setStatus("In progress");
 
-        gameDao.addGame(game);
+        game = gameDao.addGame(game);
         Game fromDao = gameDao.getGameById(game.getGameId());
 
-        assertEquals(game, fromDao, "Game could not be retrieved :/");
+        // assertEquals(game, fromDao, "Game could not be retrieved :/");
+        assertEquals(game, fromDao);
 
         System.out.println(fromDao.getGameId());
 
@@ -71,6 +70,7 @@ public class GuessTheNumberGameDaoDBTest {
      */
     @Test
     public void testGetAllGames() {
+
     }
 
     /**
