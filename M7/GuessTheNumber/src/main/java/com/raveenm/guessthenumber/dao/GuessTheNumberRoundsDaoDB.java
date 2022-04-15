@@ -6,7 +6,6 @@
 package com.raveenm.guessthenumber.dao;
 
 import com.raveenm.guessthenumber.model.Round;
-import static java.lang.Math.round;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +32,7 @@ public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
  
     @Override
     public Round addRound(Round round) {
-        final String sql = "INSERT INTO round(guess,game_id,result,time,result) VALUES (?,?,?,?,?);";
+        final String sql = "INSERT INTO round(guess,game_id,result,timeLog,result) VALUES (?,?,?,?,?);";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update((Connection conn) -> {
@@ -42,13 +41,13 @@ public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
                     sql,
                     Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, round.getGuess());
-            statement.setInt(2, round.getGameId());
-            statement.setTimestamp(3, Timestamp.valueOf(round.getTime()));
+            statement.setInt(2, round.getGame_id());
+            statement.setTimestamp(3, Timestamp.valueOf(round.getTimeLog()));
             statement.setString(4, round.getResult());
             return statement;
 
         }, keyHolder);
-        round.setRoundId(keyHolder.getKey().intValue());
+        round.setRound_id(keyHolder.getKey().intValue());
         return round;
     }
 
@@ -70,15 +69,15 @@ public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
                 + "game_id = ?, "
                 + "guess = ?, "
                 + "result = ?, "
-                + "time = ? "
+                + "timeLog = ? "
                 + "WHERE round_id =?;";
 
         return jdbcTemplate.update(sql,
-                round.getGameId(),
+                round.getGame_id(),
                 round.getGuess(),
                 round.getResult(),
-                Timestamp.valueOf(round.getTime()),
-                round.getRoundId()) > 0;
+                Timestamp.valueOf(round.getTimeLog()),
+                round.getRound_id()) > 0;
 
     }
 
@@ -88,15 +87,15 @@ public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
        return jdbcTemplate.update(sql, id) >0;
     }
 
-    private static final class RoundMapper implements RowMapper<Round> {
+    public static final class RoundMapper implements RowMapper<Round> {
 
         @Override
         public Round mapRow(ResultSet rs, int index) throws SQLException {
             Round rm = new Round();
-            rm.setRoundId(rs.getInt("round_id"));
-            rm.setGameId(rs.getInt("game_id"));
+            rm.setRound_id(rs.getInt("round_id"));
+            rm.setGame_id(rs.getInt("game_id"));
             rm.setGuess(rs.getString("guess"));
-            rm.setTimeOfGuess(rs.getTimestamp("timeLog").toLocalDateTime());
+            rm.setTimeLog(rs.getTimestamp("timeLog").toLocalDateTime());
             rm.setResult(rs.getString("result"));
 
             return rm;

@@ -5,7 +5,9 @@
  */
 package com.raveenm.guessthenumber.dao;
 
+import com.raveenm.guessthenumber.dao.GuessTheNumberRoundsDaoDB.RoundMapper;
 import com.raveenm.guessthenumber.model.Game;
+import com.raveenm.guessthenumber.model.Round;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,7 +33,7 @@ public class GuessTheNumberGameDaoDB implements GuessTheNumberGameDao {
     JdbcTemplate jdbcTemplate;
 
     @Override
-    @Transactional  
+    @Transactional
     public Game addGame(Game game) {
         final String sql = "INSERT INTO game(status, answer) VALUES(?,?);";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
@@ -47,22 +49,33 @@ public class GuessTheNumberGameDaoDB implements GuessTheNumberGameDao {
 
         }, keyHolder);
 
-        game.setGameId(keyHolder.getKey().intValue());
+        game.setGame_id(keyHolder.getKey().intValue());
         return game;
     }
 
+    // add a private helper method to help populate the round list for a game
     @Override
     public List<Game> getAllGames() {
         final String sql = "SELECT * FROM game;";
         return jdbcTemplate.query(sql, new GameMapper());
     }
 
+    // add a private helper method to help populate the round list for a game
     @Override
     public Game getGameById(int id) {
 
         final String sql = "SELECT * FROM game WHERE game_id = ?;";
-        return jdbcTemplate.queryForObject(sql, new GameMapper(), id);
+        Game game = jdbcTemplate.queryForObject(sql, new GameMapper(), id);
+        game.setRounds(getRoundsForGame(game.getGame_id()));
+        return game;
 
+    }
+
+    private List<Round> getRoundsForGame(int id) {
+
+        final String sql = "SELECT * FROM round WHERE game_id = ?;";
+        return jdbcTemplate.query(sql, new RoundMapper(), id);
+ 
     }
 
     @Override
@@ -76,7 +89,7 @@ public class GuessTheNumberGameDaoDB implements GuessTheNumberGameDao {
         return jdbcTemplate.update(sql,
                 game.getStatus(),
                 game.getAnswer(),
-                game.getGameId()) > 0;
+                game.getGame_id()) > 0;
     }
 
     @Override
@@ -88,13 +101,13 @@ public class GuessTheNumberGameDaoDB implements GuessTheNumberGameDao {
         return jdbcTemplate.update(sql, id) > 0;
     }
 
-    private static final class GameMapper implements RowMapper<Game> {
+    public static final class GameMapper implements RowMapper<Game> {
 
         @Override
         public Game mapRow(ResultSet rs, int index) throws SQLException {
             Game gm = new Game();
-            gm.setGameId(rs.getInt("id"));
-            gm.setAnswer(rs.getString("name"));
+            gm.setGame_id(rs.getInt("game_id"));
+            gm.setAnswer(rs.getString("answer"));
             gm.setStatus(rs.getString("status"));
             return gm;
         }

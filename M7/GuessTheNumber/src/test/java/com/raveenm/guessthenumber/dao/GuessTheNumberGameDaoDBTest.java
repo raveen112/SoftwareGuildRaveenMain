@@ -5,23 +5,21 @@
  */
 package com.raveenm.guessthenumber.dao;
 
-import com.raveenm.guessthenumber.TestApplicationConfiguration;
 import com.raveenm.guessthenumber.model.Game;
 import com.raveenm.guessthenumber.model.Round;
 import java.util.List;
-import static org.junit.Assert.assertEquals;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+
+
 
 /**
  *
  * @author ravee
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class GuessTheNumberGameDaoDBTest {
 
@@ -31,17 +29,17 @@ public class GuessTheNumberGameDaoDBTest {
     @Autowired
     GuessTheNumberRoundsDao roundDao;
 
-    @Before
+    @BeforeEach
     public void setUp() {
 
         List<Round> rounds = roundDao.getAllRounds();
         for (Round round : rounds) {
-            roundDao.deleteRoundById(round.getRoundId());
+            roundDao.deleteRoundById(round.getRound_id());
         }
 
         List<Game> games = gameDao.getAllGames();
         for (Game game : games) {
-            gameDao.deleteGame(game.getGameId());
+            gameDao.deleteGame(game.getGame_id());
         }
     }
 
@@ -56,13 +54,12 @@ public class GuessTheNumberGameDaoDBTest {
         game.setStatus("In progress");
 
         game = gameDao.addGame(game);
-        Game fromDao = gameDao.getGameById(game.getGameId());
+        Game fromDao = gameDao.getGameById(game.getGame_id());
 
         // assertEquals(game, fromDao, "Game could not be retrieved :/");
         assertEquals(game, fromDao);
 
-        System.out.println(fromDao.getGameId());
-
+        System.out.println(fromDao.getGame_id());
     }
 
     /**

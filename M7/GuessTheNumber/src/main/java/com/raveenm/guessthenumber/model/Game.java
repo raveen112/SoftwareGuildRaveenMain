@@ -5,6 +5,7 @@
  */
 package com.raveenm.guessthenumber.model;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -12,49 +13,17 @@ import java.util.Objects;
  * @author ravee
  */
 public class Game {
-    int gameId;
+    int game_id;
     String answer;
     String status;
+    List<Round> rounds;
 
-    public int getGameId() {
-        return gameId;
+    public int getGame_id() {
+        return game_id;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 59 * hash + this.gameId;
-        hash = 59 * hash + Objects.hashCode(this.answer);
-        hash = 59 * hash + Objects.hashCode(this.status);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Game other = (Game) obj;
-        if (this.gameId != other.gameId) {
-            return false;
-        }
-        if (!Objects.equals(this.answer, other.answer)) {
-            return false;
-        }
-        if (!Objects.equals(this.status, other.status)) {
-            return false;
-        }
-        return true;
-    }
-
-    public void setGameId(int gameId) {
-        this.gameId = gameId;
+    public void setGame_id(int game_id) {
+        this.game_id = game_id;
     }
 
     public String getAnswer() {
@@ -72,4 +41,53 @@ public class Game {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public List<Round> getRounds() {
+        return rounds;
+    }
+
+    public void setRounds(List<Round> rounds) {
+        this.rounds = rounds;
+    }
+
+    
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + this.game_id;
+        hash = 31 * hash + Objects.hashCode(this.answer);
+        hash = 31 * hash + Objects.hashCode(this.status);
+        hash = 31 * hash + Objects.hashCode(this.rounds);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Game other = (Game) obj;
+        if (this.game_id != other.game_id) {
+            return false;
+        }
+        if (!Objects.equals(this.answer, other.answer)) {
+            return false;
+        }
+        if (!Objects.equals(this.status, other.status)) {
+            return false;
+        }
+        if (!Objects.equals(this.rounds, other.rounds)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 }
