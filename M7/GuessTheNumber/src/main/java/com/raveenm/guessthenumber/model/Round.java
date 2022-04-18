@@ -19,8 +19,8 @@ public class Round {
     int exactGuess;
     int partialGuess;
     String result;
-    //will affect persistence
-    int game_id;  
+//    //will affect persistence
+//    int game_id;  
 
     public int getRound_id() {
         return round_id;
@@ -70,24 +70,16 @@ public class Round {
         this.result = result;
     }
 
-    public int getGame_id() {
-        return game_id;
-    }
-
-    public void setGame_id(int game_id) {
-        this.game_id = game_id;
-    }
-
+    
     @Override
     public int hashCode() {
-        int hash = 7;
+        int hash = 5;
         hash = 37 * hash + this.round_id;
         hash = 37 * hash + Objects.hashCode(this.guess);
         hash = 37 * hash + Objects.hashCode(this.timeLog);
         hash = 37 * hash + this.exactGuess;
         hash = 37 * hash + this.partialGuess;
         hash = 37 * hash + Objects.hashCode(this.result);
-        hash = 37 * hash + this.game_id;
         return hash;
     }
 
@@ -112,9 +104,6 @@ public class Round {
         if (this.partialGuess != other.partialGuess) {
             return false;
         }
-        if (this.game_id != other.game_id) {
-            return false;
-        }
         if (!Objects.equals(this.guess, other.guess)) {
             return false;
         }
@@ -126,8 +115,6 @@ public class Round {
         }
         return true;
     }
-    
-    
 
-
+    
 }

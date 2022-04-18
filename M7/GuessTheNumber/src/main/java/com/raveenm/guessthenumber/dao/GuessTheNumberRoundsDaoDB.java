@@ -32,7 +32,7 @@ public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
  
     @Override
     public Round addRound(Round round) {
-        final String sql = "INSERT INTO round(guess,game_id,result,timeLog,result) VALUES (?,?,?,?,?);";
+        final String sql = "INSERT INTO round(guess,result,timeLog,result) VALUES (?,?,?,?);";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update((Connection conn) -> {
@@ -41,9 +41,9 @@ public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
                     sql,
                     Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, round.getGuess());
-            statement.setInt(2, round.getGame_id());
-            statement.setTimestamp(3, Timestamp.valueOf(round.getTimeLog()));
-            statement.setString(4, round.getResult());
+//            statement.setInt(2, round.getGame_id());
+            statement.setTimestamp(2, Timestamp.valueOf(round.getTimeLog()));
+            statement.setString(3, round.getResult());
             return statement;
 
         }, keyHolder);
@@ -66,14 +66,14 @@ public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
     @Override
     public boolean updateRoundById(Round round) {
         final String sql = "UPDATE round SET "
-                + "game_id = ?, "
+//                + "game_id = ?, "
                 + "guess = ?, "
                 + "result = ?, "
                 + "timeLog = ? "
                 + "WHERE round_id =?;";
 
         return jdbcTemplate.update(sql,
-                round.getGame_id(),
+//                round.getGame_id(),
                 round.getGuess(),
                 round.getResult(),
                 Timestamp.valueOf(round.getTimeLog()),
@@ -93,7 +93,7 @@ public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
         public Round mapRow(ResultSet rs, int index) throws SQLException {
             Round rm = new Round();
             rm.setRound_id(rs.getInt("round_id"));
-            rm.setGame_id(rs.getInt("game_id"));
+//            rm.setGame_id(rs.getInt("game_id"));
             rm.setGuess(rs.getString("guess"));
             rm.setTimeLog(rs.getTimestamp("timeLog").toLocalDateTime());
             rm.setResult(rs.getString("result"));

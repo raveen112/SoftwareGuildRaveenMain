@@ -71,11 +71,12 @@ public class GuessTheNumberGameDaoDB implements GuessTheNumberGameDao {
 
     }
 
+    //helper method
     private List<Round> getRoundsForGame(int id) {
 
         final String sql = "SELECT * FROM round WHERE game_id = ?;";
         return jdbcTemplate.query(sql, new RoundMapper(), id);
- 
+
     }
 
     @Override

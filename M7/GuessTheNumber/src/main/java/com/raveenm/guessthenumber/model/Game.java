@@ -5,6 +5,7 @@
  */
 package com.raveenm.guessthenumber.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,7 +17,7 @@ public class Game {
     int game_id;
     String answer;
     String status;
-    List<Round> rounds;
+    List<Round> rounds = new ArrayList<>();
 
     public int getGame_id() {
         return game_id;
@@ -49,16 +50,14 @@ public class Game {
     public void setRounds(List<Round> rounds) {
         this.rounds = rounds;
     }
-
     
-
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 31 * hash + this.game_id;
-        hash = 31 * hash + Objects.hashCode(this.answer);
-        hash = 31 * hash + Objects.hashCode(this.status);
-        hash = 31 * hash + Objects.hashCode(this.rounds);
+        int hash = 3;
+        hash = 83 * hash + this.game_id;
+        hash = 83 * hash + Objects.hashCode(this.answer);
+        hash = 83 * hash + Objects.hashCode(this.status);
+        hash = 83 * hash + Objects.hashCode(this.rounds);
         return hash;
     }
 
@@ -88,6 +87,5 @@ public class Game {
         }
         return true;
     }
-    
-    
+
 }

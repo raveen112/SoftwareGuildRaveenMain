@@ -9,12 +9,12 @@ import com.raveenm.guessthenumber.model.Game;
 import com.raveenm.guessthenumber.model.Round;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-
 
 /**
  *
@@ -56,8 +56,7 @@ public class GuessTheNumberGameDaoDBTest {
         game = gameDao.addGame(game);
         Game fromDao = gameDao.getGameById(game.getGame_id());
 
-        // assertEquals(game, fromDao, "Game could not be retrieved :/");
-        assertEquals(game, fromDao);
+        assertEquals(game, fromDao, "Game could not be retrieved :/");
 
         System.out.println(fromDao.getGame_id());
     }
@@ -67,14 +66,21 @@ public class GuessTheNumberGameDaoDBTest {
      */
     @Test
     public void testGetAllGames() {
+        Game game1 = new Game();
+        game1.setAnswer("9312");
+        game1.setStatus("In progress");
+        game1 = gameDao.addGame(game1);
 
-    }
+        Game game2 = new Game();
+        game2.setAnswer("9332");
+        game2.setStatus("In progress");
+        game2 = gameDao.addGame(game2);
 
-    /**
-     * Test of getGameById method, of class GuessTheNumberGameDaoDB.
-     */
-    @Test
-    public void testGetGameById() {
+        List<Game> games = gameDao.getAllGames();
+        assertEquals(games.size(), 2);
+
+        assertTrue(games.contains(game1));
+        assertTrue(games.contains(game2));
     }
 
     /**
@@ -82,6 +88,19 @@ public class GuessTheNumberGameDaoDBTest {
      */
     @Test
     public void testUpdateGame() {
+        Game game1 = new Game();
+        game1.setAnswer("9312");
+        game1.setStatus("In progress");
+        game1 = gameDao.addGame(game1);
+
+        game1.setAnswer("8212");
+        gameDao.updateGame(game1);
+
+        Game fromDao = gameDao.getGameById(game1.getGame_id());
+
+        assertEquals(fromDao, game1);
+        assertNotEquals(fromDao.getAnswer(), "9312");
+
     }
 
     /**
@@ -89,6 +108,21 @@ public class GuessTheNumberGameDaoDBTest {
      */
     @Test
     public void testDeleteGame() {
+         Game game1 = new Game();
+        game1.setAnswer("9312");
+        game1.setStatus("In progress");
+        game1 = gameDao.addGame(game1);
+
+        Game game2 = new Game();
+        game2.setAnswer("9332");
+        game2.setStatus("In progress");
+        game2 = gameDao.addGame(game2);
+        
+        gameDao.deleteGame(game1.getGame_id());
+        
+        List<Game> games = gameDao.getAllGames();
+        assertEquals(1, games.size());
+        assertTrue(games.contains(game2));
     }
 
 }
