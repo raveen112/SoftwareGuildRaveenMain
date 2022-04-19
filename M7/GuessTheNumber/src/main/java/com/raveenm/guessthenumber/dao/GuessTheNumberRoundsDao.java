@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface GuessTheNumberRoundsDao {
     // Basic CRUD functionality 
-    List<Round> getAllRoundsForGame();
+    List<Round> getAllRoundsForGame(int id);
     Round addRound(Round round);
     boolean deleteRoundByGameId(int id);
 }

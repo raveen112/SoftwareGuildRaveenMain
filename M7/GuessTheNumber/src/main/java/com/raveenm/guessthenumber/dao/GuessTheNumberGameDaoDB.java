@@ -57,16 +57,27 @@ public class GuessTheNumberGameDaoDB implements GuessTheNumberGameDao {
     @Override
     public List<Game> getAllGames() {
         final String sql = "SELECT * FROM game;";
-        return jdbcTemplate.query(sql, new GameMapper());
+        List<Game> games =  jdbcTemplate.query(sql, new GameMapper());
+        for(Game game : games){
+            game.setRounds(getRoundsForGame(game.getGame_id()));
+        }
+        
+        return games;
     }
 
     // add a private helper method to help populate the round list for a game
     @Override
     public Game getGameById(int id) {
 
-        final String sql = "SELECT * FROM game WHERE game_id = ?;";
-        Game game = jdbcTemplate.queryForObject(sql, new GameMapper(), id);
-        game.setRounds(getRoundsForGame(game.getGame_id()));
+        Game game;
+        try {
+            final String sql = "SELECT * FROM game WHERE game_id = ?;";
+            game = jdbcTemplate.queryForObject(sql, new GameMapper(), id);
+            game.setRounds(getRoundsForGame(game.getGame_id()));
+        } catch (DataAccessException ex) {
+            
+            return null;
+        }
         return game;
 
     }

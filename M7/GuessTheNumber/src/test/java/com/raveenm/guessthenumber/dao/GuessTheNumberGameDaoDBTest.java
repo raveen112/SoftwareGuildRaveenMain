@@ -32,13 +32,9 @@ public class GuessTheNumberGameDaoDBTest {
     @BeforeEach
     public void setUp() {
 
-        List<Round> rounds = roundDao.getAllRoundsForGame();
-        for (Round round : rounds) {
-            roundDao.deleteRoundByGameId(round.getRound_id());
-        }
-
         List<Game> games = gameDao.getAllGames();
         for (Game game : games) {
+            roundDao.deleteRoundByGameId(game.getGame_id());
             gameDao.deleteGame(game.getGame_id());
         }
     }
@@ -108,7 +104,7 @@ public class GuessTheNumberGameDaoDBTest {
      */
     @Test
     public void testDeleteGame() {
-         Game game1 = new Game();
+        Game game1 = new Game();
         game1.setAnswer("9312");
         game1.setStatus("In progress");
         game1 = gameDao.addGame(game1);
@@ -117,9 +113,9 @@ public class GuessTheNumberGameDaoDBTest {
         game2.setAnswer("9332");
         game2.setStatus("In progress");
         game2 = gameDao.addGame(game2);
-        
+
         gameDao.deleteGame(game1.getGame_id());
-        
+
         List<Game> games = gameDao.getAllGames();
         assertEquals(1, games.size());
         assertTrue(games.contains(game2));

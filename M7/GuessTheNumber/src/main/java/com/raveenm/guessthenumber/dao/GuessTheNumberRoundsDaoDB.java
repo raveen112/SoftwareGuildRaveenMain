@@ -52,9 +52,9 @@ public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
     }
 
     @Override
-    public List<Round> getAllRoundsForGame() {
-        final String sql = "SELECT * FROM round; ";
-        return jdbcTemplate.query(sql, new RoundMapper());
+    public List<Round> getAllRoundsForGame(int id) {
+        final String sql = "SELECT * FROM round WHERE game_id = ? ; ";
+        return jdbcTemplate.query(sql, new RoundMapper(), id);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
         public Round mapRow(ResultSet rs, int index) throws SQLException {
             Round rm = new Round();
             rm.setRound_id(rs.getInt("round_id"));
-//            rm.setGame_id(rs.getInt("game_id"));
+            rm.setGame_id(rs.getInt("game_id"));
             rm.setGuess(rs.getString("guess"));
             rm.setTimeLog(rs.getTimestamp("timeLog").toLocalDateTime());
             rm.setResult(rs.getString("result"));
