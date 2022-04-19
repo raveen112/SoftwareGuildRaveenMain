@@ -17,6 +17,7 @@ public class Game {
     int game_id;
     String answer;
     String status;
+    // List wasnt initialized to a null array list and caused issues? Why?
     List<Round> rounds = new ArrayList<>();
 
     public int getGame_id() {

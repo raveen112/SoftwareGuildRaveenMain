@@ -16,11 +16,49 @@ public class Round {
     int round_id;
     String guess;
     LocalDateTime timeLog;
-    int exactGuess;
-    int partialGuess;
-    String result;
-//    //will affect persistence
-//    int game_id;  
+    String result; 
+    int game_id;  
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + this.round_id;
+        hash = 59 * hash + Objects.hashCode(this.guess);
+        hash = 59 * hash + Objects.hashCode(this.timeLog);
+        hash = 59 * hash + Objects.hashCode(this.result);
+        hash = 59 * hash + this.game_id;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Round other = (Round) obj;
+        if (this.round_id != other.round_id) {
+            return false;
+        }
+        if (this.game_id != other.game_id) {
+            return false;
+        }
+        if (!Objects.equals(this.guess, other.guess)) {
+            return false;
+        }
+        if (!Objects.equals(this.result, other.result)) {
+            return false;
+        }
+        if (!Objects.equals(this.timeLog, other.timeLog)) {
+            return false;
+        }
+        return true;
+    }
 
     public int getRound_id() {
         return round_id;
@@ -46,22 +84,6 @@ public class Round {
         this.timeLog = timeLog;
     }
 
-    public int getExactGuess() {
-        return exactGuess;
-    }
-
-    public void setExactGuess(int exactGuess) {
-        this.exactGuess = exactGuess;
-    }
-
-    public int getPartialGuess() {
-        return partialGuess;
-    }
-
-    public void setPartialGuess(int partialGuess) {
-        this.partialGuess = partialGuess;
-    }
-
     public String getResult() {
         return result;
     }
@@ -70,51 +92,12 @@ public class Round {
         this.result = result;
     }
 
-    
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 37 * hash + this.round_id;
-        hash = 37 * hash + Objects.hashCode(this.guess);
-        hash = 37 * hash + Objects.hashCode(this.timeLog);
-        hash = 37 * hash + this.exactGuess;
-        hash = 37 * hash + this.partialGuess;
-        hash = 37 * hash + Objects.hashCode(this.result);
-        return hash;
+    public int getGame_id() {
+        return game_id;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Round other = (Round) obj;
-        if (this.round_id != other.round_id) {
-            return false;
-        }
-        if (this.exactGuess != other.exactGuess) {
-            return false;
-        }
-        if (this.partialGuess != other.partialGuess) {
-            return false;
-        }
-        if (!Objects.equals(this.guess, other.guess)) {
-            return false;
-        }
-        if (!Objects.equals(this.result, other.result)) {
-            return false;
-        }
-        if (!Objects.equals(this.timeLog, other.timeLog)) {
-            return false;
-        }
-        return true;
+    public void setGame_id(int game_id) {
+        this.game_id = game_id;
     }
 
-    
 }

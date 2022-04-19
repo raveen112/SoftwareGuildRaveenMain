@@ -32,7 +32,7 @@ public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
  
     @Override
     public Round addRound(Round round) {
-        final String sql = "INSERT INTO round(guess,result,timeLog,result) VALUES (?,?,?,?);";
+        final String sql = "INSERT INTO round(game_id,guess,timeLog,result) VALUES (?,?,?,?);";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update((Connection conn) -> {
@@ -40,10 +40,10 @@ public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
             PreparedStatement statement = conn.prepareStatement(
                     sql,
                     Statement.RETURN_GENERATED_KEYS);
-            statement.setString(1, round.getGuess());
-//            statement.setInt(2, round.getGame_id());
-            statement.setTimestamp(2, Timestamp.valueOf(round.getTimeLog()));
-            statement.setString(3, round.getResult());
+            statement.setInt(1, round.getGame_id());
+            statement.setString(2, round.getGuess());
+            statement.setTimestamp(3, Timestamp.valueOf(round.getTimeLog()));
+            statement.setString(4, round.getResult());
             return statement;
 
         }, keyHolder);
@@ -52,38 +52,14 @@ public class GuessTheNumberRoundsDaoDB implements GuessTheNumberRoundsDao {
     }
 
     @Override
-    public List<Round> getAllRounds() {
+    public List<Round> getAllRoundsForGame() {
         final String sql = "SELECT * FROM round; ";
         return jdbcTemplate.query(sql, new RoundMapper());
     }
 
     @Override
-    public Round getRoundById(int id) {
-        final String sql = "SELECT * FROM round WHERE round_id = ?;";
-        return jdbcTemplate.queryForObject(sql, new RoundMapper(), id);
-    }
-
-    @Override
-    public boolean updateRoundById(Round round) {
-        final String sql = "UPDATE round SET "
-//                + "game_id = ?, "
-                + "guess = ?, "
-                + "result = ?, "
-                + "timeLog = ? "
-                + "WHERE round_id =?;";
-
-        return jdbcTemplate.update(sql,
-//                round.getGame_id(),
-                round.getGuess(),
-                round.getResult(),
-                Timestamp.valueOf(round.getTimeLog()),
-                round.getRound_id()) > 0;
-
-    }
-
-    @Override
-    public boolean deleteRoundById(int id) {
-       final String sql = "DELETE FROM round WHERE round_id = ?;";
+    public boolean deleteRoundByGameId(int id) {
+       final String sql = "DELETE FROM round WHERE game_id = ?;";
        return jdbcTemplate.update(sql, id) >0;
     }
 

@@ -32,9 +32,9 @@ public class GuessTheNumberGameDaoDBTest {
     @BeforeEach
     public void setUp() {
 
-        List<Round> rounds = roundDao.getAllRounds();
+        List<Round> rounds = roundDao.getAllRoundsForGame();
         for (Round round : rounds) {
-            roundDao.deleteRoundById(round.getRound_id());
+            roundDao.deleteRoundByGameId(round.getRound_id());
         }
 
         List<Game> games = gameDao.getAllGames();
