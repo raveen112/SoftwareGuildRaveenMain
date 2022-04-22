@@ -6,7 +6,6 @@
 package com.raveenm.guessthenumber.dao;
 
 import com.raveenm.guessthenumber.model.Game;
-import com.raveenm.guessthenumber.model.Round;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
