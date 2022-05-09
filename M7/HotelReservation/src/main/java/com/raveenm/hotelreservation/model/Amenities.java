@@ -9,8 +9,6 @@ package com.raveenm.hotelreservation.model;
  *
  * @author ravee
  */
-public class Room {
-    int room_id;
+public class Amenities {
     
-
 }

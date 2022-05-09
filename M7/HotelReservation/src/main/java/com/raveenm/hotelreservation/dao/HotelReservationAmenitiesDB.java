@@ -5,21 +5,10 @@
  */
 package com.raveenm.hotelreservation.dao;
 
-import com.raveenm.hotelreservation.model.Guest;
-import java.util.List;
-
 /**
  *
  * @author ravee
  */
-public interface HotelReservationGuestDB {
-
-    Guest addGuest();
-
-    List<Guest> getAllGuests();
-
-    Guest removeGuest();
-
-    Guest updateGuest();
-
+public interface HotelReservationAmenitiesDB {
+    
 }
