@@ -27,6 +27,7 @@
             </div>
             <!--Search area is a form -->
             <div class="nav col-sm">
+                <form class="form-horizontal" role="form" id="searchDvds">
                 <button type="button" id="searchButton" class="btn btn-primary">Search</button>
             </div>
 
@@ -46,17 +47,16 @@
                     <input type="text" class="form-control" id="termSearch" placeHolder="Search Term" required>
                 </div>
             </div>
-
-
-
-
+        
+            
         </div>
 
-        <div class="modal" id="deleteConfirmation" tabindex="-1">
+        <!--Modal for pop up delete confirmation window-->
+        <div class="modal" id="deleteConfirmationContainer" tabindex="-1">
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Modal title</h5>
+                  <h5 class="modal-title">Are you sure?</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <button type="button" class="btn btn-primary" onclick="deleteDvd('+ dvdId +')">Yes</button>
                 </div>
               </div>
             </div>
@@ -130,24 +130,24 @@
                             Choose Rating:
                         </label>
 
-                        <div class="col-md-8">
-                            <select id="addRating" class="form-control">
-                                <option value="G">G</option>
-                                <option value="E">E</option>
-                                <option value="PG">PG</option>
-                                <option value="PG15">PG15</option>
-                                <option value="R">R</option>
-                            </select>
+                            <div class="col-md-8">
+                                <select id="addRating" class="form-control">
+                                    <option value="G">G</option>
+                                    <option value="E">E</option>
+                                    <option value="PG">PG</option>
+                                    <option value="PG15">PG15</option>
+                                    <option value="R">R</option>
+                                </select>
 
+                            </div>
                         </div>
-                    </div>
 
                     <div class="form-group row">
                         <label for="addNotes" class="col-md-4 control-label">
                             Notes:
                         </label>
                         <div class="col-md-8">
-                            <textarea class="form-control" id="editNotes" placeHolder="Enter additional notes" rows="5"
+                            <textarea class="form-control" id="addNotes" placeHolder="Enter additional notes" rows="5"
                                 cols="30">
                             </textarea>
                         </div>
@@ -176,7 +176,7 @@
             </div>
 
             <div class="col-sm">
-                <div id="editFormDiv" class="col-md-6">
+                <div id="editFormDiv" class="col-md-6"  style="display:none;">
 
                     <!--Add title concatination to the header-->
                     <h1>Edit Dvd</h1>
@@ -230,7 +230,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="addNotes" class="col-md-4 control-label">
+                            <label for="editNotes" class="col-md-4 control-label">
                                 Notes:
                             </label>
                             <div class="col-md-8">
@@ -244,7 +244,7 @@
                         <div class="col-sm">
                             <input type="hidden" id="editDvdId">
                             <button type="button" onclick="hideEditForm()" id="cancelButton" class="btn btn-danger"
-                                onclick="hideAddForm()">
+>
                                 Cancel
                             </button>
                         </div>
@@ -252,7 +252,7 @@
 
                         <div class="form-group row">
                             <div class="col-md-3">
-                                <button type="button" id="saveChangesButton" class="btn btn-success">
+                                <button type="button"  id="saveChangesButton" class="btn btn-success">
                                     Save Changes
                                 </button>
 

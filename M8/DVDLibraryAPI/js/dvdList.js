@@ -1,6 +1,8 @@
 $(document).ready(function () {
     loadLibrary();
     addDvd();
+    updateDvd();
+    
 });
 
 $("#createFormDiv").hide();
@@ -21,14 +23,14 @@ function loadLibrary() {
                 var director = library.director;
                 var releaseYear = library.releaseYear;
                 var rating = library.rating;
-                var dvdId = library.dvdId;
+                var dvdId = library.id;
 
                 var row = '<tr>';
                 row += '<td>' + title + '</td>';
                 row += '<td>' + releaseYear + '</td>';
                 row += '<td>' + director + '</td>';
                 row += '<td>' + rating + '</td>';
-                row += '<td><button type="button" class="btn btn-info" onclick="showEditForm('+ dvdId +')">Edit</button> <button type="button" onclick="deleteDvd('+ dvdId +')" class="btn btn-danger">Delete</button></td>';
+                row += '<td><button type="button" class="btn btn-info" onclick="showEditForm('+ dvdId +')">Edit</button> <button type="button" onclick="openDeleteModal()" class="btn btn-danger">Delete</button></td>';
                 row += '</tr>';
 
                 dvdContentRows.append(row);
@@ -56,7 +58,7 @@ function addDvd() {
                 title: $('#addTitle').val(),
                 releaseYear: $('#addReleaseYear').val(),
                 director: $('#addDirector').val(),
-                rating: $('#chooseRating').val(),
+                rating: $('#addRating').val(),
                 notes: $('#addNotes').val()
 
             }),
@@ -66,6 +68,19 @@ function addDvd() {
             },
             'dataType': 'json',
             success: function () {
+                $('#errorMessages').empty();
+                $('#addtitle').val('');
+                $('#addReleaseYear').val('');
+                $('#addDirector').val('');
+                $('#addRating').val('');
+                $('#addNotes').val('');
+              
+                loadLibrary();
+                hideCreateForm();
+                
+            },
+
+            error: function(){
                 $('#errorMessages')
                     .append($('<li>')
                         .attr({ class: 'list-group-item list-group-item-danger' })
@@ -85,15 +100,50 @@ function deleteDvd(dvdId) {
     });
 }
 
-// $('#exampleModal').on('show.bs.modal', function (event) {
-//     var button = $(event.relatedTarget) // Button that triggered the modal
-//     var recipient = button.data('whatever') // Extract info from data-* attributes
-//     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-//     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-//     var modal = $(this)
-//     modal.find('.modal-title').text('New message to ' + recipient)
-//     modal.find('.modal-body input').val(recipient)
-//   })
+function updateDvd(dvdId){
+    $('#saveChangesButton').click(function(event){
+        $.ajax({
+            type: 'PUT',
+            url: 'http://dvd-library.us-east-1.elasticbeanstalk.com/dvd/' + $('#editDvdId').val(),
+            data: JSON.stringify({
+                dvdId: $('#editDvdId').val(),
+                title: $('#editTitle').val(),
+                releaseYear: $('#editReleaseYear').val(),
+                director: $('#editDirector').val(),
+                rating:$('#editRating').val(),
+                notes: $('#editNotes').val()
+
+            }),
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            'dataType': 'json',
+            'success': function() {
+                $('#errorMessage').empty();
+
+                hideEditForm();
+                loadLibrary();
+            },
+            'error': function() {
+                $('#errorMessages')
+                .append($('<li>')
+                .attr({class: 'list-group-item list-group-item-danger'})
+                .text('Error calling web service. Please try again later.'));
+        }
+    })
+})
+}
+
+// // $('#exampleModal').on('show.bs.modal', function (event) {
+// //     var button = $(event.relatedTarget) // Button that triggered the modal
+// //     var recipient = button.data('whatever') // Extract info from data-* attributes
+// //     // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+// //     // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+// //     var modal = $(this)
+// //     modal.find('.modal-title').text('New message to ' + recipient)
+// //     modal.find('.modal-body input').val(recipient)
+// //   })
   
 
 
@@ -127,7 +177,7 @@ function showEditForm(dvdId) {
             $('#editDirector').val(data.director);
             $('#editRating').val(data.rating);
             $('#editNotes').val(data.notes);
-            $('#editDvdId').val(data.dvdId);
+            $('#editDvdId').val(data.id);
         },
         error: function () {
             $('#errorMessages')
@@ -171,5 +221,11 @@ function hideCreateForm() {
     $('#editFormDiv').hide();
     $('#dvdTable').show();
 
+}
+
+function openDeleteModal(){
+    $("#deleteConfirmationContainer").click(function(){
+        $('#deleteConfirmationContainer').modal('show');
+    });
 }
 
