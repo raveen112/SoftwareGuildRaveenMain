@@ -27,247 +27,258 @@
             </div>
             <!--Search area is a form -->
             <div class="nav col-sm">
-                <form class="form-horizontal" role="form" id="searchDvds">
-                <button type="button" id="searchButton" class="btn btn-primary">Search</button>
+                <form class="form-horizontal" role="form" id="searchDvds" onclick="searchByCategory()">
+                    <button type="button" id="searchButton" class="btn btn-primary">Search</button>
             </div>
 
-            <div class="nav row col-sm">
-                <label for="chooseRating" class="col-md-4 control-label">
-                </label>
-                <select id="chooseCategory">
-                    <option value="default">Search Category</option>
-                    <option value="title">Title</option>
-                    <option value="releaseDate">Release Date</option>
-                    <option value="director">Director</option>
-                    <option value="rating">Rating</option>
-                </select>
+            <div class="form-group row">
+                <div class="nav row col-sm">
+                    <label for="chooseRating" class="col-md-4 control-label">
+                    </label>
+                    <select id="chooseCategory">
+                        <option value="default">Search Category</option>
+                        <option value="title">Title</option>
+                        <option value="year">Release Date</option>
+                        <option value="director">Director</option>
+                        <option value="rating">Rating</option>
+                    </select>
+                </div>
             </div>
             <div class="nav row col-sm">
                 <div class="col-md-8">
                     <input type="text" class="form-control" id="termSearch" placeHolder="Search Term" required>
                 </div>
             </div>
-        
-            
-        </div>
+            </form>
 
-        <!--Modal for pop up delete confirmation window-->
-        <div class="modal" id="deleteConfirmationContainer" tabindex="-1">
-            <div class="modal-dialog">
-              <div class="modal-content">
+        </div>
+    </div>
+
+    <!--Modal for pop up delete confirmation window-->
+
+    <div class="modal" id="deleteConfirmationContainer" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title">Are you sure?</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title">Are you sure?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <p>Are you sure you want to delete this DVD from your collection?</p>
+                    <p>Are you sure you want to delete this DVD from your collection?</p>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary" onclick="deleteDvd('+ dvdId +')">Yes</button>
+                    <button type="button" class="btn btn-secondary" onclick="hideModal()" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="yesButton" class="btn btn-primary">Yes</button>
                 </div>
-              </div>
             </div>
-          </div>
+        </div>
+    </div>
 
-        <ul class="list-group" id="errorMessages"></ul>
+    <ul class="list-group" id="errorMessages">
+
+    </ul>
+
+    <div class="container" id="titleHeader">
+        <h1>Title</h1>
+    </div>
+
+    <div class="container" id="dvdTable">
 
         <div class="row">
             <!-- Container for table -->
             <div class="col-sm">
-                <div= id="dvdTable">
-                    <table id="dvdTable" class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th width="20%">Title</th>
-                                <th width="10%">Release Year</th>
-                                <th width="30%">Director</th>
-                                <th width="10%">Rating</th>
-                                <th width="30%"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="dvdContentRows"></tbody>
-                    </table>
+
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th width="20%">Title</th>
+                            <th width="10%">Release Year</th>
+                            <th width="30%">Director</th>
+                            <th width="10%">Rating</th>
+                            <th width="30%"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="dvdContentRows"></tbody>
+                </table>
             </div>
         </div>
-        <!-- container for form -->
-        <div class="col-sm">
-            <div id="createFormDiv" class="col-md-6">
-                <h1>Create DVD</h1>
-                <form class="form-horizontal" role="form" id="addForm">
+    </div>
 
-                    <div class="form-group row">
-                        <label for="addTitle" class="col-md-4 control-label">
-                            Title:
-                        </label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" id="addTitle" placeHolder="Enter Title" optional>
-                        </div>
-                    </div>
+    <!-- container for form -->
 
-                    <div class="form-group row">
-                        <label for="addReleaseYear" class="col-md-4 control-label">
-                            Release Year:
-                        </label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" id="addReleaseYear" placeHolder="Enter Release Year"
-                                optional>
-                        </div>
-                    </div>
+    <div class="container" id="createFormDiv">
 
-                    <div class="form-group row">
-                        <label for="addDirector" class="col-md-4 control-label">
-                            Director:
-                        </label>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" id="addDirector" placeHolder="Enter Director"
-                                optional>
-                        </div>
-                    </div>
+        <form class="form-horizontal" role="form" id="addForm">
 
-                    <div class="form-group row">
-                        <label for="addRating" class="col-sm control-label">
-                            Choose Rating:
-                        </label>
+            <div class="form-group row">
+                <label for="addTitle" class="col-md-4 control-label">
+                    Title:
+                </label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="addTitle" placeHolder="Enter Title" required>
+                </div>
+            </div>
 
-                            <div class="col-md-8">
-                                <select id="addRating" class="form-control">
-                                    <option value="G">G</option>
-                                    <option value="E">E</option>
-                                    <option value="PG">PG</option>
-                                    <option value="PG15">PG15</option>
-                                    <option value="R">R</option>
-                                </select>
+            <div class="form-group row">
+                <label for="addReleaseYear" class="col-md-4 control-label">
+                    Release Year:
+                </label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="addReleaseYear" placeHolder="Enter Release Year"
+                        optional>
+                </div>
+            </div>
 
-                            </div>
-                        </div>
+            <div class="form-group row">
+                <label for="addDirector" class="col-md-4 control-label">
+                    Director:
+                </label>
+                <div class="col-md-8">
+                    <input type="text" class="form-control" id="addDirector" placeHolder="Enter Director" optional>
+                </div>
+            </div>
 
-                    <div class="form-group row">
-                        <label for="addNotes" class="col-md-4 control-label">
-                            Notes:
-                        </label>
-                        <div class="col-md-8">
-                            <textarea class="form-control" id="addNotes" placeHolder="Enter additional notes" rows="5"
-                                cols="30">
-                            </textarea>
-                        </div>
-                    </div>
-                </form>
+            <div class="form-group row">
+                <label for="addRating" class="col-sm control-label">
+                    Choose Rating:
+                </label>
+
+                <div class="col-md-8">
+                    <select id="addRating" class="form-control">
+                        <option value="G">G</option>
+                        <option value="E">E</option>
+                        <option value="PG">PG</option>
+                        <option value="PG15">PG15</option>
+                        <option value="R">R</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="addNotes" class="col-md-4 control-label">
+                    Notes:
+                </label>
+                <div class="col-md-8">
+                    <textarea class="form-control" id="addNotes" placeHolder="Enter additional notes" rows="5"
+                        cols="30">
+                    </textarea>
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <input type="hidden">
+                <button type="button" onclick="hideCreateForm()" id="cancelButton" class="btn btn-danger"
+                    onclick="hideAddForm()">
+                    Cancel
+                </button>
+            </div>
+
+            <div class="col-sm-4">
+                <button type="button" id="addButton" class="btn btn-success">
+                    Create DVD
+                </button>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="container" id="editFormDiv" style="display:none;"> 
+        <div class="row">
+
+            <!--Add title concatination to the header-->
+            <form class="form-horizontal" role="form" id="editForm">
+
                 <div class="form-group row">
-                    <div class="col-sm">
-                        <input type="hidden">
-                        <button type="button" onclick="hideCreateForm()" id="cancelButton" class="btn btn-danger"
-                            onclick="hideAddForm()">
-                            Cancel
-                        </button>
-                    </div>
-
-
-                    <div class="form-group row">
-                        <div class="col-md-3">
-                            <button type="button" id="addButton" class="btn btn-success">
-                                Create DVD
-                            </button>
-
-                        </div>
+                    <label for="editTitle" class="col-md-4 control-label">
+                        Title:
+                    </label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="editTitle" placeHolder="Enter Title" optional>
                     </div>
                 </div>
-                </form>
+
+                <div class="form-group row">
+                    <label for="editReleaseYear" class="col-md-4 control-label">
+                        Release Year:
+                    </label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="editReleaseYear" placeHolder="Enter Release Year"
+                            optional>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="editDirector" class="col-md-4 control-label">
+                        Director:
+                    </label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" id="editDirector" placeHolder="Enter Director" optional>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="editRating" class="col-sm control-label">
+                        Choose Rating:
+                    </label>
+
+                    <div class="col-md-8">
+                        <select id="editRating" class="form-control">
+                            <option value="G">G</option>
+                            <option value="E">E</option>
+                            <option value="PG">PG</option>
+                            <option value="PG15">PG15</option>
+                            <option value="R">R</option>
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="editNotes" class="col-md-4 control-label">
+                        Notes:
+                    </label>
+                    <div class="col-md-8">
+                        <textarea class="form-control" id="editNotes" placeHolder="Enter additional notes" rows="5"
+                            cols="30">
+                            </textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="row" id="editButtonDiv">
+            <div class="col-sm-4">
+                <input type="hidden" id="editDvdId">
+                <button type="button" onclick="hideEditForm()" id="cancelButton" class="btn btn-danger">
+                    Cancel
+                </button>
             </div>
 
-            <div class="col-sm">
-                <div id="editFormDiv" class="col-md-6"  style="display:none;">
-
-                    <!--Add title concatination to the header-->
-                    <h1>Edit Dvd</h1>
-                    <form class="form-horizontal" role="form" id="editForm">
-
-                        <div class="form-group row">
-                            <label for="editTitle" class="col-md-4 control-label">
-                                Title:
-                            </label>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" id="editTitle" placeHolder="Enter Title"
-                                    optional>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="editReleaseYear" class="col-md-4 control-label">
-                                Release Year:
-                            </label>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" id="editReleaseYear"
-                                    placeHolder="Enter Release Year" optional>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="editDirector" class="col-md-4 control-label">
-                                Director:
-                            </label>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" id="editDirector" placeHolder="Enter Director"
-                                    optional>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="editRating" class="col-sm control-label">
-                                Choose Rating:
-                            </label>
-
-                            <div class="col-md-8">
-                                <select id="editRating" class="form-control">
-                                    <option value="G">G</option>
-                                    <option value="E">E</option>
-                                    <option value="PG">PG</option>
-                                    <option value="PG15">PG15</option>
-                                    <option value="R">R</option>
-                                </select>
-
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="editNotes" class="col-md-4 control-label">
-                                Notes:
-                            </label>
-                            <div class="col-md-8">
-                                <textarea class="form-control" id="editNotes" placeHolder="Enter additional notes"
-                                    rows="5" cols="30">
-                            </textarea>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="form-group row">
-                        <div class="col-sm">
-                            <input type="hidden" id="editDvdId">
-                            <button type="button" onclick="hideEditForm()" id="cancelButton" class="btn btn-danger"
->
-                                Cancel
-                            </button>
-                        </div>
-
-
-                        <div class="form-group row">
-                            <div class="col-md-3">
-                                <button type="button"  id="saveChangesButton" class="btn btn-success">
-                                    Save Changes
-                                </button>
-
-                            </div>
-                        </div>
-                    </div>
-                    </form>
-                </div>
+            <div class="col-sm-">
+                <button type="button" id="saveChangesButton" class="btn btn-success">
+                    Save Changes
+                </button>
 
             </div>
         </div>
     </div>
 
+    <div class="container">
+        <div>
 
+        </div>
     </div>
+
+
+
+
+
+
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <!-- use the the full jQuery build, NOT the slim build-->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"
