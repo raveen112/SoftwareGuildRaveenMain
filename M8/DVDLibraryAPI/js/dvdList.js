@@ -10,6 +10,7 @@ $(document).ready(function () {
 $("#createFormDiv").hide();
 $("#editFormDiv").hide();
 $("#dvdSummaryTable").hide();
+$('#summaryDiv').hide();
 
 
 function loadLibrary() {
@@ -31,7 +32,7 @@ function loadLibrary() {
                 var dvdId = library.id;
 
                 var row = '<tr>';
-                row += '<td>' + title + '</td>';
+                row += '<td><a href="" onclick="event.preventDefault(); showSummary('+ dvdId +')">' + title + '</td>';
                 row += '<td>' + releaseYear + '</td>';
                 row += '<td>' + director + '</td>';
                 row += '<td>' + rating + '</td>';
@@ -96,11 +97,11 @@ function addDvd() {
     })
 }
 
-function deleteDvd(dvdId) {
+function deleteDvd() {
     $('#yesButton').click(function(event){
         $.ajax({
             type: 'DELETE',
-            url: 'http://dvd-library.us-east-1.elasticbeanstalk.com/dvd/' + dvdId,
+            url: 'http://dvd-library.us-east-1.elasticbeanstalk.com/dvd/' + $('#deleteId').val(),
             success: function () {
                 loadLibrary();
             }
@@ -129,7 +130,7 @@ function updateDvd(dvdId) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            'dataType': 'json',
+            'dataType': 'text',
             success: function () {
                 $('#errorMessages').empty();
 
@@ -214,14 +215,49 @@ function searchByCategory() {
 
 function showModal(dvdId){
     $('#deleteConfirmationContainer').show();
-    deleteDvd(dvdId);
+    $('#deleteId').attr('value',dvdId);
 }
 
 function hideModal(){
     $('#deleteConfirmationContainer').hide();
 }
 
+function unhideSummary(){
+    $('#summaryDiv').show();
+    $('#errorMessages').empty();
+    $('#createFormDiv').hide();
+    $('#dvdTable').hide();
+    $('#editButtonDiv').hide();
+    $('#editFormDiv').hide();
 
+}
+
+function hideSummary(){
+    $('#summaryDiv').hide();
+    $('#errorMessages').empty();
+    $('#createFormDiv').hide();
+    $('#dvdTable').show();
+    $('#editButtonDiv').hide();
+    $('#editFormDiv').hide();
+}
+
+function showSummary(dvdId){
+    $.ajax({
+        type: 'GET',
+        url: 'http://dvd-library.us-east-1.elasticbeanstalk.com/dvd/' + dvdId,
+        success: function (data, status) {
+            $('#summaryReleaseYear').text(data.releaseYear);
+            $('#summaryDirector').text(data.director);
+            $('#summaryRating').text(data.rating);
+            $('#summaryNotes').text(data.notes);
+            
+        }
+
+        
+      
+    })
+    unhideSummary();
+}
 
 function clearDvdTable() {
     $('#dvdContentRows').empty();
