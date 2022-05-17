@@ -25,12 +25,16 @@
         <!--Blank container for API items-->
 
         <div class="row">
-            <div class="col-md-8 item">
 
+            <div class="col-md-8"> 
+                <div class="row" id="item">
+
+                </div>
             </div>
             <div class="row" id="idHolderDiv">
                 <input type="hidden" id="itemIds">
             </div>
+
 
             <!--Container for the side form-->
             <div class="container col-md-4" id="sideForm">
@@ -122,6 +126,19 @@
                     </button>
                 </div>
 
+            </div>
+        </div>
+        
+    </div>
+
+    <!--Bootstrap card for all items-->
+    <div id="itemTemplate" class="col-md-4 p-2 d-none">
+        <div class="card border-primary mb-3 h-100">
+            <div id="itemNumber" class="card-header h5"></div>
+            <div class="card-body text-center">
+                <div id="itemName" class="card-title text-primary h6"></div>
+                <div id="itemPrice" class="card-text"></div>
+                <div id="itemQuantity" class="card-text"></div>
             </div>
         </div>
     </div>
