@@ -35,17 +35,22 @@ function loadItems() {
 
 }
 // Purchase Functions ----------------------------------------------------------------------------------------------------------------
+
 function makePurchase() {
     // get money from total money column {amount path variable}
     $('#errorMessages').empty();
 
-    itemId =
+    
         $.ajax({
             type: 'POST',
             url: 'http://vending.us-east-1.elasticbeanstalk.com/money/' + $("#totalMoneyField").val() + '/' + 'item' + '/' + $("#itemField").val(),
 
-            success: function (itemPurchase) {
+            success: function (xhr, itemPurchase, status) {
+                var successMessage = jQuery.parseJSON(xhr.responseText);
+                $('#messagesField').val(successMessage.message);
                 loadItems();
+
+ 
                 $("#totalMoneyField").val('0.00');
             },
 
@@ -105,7 +110,7 @@ $("#addPenny").on("click", function () {
 
 //method for give change when change return is clicked
 $("#giveChange").on("click", function (price) {
-    purchaseChange(price);
+    purchaseChange();
     $("#messageField").val("");
     $("#itemField").val("");
     $("#totalMoneyField").val('0.00');
@@ -113,12 +118,49 @@ $("#giveChange").on("click", function (price) {
 
 
 // method to purchase item on clicking make purchase button,
-$("#makePurchase").on("click", function (){
+$("#makePurchase").on("click", function () {
     var amount = $("#totalMoneyField").val();
-    var id= $('#itemIds').val('');
+    var id = $('#itemIds').val('');
 })
 
 // Change Processing----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+function purchaseChange() {
+
+    $('#errorMessages').empty();
+    
+    $.ajax({
+        type: 'GET',
+        url: 'http://vending.us-east-1.elasticbeanstalk.com/items',
+        'dataType': 'json',
+        success: function (data, status) {
+            var price = $("#itemPrice").text();
+            var total = $("#totalMoneyField").val();
+
+            var totalMoney = Number(total);
+        
+            var dummyValue = price - total;
+            var returnValue = Math.abs(dummyValue);
+            var change = "";
+        
+            const coinTypes = ["quarters", "dimes", "nickels", "pennies"];
+        
+            const coinValues = [0.25, 0.1, 0.05, 0.01];
+        
+            var amount;
+        
+            for (var i = 0; i < coinValues.length; i++) {
+                amount = Math.floor(returnValue / coinValues[i]);
+                if (amount > 0) {
+                    change[coinTypes[i]] = amount;
+                    returnValue = returnValue % coinTypes[i];
+                }
+            }
+            return change;
+        }
+        })
+    }
+   
 
 // // method to display the change after a purchase is made 
 // function purchaseChange(quarters, dimes, nickels, pennies) {
@@ -232,26 +274,3 @@ function displayId(itemId) {
 
 //============================================
 
-function purchaseChange(price) {
-    var total = $("#totalMoneyField").val();
-       
-    var totalMoney = Number(total);
-
-    var returnValue = price-total;
-    var change = "";
-
-    const coinTypes = ["quarters", "dimes", "nickels", "pennies"];
-
-    const coinValues = [0.25, 0.1, 0.05, 0.01]
-   
-    var amount;
-
-    for(var i=0; i<coinValues.length; i++){
-        amount = Math.floor(returnValue/coinValues[i]);
-        if(amount>0){
-            change[coinTypes[i]]= amount;
-            returnValue = returnValue%coinTypes[i];
-        }
-    }
-    return change;
-}
