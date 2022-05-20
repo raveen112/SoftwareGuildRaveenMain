@@ -40,35 +40,35 @@ function makePurchase() {
     // get money from total money column {amount path variable}
     $('#errorMessages').empty();
 
-    
-        $.ajax({
-            type: 'POST',
-            url: 'http://vending.us-east-1.elasticbeanstalk.com/money/' + $("#totalMoneyField").val() + '/' + 'item' + '/' + $("#itemField").val(),
+    $.ajax({
+        type: 'POST',
+        url: 'http://vending.us-east-1.elasticbeanstalk.com/money/' + $("#totalMoneyField").val() + '/' + 'item' + '/' + $("#itemField").val(),
+        contentType: "application/json",
+        success: function (xhr, itemPurchase, status) {
+            console.log(xhr);
+            var changeObject = xhr;
+            $("#changeField").val("Quarters: " + changeObject.quarters + "  Dimes: " + changeObject.dimes + "  Nickels: " + changeObject.nickels + "  Pennies: " + changeObject.pennies);
+            loadItems();
 
-            success: function (xhr, itemPurchase, status) {
-                var successMessage = jQuery.parseJSON(xhr.responseText);
-                $('#messagesField').val(successMessage.message);
-                loadItems();
 
- 
-                $("#totalMoneyField").val('0.00');
-            },
+            $("#totalMoneyField").val('0.00');
+            $("#messageField").val("THANK YOU!");
+        },
 
-            error: function (xhr, status, error) {
-                var errorMessage = jQuery.parseJSON(xhr.responseText);
-                $('#messagesField').val(errorMessage.message);
-                // Refresh the item list.
-                loadItems();
+        error: function (xhr, status, error) {
+            var errorMessage = jQuery.parseJSON(xhr.responseText);
+            $('#messagesField').val(errorMessage.message);
+            // Refresh the item list.
+            loadItems();
 
-                $('#errorMessages')
-                    .append($('<li>')
-                        .attr({ class: 'list-group-item list-group-item-danger' })
-                        .text('Error calling web service. Please try again later.'));
-            }
+            $('#errorMessages')
+                .append($('<li>')
+                    .attr({ class: 'list-group-item list-group-item-danger' })
+                    .text('Error calling web service. Please try again later.'));
+        }
 
-        })
+    })
 }
-
 
 // Coin/Purchase/Change Button functionality ----------------------------------------------------------------------------------------------
 
@@ -111,9 +111,9 @@ $("#addPenny").on("click", function () {
 //method for give change when change return is clicked
 $("#giveChange").on("click", function (price) {
     purchaseChange();
-    $("#messageField").val("");
-    $("#itemField").val("");
-    $("#totalMoneyField").val('0.00');
+    $("#totalMoneyField").val();
+   
+
 })
 
 
@@ -121,14 +121,15 @@ $("#giveChange").on("click", function (price) {
 $("#makePurchase").on("click", function () {
     var amount = $("#totalMoneyField").val();
     var id = $('#itemIds').val('');
+    
 })
 
-// Change Processing----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Change Processing----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 function purchaseChange() {
 
     $('#errorMessages').empty();
-    
+
     $.ajax({
         type: 'GET',
         url: 'http://vending.us-east-1.elasticbeanstalk.com/items',
@@ -138,29 +139,30 @@ function purchaseChange() {
             var total = $("#totalMoneyField").val();
 
             var totalMoney = Number(total);
-        
-            var dummyValue = price - total;
-            var returnValue = Math.abs(dummyValue);
+
+            //var dummyValue = price - total;
+            //var returnValue = Math.abs(dummyValue);
             var change = "";
-        
+
             const coinTypes = ["quarters", "dimes", "nickels", "pennies"];
-        
+
             const coinValues = [0.25, 0.1, 0.05, 0.01];
-        
-            var amount;
-        
+
             for (var i = 0; i < coinValues.length; i++) {
-                amount = Math.floor(returnValue / coinValues[i]);
-                if (amount > 0) {
-                    change[coinTypes[i]] = amount;
-                    returnValue = returnValue % coinTypes[i];
+                var numCoins = Math.floor(totalMoney / coinValues[i]);
+                totalMoney = Math.round((totalMoney % coinValues[i]) * 100) / 100;
+                if (numCoins != 0) {
+                    change += coinTypes[i] + ": " + numCoins + "  ";
                 }
             }
-            return change;
+            $("#changeField").val(change);
+            $("#totalMoneyField").val('0.00');
+            $("#messageField").val("");
+            $("#itemField").val("");
         }
-        })
-    }
-   
+    })
+}
+
 
 // // method to display the change after a purchase is made 
 // function purchaseChange(quarters, dimes, nickels, pennies) {
@@ -273,4 +275,3 @@ function displayId(itemId) {
 }
 
 //============================================
-
