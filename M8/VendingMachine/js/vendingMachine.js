@@ -1,6 +1,9 @@
 $(document).ready(function () {
     loadItems();
     $("#totalMoneyField").val('0.00');
+    $('#messagesField').val("Choose an item!");
+    $("#changeField").val("");
+    
 });
 
 // Load All Items
@@ -50,9 +53,8 @@ function makePurchase() {
             $("#changeField").val("Quarters: " + changeObject.quarters + "  Dimes: " + changeObject.dimes + "  Nickels: " + changeObject.nickels + "  Pennies: " + changeObject.pennies);
             loadItems();
 
-
             $("#totalMoneyField").val('0.00');
-            $("#messageField").val("THANK YOU!");
+            $("#messagesField").val("THANK YOU!");
         },
 
         error: function (xhr, status, error) {
@@ -272,6 +274,7 @@ function displayId(itemId) {
     $('#itemIds').val(itemId);
     // Reset the change, if any change is being returned.
     $("#changeField").val('');
+    $("#messagesField").val("")
 }
 
 //============================================
