@@ -126,10 +126,7 @@ function updateDvd(dvdId) {
                 notes: $('#editNotes').val()
 
             }),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
+            
             'dataType': 'text',
             success: function () {
                 $('#errorMessages').empty();

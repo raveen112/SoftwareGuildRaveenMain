@@ -35,7 +35,6 @@ function loadItems() {
                     .text('Error calling web service. Please try again later.'));
         }
     });
-
 }
 // Purchase Functions ----------------------------------------------------------------------------------------------------------------
 
