@@ -22,45 +22,48 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 public class TeacherDaoDB implements TeacherDao {
-
-    @Autowired
+  @Autowired
     JdbcTemplate jdbc;
+    
+    final String SELECT_TEACHER_BY_ID = "SELECT id, firstName, lastName, specialty FROM teacher WHERE id = ?";
+    final String SELECT_ALL_TEACHERS = "SELECT id, firstName, lastName, specialty FROM teacher";
+    final String INSERT_TEACHER = "INSERT INTO teacher(firstName, lastName, specialty) VALUES(?,?,?)";
+    final String SELECT_LAST_ID = "SELECT LAST_INSERT_ID()";
+    final String UPDATE_TEACHER = "UPDATE teacher SET firstName = ?, lastName = ?, specialty = ? WHERE id = ?";
+    final String DELETE_COURSE_STUDENT = "DELETE cs.* FROM course_student cs JOIN course c ON cs.courseId = c.Id WHERE c.teacherId = ?";
+    final String DELETE_COURSE = "DELETE FROM course WHERE teacherId = ?";
+    final String DELETE_TEACHER = "DELETE FROM teacher WHERE id = ?";
 
     @Override
     public Teacher getTeacherById(int id) {
-        try {
-            final String GET_TEACHER_BY_ID = "SELECT * FROM teacher WHERE id=?";
-            return jdbc.queryForObject(GET_TEACHER_BY_ID, new TeacherMapper(), id);
-        } catch (DataAccessException ex) {
+        try{
+            return jdbc.queryForObject(SELECT_TEACHER_BY_ID, new TeacherMapper(), id);
+        }catch(DataAccessException ex){
             return null;
         }
     }
 
     @Override
+    @Transactional
     public List<Teacher> getAllTeachers() {
-        final String GET_ALL_TEACHERS = "SELECT * FROM teacher";
-        return jdbc.query(GET_ALL_TEACHERS, new TeacherMapper());
+        return jdbc.query(SELECT_ALL_TEACHERS, new TeacherMapper());    
     }
 
     @Override
-    @Transactional
     public Teacher addTeacher(Teacher teacher) {
-        final String INSERT_TEACHER = "INSERT INTO teacher(firstName, lastName, specialty) " + "VALUES(?,?,?)";
-        jdbc.update(INSERT_TEACHER,
+        jdbc.update(INSERT_TEACHER, 
                 teacher.getFirstName(),
                 teacher.getLastName(),
                 teacher.getSpecialty());
-
-        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        int newId = jdbc.queryForObject(SELECT_LAST_ID, Integer.class);
         teacher.setId(newId);
+        
         return teacher;
     }
 
     @Override
     public void updateTeacher(Teacher teacher) {
-        final String UPDATE_TEACHER = "UPDATE teacher SET firstName = ?, lastName = ?, specialty = ? WHERE id = ?";
-
-        jdbc.update(UPDATE_TEACHER,
+        jdbc.update(UPDATE_TEACHER, 
                 teacher.getFirstName(),
                 teacher.getLastName(),
                 teacher.getSpecialty(),
@@ -70,19 +73,13 @@ public class TeacherDaoDB implements TeacherDao {
     @Override
     @Transactional
     public void deleteTeacherById(int id) {
-        final String DELETE_COURSE_STUDENT = "DELETE cs.* FROM course_student cs "
-                + "JOIN course c ON cs.courseId = c.Id WHERE c.teacherId=?";
         jdbc.update(DELETE_COURSE_STUDENT, id);
-
-        final String DELETE_COURSE = "DELETE FROM course WHERE teacherId = ?";
         jdbc.update(DELETE_COURSE, id);
-
-        final String DELETE_TEACHER = "DELETE FROM teacher WHERE id=?";
         jdbc.update(DELETE_TEACHER, id);
     }
+    
 
-    public static final class TeacherMapper implements RowMapper<Teacher> {
-
+    public static final class TeacherMapper implements RowMapper<Teacher>{
         @Override
         public Teacher mapRow(ResultSet rs, int index) throws SQLException {
             Teacher teacher = new Teacher();
@@ -90,10 +87,12 @@ public class TeacherDaoDB implements TeacherDao {
             teacher.setFirstName(rs.getString("firstName"));
             teacher.setLastName(rs.getString("lastName"));
             teacher.setSpecialty(rs.getString("specialty"));
-
+            
             return teacher;
-
         }
+        
     }
 
+    
+    
 }
