@@ -45,8 +45,7 @@ public class TeacherDaoDB implements TeacherDao {
     @Override
     @Transactional
     public Teacher addTeacher(Teacher teacher) {
-        final String INSERT_TEACHER = "INSERT INTO teacher(firstName, lastName, specialty) "
-                + "VALUES(?,?,?)";
+        final String INSERT_TEACHER = "INSERT INTO teacher(firstName, lastName, specialty) " + "VALUES(?,?,?)";
         jdbc.update(INSERT_TEACHER,
                 teacher.getFirstName(),
                 teacher.getLastName(),

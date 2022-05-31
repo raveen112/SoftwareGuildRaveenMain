@@ -5,33 +5,21 @@
  */
 package com.example.classroster.dao;
 
-import com.example.classroster.dao.TeacherDao;
-import com.example.classroster.dao.CourseDao;
-import com.example.classroster.dao.StudentDao;
 import com.example.classroster.dto.Course;
 import com.example.classroster.dto.Student;
 import com.example.classroster.dto.Teacher;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  *
  * @author ravee
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest
 public class StudentDaoDBTest {
     
@@ -47,55 +35,37 @@ public class StudentDaoDBTest {
     public StudentDaoDBTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
     
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
+    @BeforeEach
     public void setUp() {
         List<Teacher> teachers = teacherDao.getAllTeachers();
-        for(Teacher teacher : teachers) {
+        teachers.forEach(teacher -> {
             teacherDao.deleteTeacherById(teacher.getId());
-        }
+        });
         
         List<Student> students = studentDao.getAllStudents();
-        for(Student student : students) {
+        students.forEach(student -> {
             studentDao.deleteStudentById(student.getId());
-        }
+        });
         
         List<Course> courses = courseDao.getAllCourses();
-        for(Course course : courses) {
+        courses.forEach(course -> {
             courseDao.deleteCourseById(course.getId());
-        }
+        });
     }
     
-    @After
-    public void tearDown() {
-    }
+
+
+ 
     /**
-     * Test of getStudentById method, of class StudentDaoDB.
+     * Test of getAllStudents method, of class StudentDaoDB.
      */
     @Test
-    public void testAddAndGetStudent() {
-        Student student = new Student();
-        student.setFirstName("Test Student First");
-        student.setLastName("Test Student Last");
-        student = studentDao.addStudent(student);
-        
-        Student fromDao = studentDao.getStudentById(student.getId());
-        assertEquals(student, fromDao);
-    }
-
-    @Test
     public void testGetAllStudents() {
-        Student student = new Student();
-        student.setFirstName("Test Student First");
-        student.setLastName("Test Student Last");
-        student = studentDao.addStudent(student);
+        Student student1 = new Student();
+        student1.setFirstName("Test Student First");
+        student1.setLastName("Test Student Last");
+        student1 = studentDao.addStudent(student1);
         
         Student student2 = new Student();
         student2.setFirstName("Test Student First 2");
@@ -105,30 +75,50 @@ public class StudentDaoDBTest {
         List<Student> students = studentDao.getAllStudents();
         
         assertEquals(2, students.size());
-        assertTrue(students.contains(student));
+        assertTrue(students.contains(student1));
         assertTrue(students.contains(student2));
     }
 
+    /**
+     * Test of addStudent method & getStudentById method, of class StudentDaoDB.
+     */
     @Test
-    public void testUpateStudent() {
+    public void testAddAndGetStudent() {
         Student student = new Student();
         student.setFirstName("Test Student First");
         student.setLastName("Test Student Last");
         student = studentDao.addStudent(student);
         
-        Student fromDao = studentDao.getStudentById(student.getId());
-        assertEquals(student, fromDao);
+        Student addedStudent = studentDao.getStudentById(student.getId());
+        assertEquals(student, addedStudent);
+    }
+
+    /**
+     * Test of updateStudent method, of class StudentDaoDB.
+     */
+    @Test
+    public void testUpdateStudent() {
+        Student student = new Student();
+        student.setFirstName("Test Student First");
+        student.setLastName("Test Student Last");
+        student = studentDao.addStudent(student);
+        
+        Student updatedStudent = studentDao.getStudentById(student.getId());
+        assertEquals(student, updatedStudent);
         
         student.setFirstName("New Test Student First");
         studentDao.updateStudent(student);
         
-        assertNotEquals(student, fromDao);
+        assertNotEquals(student, updatedStudent);
         
-        fromDao = studentDao.getStudentById(student.getId());
+        updatedStudent = studentDao.getStudentById(student.getId());
         
-        assertEquals(student, fromDao);
+        assertEquals(student, updatedStudent);        
     }
 
+    /**
+     * Test of deleteStudentById method, of class StudentDaoDB.
+     */
     @Test
     public void testDeleteStudentById() {
         Teacher teacher = new Teacher();
@@ -150,12 +140,13 @@ public class StudentDaoDBTest {
         course.setStudents(students);
         course = courseDao.addCourse(course);
         
-        Student fromDao = studentDao.getStudentById(student.getId());
-        assertEquals(student, fromDao);
+        Student studentToDelete = studentDao.getStudentById(student.getId());
+        assertEquals(student, studentToDelete);
         
         studentDao.deleteStudentById(student.getId());
         
-        fromDao = studentDao.getStudentById(student.getId());
-        assertNull(fromDao);
+        studentToDelete = studentDao.getStudentById(student.getId());
+        assertNull(studentToDelete);      
     }
+    
 }

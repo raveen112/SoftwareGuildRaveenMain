@@ -22,45 +22,47 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 public class StudentDaoDB implements StudentDao {
-
+    
     @Autowired
     JdbcTemplate jdbc;
-
+    
+    final String SELECT_STUDENT_BY_ID = "SELECT id, firstName, lastName FROM student WHERE id = ?";
+    final String SELECT_ALL_STUDENTS = "SELECT id, firstName, lastName FROM student";
+    final String INSERT_STUDENT = "INSERT INTO student(firstName, lastName) VALUES(?,?)";
+    final String SELECT_LAST_ID = "SELECT LAST_INSERT_ID()";
+    final String UPDATE_STUDENT = "UPDATE student SET firstName = ?, lastName = ? WHERE id = ?";
+    final String DELETE_COURSE_STUDENT = "DELETE FROM course_student WHERE studentId = ?";
+    final String DELETE_STUDENT = "DELETE FROM student WHERE id = ?";
+  
     @Override
     public Student getStudentById(int id) {
-        try {
-            final String SELECT_STUDENT_BY_ID = "SELECT * FROM student WHERE id = ?";
+        try{
             return jdbc.queryForObject(SELECT_STUDENT_BY_ID, new StudentMapper(), id);
-        } catch (DataAccessException ex) {
+        }catch(DataAccessException ex){
             return null;
         }
     }
 
     @Override
     public List<Student> getAllStudents() {
-        final String SELECT_ALL_STUDENTS = "SELECT * FROM student";
         return jdbc.query(SELECT_ALL_STUDENTS, new StudentMapper());
     }
 
     @Override
     @Transactional
     public Student addStudent(Student student) {
-        final String INSERT_STUDENT = "INSERT INTO student(firstName, lastName) "
-                + "VALUES(?,?)";
-        jdbc.update(INSERT_STUDENT,
+        jdbc.update(INSERT_STUDENT, 
                 student.getFirstName(),
                 student.getLastName());
-
-        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        int newId = jdbc.queryForObject(SELECT_LAST_ID, Integer.class);
         student.setId(newId);
+        
         return student;
     }
 
     @Override
     public void updateStudent(Student student) {
-        final String UPDATE_STUDENT = "UPDATE student SET firstName = ?, lastName = ? "
-                + "WHERE id = ?";
-        jdbc.update(UPDATE_STUDENT,
+        jdbc.update(UPDATE_STUDENT, 
                 student.getFirstName(),
                 student.getLastName(),
                 student.getId());
@@ -69,23 +71,22 @@ public class StudentDaoDB implements StudentDao {
     @Override
     @Transactional
     public void deleteStudentById(int id) {
-        final String DELETE_COURSE_STUDENT = "DELETE FROM course_student WHERE studentId = ?";
         jdbc.update(DELETE_COURSE_STUDENT, id);
-
-        final String DELETE_STUDENT = "DELETE FROM student WHERE id = ?";
         jdbc.update(DELETE_STUDENT, id);
     }
-
-    public static final class StudentMapper implements RowMapper<Student> {
-
+    
+    public static final class StudentMapper implements RowMapper<Student>{
         @Override
-        public Student mapRow(ResultSet rs, int index) throws SQLException {
+        public Student mapRow(ResultSet rs, int rowNum) throws SQLException {
             Student student = new Student();
             student.setId(rs.getInt("id"));
             student.setFirstName(rs.getString("firstName"));
             student.setLastName(rs.getString("lastName"));
 
-            return student;
+            return student;           
         }
+        
     }
+    
 }
+
