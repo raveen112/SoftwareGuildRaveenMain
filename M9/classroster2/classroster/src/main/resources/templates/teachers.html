@@ -17,7 +17,7 @@
         <div class="container">
             <div class="row m-4">
                 <div class="col text-center border border-dark">
-                    <h1><a href="/" class="text-dark">Course Manager</a></h1>
+                    <h1><a href="#" class="text-dark">Course Manager</a></h1>
                 </div>
             </div>
             <div class="row m-4 border border-dark">
@@ -40,8 +40,8 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Specialty</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <td>Edit</td>
+                                <td>Delete</td>
                             </tr>
                         </thead>
 
@@ -74,76 +74,21 @@
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Add Teacher</button>
-                                </form>
                             </div>
-                            <!--Update page-->
-                            <div class="container">
-                                <div class="row m-4">
-                                    <div class="col text-center border border-dark">
-                                        <h1><a href="/" class="text-dark">Course Manager</a></h1>
-                                    </div>
-                                </div>
-                                <div class="row m-4 border border-dark">
-                                    <div class="col text-center m-3">
-                                        <a href="teachers" class="btn btn-outline-primary btn-lg">Teachers</a>
-                                    </div>
-                                    <div class="col text-center m-3">
-                                        <a href="students" class="btn btn-outline-primary btn-lg">Students</a>
-                                    </div>
-                                    <div class="col text-center m-3">
-                                        <a href="courses" class="btn btn-outline-primary btn-lg">Courses</a>
-                                    </div>
-                                </div>
-                                <div class="row m-4 border border-dark">
-                                    <div class="col-3 text-center m-3">
-                                        <span class="h3">Edit Teacher</span>
-                                    </div>
-                                    <div class="col-7 text-center m-3">
-                                        <form action="editTeacher" method="POST">
-                                            <div class="form-group row">
-                                                <label for="firstName" class="col-3 col-form-label">
-                                                    First Name</label>
-                                                <div class="col-9">
-                                                    <input type="text" name="firstName" id="firstName" 
-                                                           class="form-control" th:value="${teacher.firstName}"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="lastName" class="col-3 col-form-label">
-                                                    Last Name</label>
-                                                <div class="col-9">
-                                                    <input type="text" name="lastName" id="lastName" 
-                                                           class="form-control"  th:value="${teacher.lastName}"/>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="specialty" class="col-3 col-form-label">
-                                                    Specialty</label>
-                                                <div class="col-9">
-                                                    <input type="text" name="specialty" id="specialty" 
-                                                           class="form-control" th:value="${teacher.specialty}">
-                                                </div>
-                                            </div>
-                                            <input type="hidden" name="id" th:value="${teacher.id}"/>
-                                            <button type="submit" class="btn btn-primary">
-                                                Update Teacher</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>     
+                        </div>
 
 
+                        <tbody>
+                            <tr th:each = "teacher: ${teachers}">
+                                <td th:text = "${teacher.id}">Teacher ID</td>
+                                <td th:text = "${teacher.firstName}">Teacher First Name</td>
+                                <td th:text = "${teacher.lastName}">Teacher Last Name</td>
+                                <td th:text = "${teacher.specialty}">Teacher Specialty</td>
+                                <th><a href="#" th:href="@{/editTeacher(id=${teacher.id})}">Edit</a></th>
+                                <th><a href="#" th:href="@{/deleteTeacher(id=${teacher.id})}">Delete</a></th>
 
-                            <tbody>
-                                <tr th:each = "teacher: ${teachers}">
-                                    <td th:text = "${teacher.id}">Teacher ID</td>
-                                    <td th:text = "${teacher.firstName}">Teacher First Name</td>
-                                    <td th:text = "${teacher.lastName}">Teacher Last Name</td>
-                                    <td th:text = "${teacher.specialty}">Teacher Specialty</td>
-                            <a href="#" th:href="@{/editTeacher(id=${teacher.id})}">Edit</a>
-                            <a href="#" th:href="@{/deleteTeacher(id=${teacher.id})}">Delete</a>
                             </tr>
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
             </div>
