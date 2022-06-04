@@ -6,15 +6,26 @@
 package com.example.classroster.dto;
 
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author ravee
  */
 public class Teacher {
+
     private int id;
+
+    @NotBlank(message = "First name must not be blank.")
+    @Size(max = 30, message = "First name must be less than 30 characters.")
     private String firstName;
+
+    @NotBlank(message = "Last name must not be empty.")
+    @Size(max = 50, message = "Last name must be less than 50 characters.")
     private String lastName;
+    
+    @Size(max = 30, message="Specialty must be less than 30 characters.")
     private String specialty;
 
     public int getId() {
@@ -85,5 +96,5 @@ public class Teacher {
         }
         return true;
     }
-    
+
 }

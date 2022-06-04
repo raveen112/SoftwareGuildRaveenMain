@@ -7,6 +7,8 @@ package com.example.classroster.dto;
 
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -14,7 +16,11 @@ import java.util.Objects;
  */
 public class Course {
     private int id;
+    @NotBlank(message = "Name cannot be blank.")
+    @Size(max = 30, message = "Name must be less than 30 characters.")
     private String name;
+    
+    @Size(max = 255, message = "Description must be fewer than 255 characters")
     private String description;
     private Teacher teacher;
     private List<Student> students;

@@ -47,11 +47,21 @@
 
                         <!--Add page-->
                         <div class="row m-4 border border-dark">
+                            <div class="col-12 m-1 text-center" 
+                                 th:if="${!errors.isEmpty()}">
+                                <p class="alert alert-danger" th:each="error : ${errors}" 
+                                   th:text="${error.message}">Error message</p>
+                            </div>
+
                             <div class="col-3 text-center m-3">
                                 <span class="h3">Add Teacher</span>
                             </div>
                             <div class="col-7 text-center m-3">
+
                                 <form action="addTeacher" method="POST">
+
+
+
                                     <div class="form-group row">
                                         <label for="firstName" class="col-3 col-form-label">
                                             First Name</label>
