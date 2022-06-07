@@ -9,22 +9,22 @@ locationId int PRIMARY KEY AUTO_INCREMENT,
 `name` VARCHAR(50) NOT NULL,
 `description` VARCHAR(50) NOT NULL,
 address VARCHAR(50) NOT NULL,
-longitude VARCHAR(10),
-latitude VARCHAR(10)
+longitude VARCHAR(40),
+latitude VARCHAR(40)
 );
 
-CREATE TABLE superPower(
+CREATE TABLE super_power(
 superPowerId INT PRIMARY KEY AUTO_INCREMENT,
-`name` VARCHAR(40) NOT NULL
+superPowerName VARCHAR(40) NOT NULL
 );
 
-CREATE TABLE superPeople(
+CREATE TABLE super_people(
 superId INT PRIMARY KEY AUTO_INCREMENT,
-`name` VARCHAR(50) NOT NULL,
-`description` VARCHAR(50) NOT NULL,
+heroName VARCHAR(50) NOT NULL,
+heroDescripton VARCHAR(50) NOT NULL,
 superPowerId INT NOT NULL,
 CONSTRAINT FOREIGN KEY fk_superPowerId(superPowerId)
-REFERENCES superPower(superPowerId)
+REFERENCES super_power(superPowerId)
 );
 
 CREATE TABLE sighting(
@@ -35,28 +35,28 @@ superId INT NOT NULL,
 CONSTRAINT FOREIGN KEY fk_locationId(locationId)
 	REFERENCES location(locationId),
 CONSTRAINT FOREIGN KEY fk_superId(superId)
-	REFERENCES superPeople(superId)
+	REFERENCES super_people(superId)
 );
 
-CREATE TABLE superOrg(
+CREATE TABLE super_org(
 orgId INT PRIMARY KEY AUTO_INCREMENT,
-`name` VARCHAR(50) NOT NULL,
-`description` VARCHAR(50) NOT NULL,
+orgName VARCHAR(50) NOT NULL,
+orgDescription VARCHAR(50) NOT NULL,
 address VARCHAR(50),
 contact VARCHAR(25),
 superId INT NOT NULL
 );
 
-CREATE TABLE superPeopleOrg (
+CREATE TABLE super_people_org (
 superId INT NOT NULL,
 orgId INT NOT NULL,
 CONSTRAINT PRIMARY KEY pk_superPeopleOrg(superId, orgId),
 
 CONSTRAINT FOREIGN KEY fk_heroId(superId)
-	REFERENCES superPeople(superId),
+	REFERENCES super_people(superId),
     
 CONSTRAINT FOREIGN KEY fk_orgId(orgId)
-	REFERENCES superOrg(orgId)
+	REFERENCES super_org(orgId)
 );
 
 

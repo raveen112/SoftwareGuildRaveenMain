@@ -5,10 +5,23 @@
  */
 package com.example.supersightings.dao;
 
+import com.example.supersightings.model.Superpower;
+import java.util.List;
+
 /**
  *
  * @author ravee
  */
 public interface SuperpowerDao {
-    
+
+    Superpower getSuperpowerById(int id);
+
+    List<Superpower> getAllSuperpowers();
+
+    Superpower addSuperpower(Superpower superpower);
+
+    void updateSuperpower(Superpower superpower);
+
+    void deleteSuperpowerById(int id);
+
 }
