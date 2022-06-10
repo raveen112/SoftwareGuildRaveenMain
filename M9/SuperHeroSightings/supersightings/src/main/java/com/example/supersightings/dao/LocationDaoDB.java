@@ -49,7 +49,7 @@ public class LocationDaoDB implements LocationDao {
     @Override
     @Transactional
     public Location addLocation(Location location) {
-        final String INSERT_LOCATION = "INSERT INTO location(locationName, description, address, longitude, latitude) "
+        final String INSERT_LOCATION = "INSERT INTO location(name, description, address, longitude, latitude) "
                 + "VALUES(?,?,?,?,?)";
         jdbc.update(INSERT_LOCATION,
                 location.getName(),
@@ -66,7 +66,7 @@ public class LocationDaoDB implements LocationDao {
 
     @Override
     public void updateLocation(Location location) {
-        final String UPDATE_LOCATION = "UPDATE location SET locationName =?, description =?, address=?, longitude=?, latitude=? "+
+        final String UPDATE_LOCATION = "UPDATE location SET name =?, description =?, address=?, longitude=?, latitude=? "+
                 "WHERE locationId =?";
         
         jdbc.update(UPDATE_LOCATION, 
@@ -81,7 +81,7 @@ public class LocationDaoDB implements LocationDao {
     @Override
     @Transactional
     public void deleteLocationById(int id) {
-        final String DELETE_SIGHTING_LOCATION = "DELETE FROM sighting WHERE locationId = ?" ;
+        final String DELETE_SIGHTING_LOCATION = "DELETE FROM sightings WHERE locationId = ?" ;
         jdbc.update(DELETE_SIGHTING_LOCATION, id);
         
         final String DELETE_LOCATION = "DELETE FROM location WHERE locationId = ? ";
@@ -100,7 +100,7 @@ public class LocationDaoDB implements LocationDao {
         public Location mapRow(ResultSet rs, int rowNum) throws SQLException {
             Location location = new Location();
             location.setId(rs.getInt("locationId"));
-            location.setName(rs.getString("locationName"));
+            location.setName(rs.getString("name"));
             location.setAddress(rs.getString("address"));
             location.setDescription(rs.getString("description"));
             location.setLatitude(rs.getString("latitude"));

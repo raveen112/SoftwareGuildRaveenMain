@@ -16,12 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author ravee
  */
+@Repository
 public class HeroDaoDB implements HeroDao {
 
     @Autowired
@@ -42,27 +44,28 @@ public class HeroDaoDB implements HeroDao {
     }
 
     // HELPER--------------------------------------------------------------------------------------------------------------------
-    private Superpower getSuperPowerForHero(int heroId) {
+    private Superpower getSuperPowerForHero(int superId) {
         final String SELECT_SUPERPOWER_FOR_HERO = "SELECT s.* FROM super_people h JOIN super_power s "
                 + "ON h.superPowerId = s.superPowerId "
-                + "WHERE h.heroId =?";
-        return jdbc.queryForObject(SELECT_SUPERPOWER_FOR_HERO, new SuperpowerDaoDB.SuperpowerMapper(), heroId);
+                + "WHERE h.superId =?";
+        return jdbc.queryForObject(SELECT_SUPERPOWER_FOR_HERO, new SuperpowerDaoDB.SuperpowerMapper(), superId);
     }
 
-    private List<Organization> getOrganizationForHero(int heroId) {
-        final String SELECT_ORGANIZATION_FOR_HERO = "SELECT o* FROM super_people h "
+    private List<Organization> getOrganizationForHero(int superId) {
+        final String SELECT_ORGANIZATION_FOR_HERO = "SELECT o.* FROM super_people h "
                 + "JOIN super_people_org ho "
+                + "ON h.superId = ho.superId "
                 + "JOIN super_org o "
                 + "ON ho.orgId = o.orgId "
-                + "WHERE h.heroId = ?";
+                + "WHERE h.superId = ?";
 
-        return jdbc.query(SELECT_ORGANIZATION_FOR_HERO, new OrganizationDaoDB.OrganizationMapper(), heroId);
+        return jdbc.query(SELECT_ORGANIZATION_FOR_HERO, new OrganizationDaoDB.OrganizationMapper(), superId);
 
     }
 
     // bridge table handler
     private void insertHeroOrganization(Hero hero) {
-        final String INSERT_HERO_ORGANIZATION = "INSERT INTO super_people_org(heroId, orgId) VALUES (?,?)";
+        final String INSERT_HERO_ORGANIZATION = "INSERT INTO super_people_org(superId, orgId) VALUES (?,?)";
         for (Organization organization : hero.getOrganizations()) {
             jdbc.update(INSERT_HERO_ORGANIZATION, hero.getId(), organization.getId());
         }
@@ -90,9 +93,9 @@ public class HeroDaoDB implements HeroDao {
         jdbc.update(INSERT_HERO,
                 hero.getName(),
                 hero.getDescription(),
-                hero.getSuperPower());
+                hero.getSuperPower().getId());
 
-        int newId = jdbc.queryForObject("SELECT_LAST_INSERT_ID()", Integer.class);
+        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         hero.setId(newId);
         insertHeroOrganization(hero);
         return hero;
@@ -102,14 +105,14 @@ public class HeroDaoDB implements HeroDao {
     @Transactional
     public void updateHero(Hero hero) {
         final String UPDATE_HERO = "UPDATE super_people SET heroName = ?, heroDescription = ?, "
-                + "superPowerId = ? WHERE heroId = ?";
+                + "superPowerId = ? WHERE superId = ?";
         jdbc.update(UPDATE_HERO,
                 hero.getName(),
                 hero.getDescription(),
                 hero.getSuperPower().getId(),
                 hero.getId());
 
-        final String DELETE_HERO_ORGANIZATION = "DELETE FROM super_org WHERE heroId = ?";
+        final String DELETE_HERO_ORGANIZATION = "DELETE FROM super_org WHERE superId = ?";
         jdbc.update(DELETE_HERO_ORGANIZATION, hero.getId());
         insertHeroOrganization(hero);
 
@@ -117,13 +120,13 @@ public class HeroDaoDB implements HeroDao {
 
     @Override
     public void deleteHeroById(int id) {
-        final String DELETE_HERO_ORG = "DELETE FROM super_org WHERE heroId=?";
+        final String DELETE_HERO_ORG = "DELETE FROM super_people_org WHERE superId=?";
         jdbc.update(DELETE_HERO_ORG, id);
 
-        final String DELETE_HERO_SIGHTING = "SELECT FROM sighting WHERE heroId = ?";
+        final String DELETE_HERO_SIGHTING = "DELETE FROM sightings WHERE superId =?";
         jdbc.update(DELETE_HERO_SIGHTING, id);
 
-        final String DELETE_HERO = "SELECT heroId FROM super_people WHERE heroId =?";
+        final String DELETE_HERO = "DELETE FROM super_people WHERE superId =?";
         jdbc.update(DELETE_HERO, id);
     }
 
@@ -131,9 +134,9 @@ public class HeroDaoDB implements HeroDao {
     public List<Hero> getAllHeroSightedAtLocation(Location location) {
         final String GET_ALL_HEROS_SIGHTED_AT_LOCATION = "SELECT DISTINCT h.* "+
                 "FROM super_people h "+
-                "JOIN sighting st" +
-                "ON h.heroId = st.heroId "+
-                "WHERE heroId =?";
+                "JOIN sightings st " +
+                "ON h.superId = st.superId "+
+                "WHERE locationId =?";
         
         List<Hero> heroes = jdbc.query(GET_ALL_HEROS_SIGHTED_AT_LOCATION, new HeroMapper(), location.getId());
         for(Hero hero : heroes){
@@ -146,9 +149,9 @@ public class HeroDaoDB implements HeroDao {
 
     @Override
     public List<Hero> getMembersForOrganization(Organization organization) {
-       final String GET_MEMBERS_FOR_ORGANIZATION = "SELECT DISTINCT h. * FROM super_people "+
+       final String GET_MEMBERS_FOR_ORGANIZATION = "SELECT DISTINCT h.* FROM super_people "+
                "JOIN super_people_org ho "+
-               "ON h.heroId = ho.heroId "+
+               "ON h.superId = ho.superId "+
                "WHERE ho.orgId = ?";
        return jdbc.query(GET_MEMBERS_FOR_ORGANIZATION, new HeroMapper(), organization.getId());
     }

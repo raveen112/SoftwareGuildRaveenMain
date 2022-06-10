@@ -59,9 +59,13 @@ public class TeacherController {
         teacher.setLastName(lastName);
         teacher.setSpecialty(specialty);
 
-       
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(teacher);
+
+        if (violations.isEmpty()) {
             teacherDao.addTeacher(teacher);
-        
+        }
+
         return "redirect:/teachers ";
     }
 

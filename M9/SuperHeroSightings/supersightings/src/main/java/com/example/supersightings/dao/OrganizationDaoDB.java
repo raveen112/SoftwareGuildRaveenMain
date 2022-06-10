@@ -43,7 +43,7 @@ public class OrganizationDaoDB implements OrganizationDao {
     private List<Hero> getMembersForOrganization(Organization organization) {
         final String GET_MEMBERS_FOR_ORGANIZATION = "SELECT DISTINCT h.* FROM super_people h "
                 + "JOIN super_people_org ho "
-                + "ON h.orgId = ho.orgId "
+                + "ON h.superId = ho.superId "
                 + "WHERE orgId = ?";
 
         return jdbc.query(GET_MEMBERS_FOR_ORGANIZATION, new HeroDaoDB.HeroMapper(), organization.getId());
@@ -65,7 +65,7 @@ public class OrganizationDaoDB implements OrganizationDao {
               organization.getDescription(),
               organization.getAddress());
       
-      int newId = jdbc.queryForObject("SELECT_LAST_INSERT_ID()", Integer.class);
+      int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
       organization.setId(newId);
       return organization;
     }
@@ -86,8 +86,8 @@ public class OrganizationDaoDB implements OrganizationDao {
         final String DELETE_HERO_ORGANIZATION = "DELETE ho.* "+
                 "FROM super_people_org ho "+
                 "JOIN super_people h " +
-                "ON ho.heroId = h.heroId "+
-                "JOIN super_org s"+
+                "ON ho.superId = h.superId "+
+                "JOIN super_org s "+
                 "ON ho.orgId = s.orgId "+
                 "WHERE s.orgId  = ?";
         jdbc.update(DELETE_HERO_ORGANIZATION, id);

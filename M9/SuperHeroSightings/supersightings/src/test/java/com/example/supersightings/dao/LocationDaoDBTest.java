@@ -11,6 +11,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -28,17 +29,18 @@ public class LocationDaoDBTest {
     @Autowired
     LocationDao locationDao;
 
-//    @Autowired
-//    HeroDao heroDao;
-//
-//    @Autowired
-//    OrganizationDao organizationDao;
-//
-//    @Autowired
-//    SightingDao sightingDao;
-//
-//    @Autowired
-//    SuperpowerDao superpowerDao;
+    @Autowired
+    HeroDao heroDao;
+
+    @Autowired
+    OrganizationDao organizationDao;
+
+    @Autowired
+    SightingDao sightingDao;
+
+    @Autowired
+    SuperpowerDao superpowerDao;
+
     public LocationDaoDBTest() {
     }
 
@@ -58,9 +60,6 @@ public class LocationDaoDBTest {
         }
     }
 
-    @AfterEach
-    public void tearDown() {
-    }
 
     /**
      * Test of getLocationById method, of class LocationDaoDB.
@@ -94,7 +93,7 @@ public class LocationDaoDBTest {
         location.setLongitude("Test Longitude");
         location.setLatitude("Test Latitude");
         location = locationDao.addLocation(location);
-        
+
         Location location2 = new Location();
         location2.setName("Test first 2");
         location2.setDescription("Test Description 2 ");
@@ -102,9 +101,9 @@ public class LocationDaoDBTest {
         location2.setLongitude("Test Longitude 2");
         location2.setLatitude("Test Latitude 2");
         location2 = locationDao.addLocation(location2);
-        
+
         List<Location> locations = locationDao.getAllLocations();
-        
+
         assertEquals(2, locations.size());
         assertTrue(locations.contains(location));
         assertTrue(locations.contains(location2));
@@ -125,17 +124,17 @@ public class LocationDaoDBTest {
         location.setLongitude("Test Longitude");
         location.setLatitude("Test Latitude");
         location = locationDao.addLocation(location);
-        
+
         Location fromDao = locationDao.getLocationById(location.getId());
         assertEquals(location, fromDao);
-        
+
         location.setName("New Test First");
         locationDao.updateLocation(location);
-        
+
         assertNotEquals(location, fromDao);
-        
+
         fromDao = locationDao.getLocationById(location.getId());
-        
+
         assertEquals(location, fromDao);
     }
 
@@ -152,14 +151,16 @@ public class LocationDaoDBTest {
         location.setLatitude("Test Latitude");
         location = locationDao.addLocation(location);
         
+        Location fromDao = locationDao.getLocationById(location.getId());
+        assertEquals(location, fromDao);
         
-    }
+        
+        locationDao.deleteLocationById(location.getId());
 
-    /**
-     * Test of getAllLocationsForHero method, of class LocationDaoDB.
-     */
-    @Test
-    public void testGetAllLocationsForHero() {
+        fromDao = locationDao.getLocationById(location.getId());
+
+        assertNull(fromDao);
+
     }
 
 }

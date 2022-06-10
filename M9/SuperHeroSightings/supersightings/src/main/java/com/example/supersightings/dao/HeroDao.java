@@ -15,6 +15,7 @@ import java.util.List;
  * @author ravee
  */
 public interface HeroDao {
+
     Hero getHeroById(int id);
 
     List<Hero> getAllHero();
@@ -24,7 +25,8 @@ public interface HeroDao {
     void updateHero(Hero hero);
 
     void deleteHeroById(int id);
-    
+
     List<Hero> getMembersForOrganization(Organization organization);
+
     List<Hero> getAllHeroSightedAtLocation(Location location);
 }

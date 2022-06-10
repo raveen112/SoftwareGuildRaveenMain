@@ -14,13 +14,17 @@ import java.util.List;
  * @author ravee
  */
 public interface OrganizationDao {
+
     // CRUD functionality 
     Organization getOrganizationById(int id);
+
     List<Organization> getAllOrganization();
+
     Organization addOrganization(Organization organization);
+
     void updateOrganization(Organization organization);
+
     void deleteOrganizationById(int id);
-    
-    
+
     List<Organization> getOrganizationByHero(Hero hero);
 }

@@ -70,7 +70,6 @@ public class Organization {
     }
 
     
-    
     @Override
     public int hashCode() {
         int hash = 7;

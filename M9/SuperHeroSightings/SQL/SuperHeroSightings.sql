@@ -27,7 +27,7 @@ CONSTRAINT FOREIGN KEY fk_superPowerId(superPowerId)
 REFERENCES super_power(superPowerId)
 );
 
-CREATE TABLE sighting(
+CREATE TABLE sightings(
 sightingId INT PRIMARY KEY AUTO_INCREMENT,
 `date` DATETIME NOT NULL,
 locationId INT NOT NULL,
@@ -43,8 +43,7 @@ orgId INT PRIMARY KEY AUTO_INCREMENT,
 orgName VARCHAR(50) NOT NULL,
 orgDescription VARCHAR(50) NOT NULL,
 address VARCHAR(50),
-contact VARCHAR(25),
-superId INT NOT NULL
+contact VARCHAR(25)
 );
 
 CREATE TABLE super_people_org (
@@ -58,7 +57,6 @@ CONSTRAINT FOREIGN KEY fk_heroId(superId)
 CONSTRAINT FOREIGN KEY fk_orgId(orgId)
 	REFERENCES super_org(orgId)
 );
-
 
 
 
