@@ -5,6 +5,7 @@
  */
 package com.example.supersightings.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ public class Organization {
     private String description;
     private String address;
     private String contact;
-    private List<Hero> members;
+    private List<Hero> members = new ArrayList<>();
 
     public int getId() {
         return id;

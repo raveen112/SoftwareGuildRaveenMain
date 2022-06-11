@@ -151,10 +151,8 @@ public class OrganizationDaoDBTest {
         
         organizationDao.deleteOrganizationById(organization.getId());
         
-        Assertions.assertNotEquals(fromDao, organization);
-
+ 
         fromDao = organizationDao.getOrganizationById(organization.getId());
-        
         assertNull(fromDao);
     }
     

@@ -77,6 +77,8 @@ public class OrganizationDaoDB implements OrganizationDao {
         
         jdbc.update(UPDATE_ORGANIZATION, 
                 organization.getName(),
+                organization.getDescription(),
+                organization.getAddress(),
                 organization.getId());
     }
 

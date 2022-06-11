@@ -32,7 +32,7 @@ public class HeroDaoDB implements HeroDao {
     @Override
     public Hero getHeroById(int id) {
         try {
-            final String GET_HERO_BY_ID = "SELECT * super_people WHERE superId = ?";
+            final String GET_HERO_BY_ID = "SELECT * FROM super_people WHERE superId = ?";
             Hero hero = jdbc.queryForObject(GET_HERO_BY_ID, new HeroMapper(), id);
             hero.setSuperPower(getSuperPowerForHero(id));
             hero.setOrganization(getOrganizationForHero(id));
@@ -111,8 +111,8 @@ public class HeroDaoDB implements HeroDao {
                 hero.getDescription(),
                 hero.getSuperPower().getId(),
                 hero.getId());
-
-        final String DELETE_HERO_ORGANIZATION = "DELETE FROM super_org WHERE superId = ?";
+        
+        final String DELETE_HERO_ORGANIZATION = "DELETE FROM super_people_org WHERE superId= ?";
         jdbc.update(DELETE_HERO_ORGANIZATION, hero.getId());
         insertHeroOrganization(hero);
 
