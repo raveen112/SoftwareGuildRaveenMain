@@ -10,13 +10,9 @@ import com.example.supersightings.model.Location;
 import com.example.supersightings.model.Organization;
 import com.example.supersightings.model.Sighting;
 import com.example.supersightings.model.Superpower;
-import java.util.ArrayList;
 import java.util.List;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,8 +83,7 @@ public class OrganizationDaoDBTest {
         Organization fromDao = organizationDao.getOrganizationById(organization.getId());
         
         assertEquals(fromDao, organization);
-       
-    }
+      }
 
     /**
      * Test of getAllOrganization method, of class OrganizationDaoDB.
@@ -148,10 +143,8 @@ public class OrganizationDaoDBTest {
         
         assertEquals(organization, fromDao);
 
-        
         organizationDao.deleteOrganizationById(organization.getId());
         
- 
         fromDao = organizationDao.getOrganizationById(organization.getId());
         assertNull(fromDao);
     }
