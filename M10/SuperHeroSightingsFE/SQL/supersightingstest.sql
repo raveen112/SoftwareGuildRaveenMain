@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS superSightings;
+DROP DATABASE IF EXISTS superSightingsTest;
 
-CREATE DATABASE superSightings;
+CREATE DATABASE superSightingsTest;
 
-USE superSightings;
+USE superSightingsTest;
 
 CREATE TABLE location(
 locationId int PRIMARY KEY AUTO_INCREMENT,

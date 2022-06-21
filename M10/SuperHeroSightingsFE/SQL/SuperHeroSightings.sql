@@ -57,17 +57,3 @@ PRIMARY KEY (superId, orgId),
  FOREIGN KEY (orgId)
 	REFERENCES super_org(orgId)
 );
-
--- SELECT o.* FROM super_people h 
--- JOIN super_people_org ho
--- ON h.superId = ho.superId 
--- JOIN super_org o 
--- ON ho.orgId = o.orgId 
--- WHERE h.superId = 1;
-
--- SELECT * FROM sightings WHERE sightingId= 1;
-
--- SELECT DISTINCT h.* FROM super_people h 
---                 JOIN super_people_org ho 
---                 ON h.superId = ho.superId
---                 WHERE orgId = 1;
