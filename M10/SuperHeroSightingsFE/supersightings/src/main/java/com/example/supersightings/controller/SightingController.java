@@ -13,15 +13,21 @@ import com.example.supersightings.dao.SuperpowerDao;
 import com.example.supersightings.model.Hero;
 import com.example.supersightings.model.Location;
 import com.example.supersightings.model.Sighting;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
  * @author ravee
  */
+@Controller
 public class SightingController {
 
     @Autowired
@@ -50,5 +56,28 @@ public class SightingController {
         
         return "sightings";
     }
+    
+    @PostMapping("addSighting")
+    public String addSighting(Sighting sighting, HttpServletRequest request){
+        String locationId = request.getParameter("locationId");
+        String superId = request.getParameter("superId");
+        String date = request.getParameter("date");
+        
+        sighting.setLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
+        sighting.setHero(heroDao.getHeroById(Integer.parseInt(superId)));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        sighting.setDate(LocalDate.parse(date, formatter));
+        sightingDao.addSighting(sighting);
+        
+        return "redirect:/sightings";
+    }
+    
+    @GetMapping("deleteSighting")
+    public String deleteSighting(int id){
+        sightingDao.deleteSightingById(id);
+        return "redirect:/sightings";
+    }
 
+    // edit reach and edit perform remains!
+    
 }

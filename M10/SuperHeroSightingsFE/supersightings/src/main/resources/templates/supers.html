@@ -36,35 +36,42 @@
                 </div> 
 
             </div>
+            <!--Add error message-->
+
             <div class="row m-4 border border-dark">
                 <div class="col-3 text-center m-3">
-                    <span class="h3">Add Sighting</span>
+                    <span class="h3">Add Hero:</span>
                 </div>
                 <div class="col-7 text-center m-3">
-                    <form action="addSighting" method="POST">
+                    <form action="addHero" method="POST">
                         <div class="form-group row">
-                            <label for="hero" class="col-3 col-form-label">Superperson</label>
-                            <select id="hero" name="superPeople" class="form-control col-9">
-                                <option th:each="hero : ${heroes}" th:value="${hero.superId}" th:text="${hero.name}">Supe</option>
-                            </select>
-                        </div>
-                        <div class="form-group row">
-                            <label for="location" class="col-3 col-form-label">Location</label>
-                            <select id="location" name="location" class="form-control col-9">
-                                <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.name}">Location Default</option>
-                            </select>
-                        </div>
-                        <div class="form-group row">
-                            <label for="date" class="col-3 col-form-label">
-                                Date</label>
+                            <label for="name" class="col-3 col-form-label">
+                                Name</label>
                             <div class="col-9">
-                                <input type="date" name="date" 
-                                       id="date" class="form-control"/>
+                                <input type="text" name="name" 
+                                       id="name" class="form-control"/>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add Sighting</button>
+
+                        <div class="form-group row">
+                            <label for="superpower" class="col-3 col-form-label">Superpower</label>
+                            <select id="superpower" name="superpowerId" class="form-control col-9">
+                                <option th:each="superpower : ${superpowers}" th:value="${superpower.superPowerId}" th:text="${superpower.name}">SuperPower</option>
+                            </select>
+                        </div>
+                        <div class="form-group row">
+                            <label for="description" class="col-3 col-form-label">
+                                Description</label>
+                            <div class="col-9">
+                                <input type="text" name="name" 
+                                       id="description" class="form-control"/>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Hero</button>
                     </form>
+
                 </div>
+
             </div>
 
             <div class="row m-4 border border-dark">
@@ -73,21 +80,21 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Superperson</th>
-                                <th>Location</th>
-                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Superpower</th>
+                                <th>Description</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="sighting : ${sightings}">
-                                <td th:text ="${sighting.sightingId}">SightingID</td>
-                                <td th:text ="${sighting.hero.name}">Superperson Name</td>
-                                <td th:text ="${sighting.location.address}">Location</td>
-                                <td th:text ="${sighting.date}">SightingID</td>
-                                <td><a href="#" th:href="@{/editSighting(id=${sighting.sightingId})}">Edit</a></td>
-                                <td><a href="#" th:href="@{/deleteSighting(id=${sighting.sightingId})}">Delete</a></td>
+                            <tr th:each="hero : ${heroes}">
+                                <td th:text ="${hero.superId}">HeroId</td>
+                                <td th:text ="${hero.name}">Superperson Name</td>
+                                <td th:text ="${hero.superpower.superPowerName}">Superpower</td>
+                                <td th:text ="${sighting.date}">Description</td>
+                                <td><a href="#" th:href="@{/editHero(id=${hero.superId})}">Edit</a></td>
+                                <td><a href="#" th:href="@{/deleteHero(id=${hero.superId})}">Delete</a></td>
 
                             </tr>
 
