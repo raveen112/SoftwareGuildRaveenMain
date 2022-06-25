@@ -46,10 +46,23 @@ public class HeroController {
     @GetMapping("supers")
     public String displayLocations(Model model) {
         List<Hero> supers = heroDao.getAllHero();
-        List<Superpower> powers = superpowerDao.getAllSuperpowers();
-        model.addAttribute("powers", powers);
+        List<Superpower> superpowers = superpowerDao.getAllSuperpowers();
+        model.addAttribute("superpowers", superpowers);
         model.addAttribute("supers", supers);
         return "supers";
+    }
+
+    @PostMapping("addHero")
+    public String addLocation(Hero hero, HttpServletRequest request) {
+        String superPowerId = request.getParameter("superpower.id");
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+
+        hero.setSuperPower(superpowerDao.getSuperpowerById(Integer.parseInt(superPowerId)));
+        hero.setDescription(description);
+        hero.setName(name);
+        heroDao.addHero(hero);
+        return "redirect:/supers";
     }
 
 }

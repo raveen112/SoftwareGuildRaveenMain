@@ -54,5 +54,11 @@ public class SuperpowerController {
         superpowerDao.addSuperpower(superpower);
         return "redirect:/superpowers";
     }
+    
+    @GetMapping("deleteSuperpower")
+    public String deleteSuperpower(Integer id) {
+        superpowerDao.deleteSuperpowerById(id);
+        return "redirect:/superpowers";
+    }
 
 }
