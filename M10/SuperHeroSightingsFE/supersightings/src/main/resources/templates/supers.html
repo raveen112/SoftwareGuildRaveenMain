@@ -67,6 +67,20 @@
                                        id="description" class="form-control"/>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="organizations" class="col-3 col-form-label">
+                                Organization</label>
+                            <div class="col-9">
+                                <select multiple id="organizations" name="orgId" class="form-control">
+                                    <option th:each="organization : ${organizations}"
+                                            th:value="${organization.id}"
+                                            th:text="%{organization.name}">
+                                    Organization Name</option>
+                                        
+                                </select>
+                            </div>
+                        </div>
+                        
                         <button type="submit" class="btn btn-primary">Add Hero</button>
                     </form>
 
@@ -91,7 +105,7 @@
                             <tr th:each="hero : ${heroes}">
                                 <td th:text ="${hero.superId}">HeroId</td>
                                 <td th:text ="${hero.name}">Superperson Name</td>
-                                <td th:text ="${hero.superpower.superPowerName}">Superpower</td>
+                                <td th:text ="${hero.superpower.name}">Superpower</td>
                                 <td th:text ="${sighting.date}">Description</td>
                                 <td><a href="#" th:href="@{/editHero(id=${hero.superId})}">Edit</a></td>
                                 <td><a href="#" th:href="@{/deleteHero(id=${hero.superId})}">Delete</a></td>
