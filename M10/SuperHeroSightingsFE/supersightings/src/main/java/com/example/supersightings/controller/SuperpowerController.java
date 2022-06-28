@@ -43,7 +43,7 @@ public class SuperpowerController {
     SuperpowerDao superpowerDao;
 
     @GetMapping("superpowers")
-    public String displayLocations(Model model) {
+    public String displaySuperpower(Model model) {
         List<Superpower> powers = superpowerDao.getAllSuperpowers();
         model.addAttribute("superpowers", powers);
         return "superpowers";

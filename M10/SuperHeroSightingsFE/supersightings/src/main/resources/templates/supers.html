@@ -55,15 +55,17 @@
 
                         <div class="form-group row">
                             <label for="superpower" class="col-3 col-form-label">Superpower</label>
-                            <select id="superpower" name="superpowerId" class="form-control col-9">
-                                <option th:each="superpower : ${superpowers}" th:value="${superpower.id}" th:text="${superpower.name}">SuperPower</option>
+                            <select id="superpower" name="id" class="form-control col-9">
+                                <option th:each="superpower : ${superpowers}" 
+                                        th:value="${superpower.id}" 
+                                        th:text="${superpower.name}">SuperPower</option>
                             </select>
                         </div>
                         <div class="form-group row">
                             <label for="description" class="col-3 col-form-label">
                                 Description</label>
                             <div class="col-9">
-                                <input type="text" name="name" 
+                                <input type="text" name="description" 
                                        id="description" class="form-control"/>
                             </div>
                         </div>
@@ -74,7 +76,7 @@
                                 <select multiple id="organizations" name="orgId" class="form-control">
                                     <option th:each="organization : ${organizations}"
                                             th:value="${organization.id}"
-                                            th:text="%{organization.name}">
+                                            th:text="${organization.name}">
                                     Organization Name</option>
                                         
                                 </select>
@@ -96,19 +98,19 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Superpower</th>
-                                <th>Description</th>
+                                <th>Details</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="hero : ${heroes}">
-                                <td th:text ="${hero.superId}">HeroId</td>
+                            <tr th:each="hero : ${supers}">
+                                <td th:text ="${hero.id}">HeroId</td>
                                 <td th:text ="${hero.name}">Superperson Name</td>
-                                <td th:text ="${hero.superpower.name}">Superpower</td>
-                                <td th:text ="${sighting.date}">Description</td>
-                                <td><a href="#" th:href="@{/editHero(id=${hero.superId})}">Edit</a></td>
-                                <td><a href="#" th:href="@{/deleteHero(id=${hero.superId})}">Delete</a></td>
+                                <td th:text ="${hero.superPower.name}">Superpower</td>
+                                <td><a href="#" th:href="@{/heroDetail(id=${hero.id})}">Details</a></td>
+                                <td><a href="#" th:href="@{/editHero(id=${hero.id})}">Edit</a></td>
+                                <td><a href="#" th:href="@{/deleteHero(id=${hero.id})}">Delete</a></td>
 
                             </tr>
 

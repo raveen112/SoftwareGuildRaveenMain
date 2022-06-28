@@ -18,7 +18,7 @@
                     <h1>Super Hero Sightings</h1>
                 </div>
             </div>
-            <div class="row m-4 border border-dark">
+            <div class="row m-4 border border-darl">
                 <div class="col text-center m-3">
                     <a href="supers" class="btn btn-outline-primary btn-lg">Supers</a>
                 </div> 
@@ -40,10 +40,10 @@
 
             <div class="row m-4 border border-dark">
                 <div class="col-3 text-center m-3">
-                    <span class="h3">Add Power:</span>
+                    <span class="h3">Add Organization:</span>
                 </div>
                 <div class="col-7 text-center m-3">
-                    <form action="addSuperpower" method="POST">
+                    <form action="addOrganization" method="POST">
                         <div class="form-group row">
                             <label for="name" class="col-3 col-form-label">
                                 Name</label>
@@ -53,11 +53,29 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Add Power</button>
+                        <div class="form-group row">
+                            <label for="description" class="col-3 col-form-label">
+                                Description</label>
+                            <div class="col-9">
+                                <input type="text" name="description" 
+                                       id="description" class="form-control"/>
+                            </div>
+                        </div>
 
+                        <div class="form-group row">
+                            <label for="address" class="col-3 col-form-label">
+                                Address</label>
+                            <div class="col-9">
+                                <input type="text" name="address" 
+                                       id="address" class="form-control"/>
+                            </div>
+                        </div>
 
+                        <button type="submit" class="btn btn-primary">Add Organization</button>
                     </form>
+
                 </div>
+
             </div>
 
             <div class="row m-4 border border-dark">
@@ -67,17 +85,20 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Address</th>
+                                <th>Details</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="superpower : ${superpowers}">
-                                <td th:text ="${superpower.id}">SuperIDs</td>
-                                <td th:text ="${superpower.name}">Superpower Name</td>
-                               <!-- <td><a href="#" th:href="@{/superPowerDetails(id=${superpower.superPowerId})}">Details</a></td> -->
-                                <td><a href="#" th:href="@{/editSuperpower(id=${superpower.id})}">Edit</a></td>
-                                <td><a href="#" th:href="@{/deleteSuperpower(id=${superpower.id})}">Delete</a></td>
+                            <tr th:each="organization : ${organizations}">
+                                <td th:text ="${organization.id}">OrgId</td>
+                                <td th:text ="${organization.name}">Name</td>
+                                <td th:text ="${organization.address}">Address</td>
+                                <td><a href="#" th:href="@{/organizationDetail(id=${organization.id})}">Details</a></td>
+                                <td><a href="#" th:href="@{/editOrganization(id=${organization.id})}">Edit</a></td>
+                                <td><a href="#" th:href="@{/deleteOrganization(id=${organization.id})}">Delete</a></td>
 
                             </tr>
 

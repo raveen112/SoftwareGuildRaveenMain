@@ -59,9 +59,9 @@ public class SightingController {
     
     @PostMapping("addSighting")
     public String addSighting(Sighting sighting, HttpServletRequest request){
-        String locationId = request.getParameter("locationId");
-        String superId = request.getParameter("superId");
-        String date = request.getParameter("date");
+        String locationId = request.getParameter("location");
+        String superId = request.getParameter("superPeople");
+        String date = request.getParameter("dateString");
         
         sighting.setLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
         sighting.setHero(heroDao.getHeroById(Integer.parseInt(superId)));

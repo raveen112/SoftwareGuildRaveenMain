@@ -13,14 +13,13 @@ import com.example.supersightings.dao.SuperpowerDao;
 import com.example.supersightings.model.Hero;
 import com.example.supersightings.model.Location;
 import com.example.supersightings.model.Organization;
-import com.example.supersightings.model.Superpower;
-import java.util.ArrayList;
+import com.example.supersightings.model.Sighting;
 import java.util.List;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -29,7 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
  * @author ravee
  */
 @Controller
-public class HeroController {
+public class OrganizationController {
 
     @Autowired
     LocationDao locationDao;
@@ -46,43 +45,30 @@ public class HeroController {
     @Autowired
     SuperpowerDao superpowerDao;
 
-    @GetMapping("supers")
-    public String displayHero(Model model) {
-        List<Hero> supers = heroDao.getAllHero();
-        List<Superpower> superpowers = superpowerDao.getAllSuperpowers();
+    @GetMapping("organizations")
+    public String displayOrganizations(Model model) {
+        List<Hero> heroes = heroDao.getAllHero();
         List<Organization> organizations = organizationDao.getAllOrganization();
 
+        model.addAttribute("heroes", heroes);
+
         model.addAttribute("organizations", organizations);
-        model.addAttribute("superpowers", superpowers);
-        model.addAttribute("supers", supers);
 
-        return "supers";
+        return "organizations";
     }
 
-    @PostMapping("addHero")
-    public String addHero(Hero hero, HttpServletRequest request) {
-        String superPowerId = request.getParameter("id");
-        String[] organizationIds = request.getParameterValues("orgId");
-        String heroDescription = request.getParameter("description");
-        hero.setSuperPower(superpowerDao.getSuperpowerById(Integer.parseInt(superPowerId)));
-
-        List<Organization> organizations = new ArrayList<>();
-
-        for (String organizationId : organizationIds) {
-            organizations.add(organizationDao.getOrganizationById(Integer.parseInt(organizationId)));
+    @PostMapping("addOrganization")
+    public String addOrganization(Organization organization, HttpServletRequest request) {
+       
+        
+        List<Hero> members = heroDao.getMembersForOrganization(organization);
+        for(Hero hero : members){
+            System.out.println(hero.getName());
         }
+      
+        organizationDao.addOrganization(organization);
 
-        hero.setDescription(heroDescription);
-        hero.setOrganization(organizations);
+        return "redirect:/organizations";
 
-        heroDao.addHero(hero);
-        return "redirect:/supers";
     }
-
-    @GetMapping("deleteHero")
-    public String deleteHero(int id) {
-        heroDao.deleteHeroById(id);
-        return "redirect:/supers";
-    }
-
 }

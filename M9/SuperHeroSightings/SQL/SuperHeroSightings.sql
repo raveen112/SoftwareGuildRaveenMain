@@ -29,7 +29,7 @@ REFERENCES super_power(superPowerId)
 
 CREATE TABLE sightings(
 sightingId INT PRIMARY KEY AUTO_INCREMENT,
-`date` DATETIME NOT NULL,
+`date` DATE NOT NULL,
 locationId INT NOT NULL,
 superId INT NOT NULL,
 FOREIGN KEY (locationId)

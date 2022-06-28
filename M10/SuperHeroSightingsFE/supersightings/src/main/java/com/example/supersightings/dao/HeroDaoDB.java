@@ -149,7 +149,7 @@ public class HeroDaoDB implements HeroDao {
 
     @Override
     public List<Hero> getMembersForOrganization(Organization organization) {
-       final String GET_MEMBERS_FOR_ORGANIZATION = "SELECT DISTINCT h.* FROM super_people "+
+       final String GET_MEMBERS_FOR_ORGANIZATION = "SELECT DISTINCT h.* FROM super_people h "+
                "JOIN super_people_org ho "+
                "ON h.superId = ho.superId "+
                "WHERE ho.orgId = ?";
