@@ -58,13 +58,15 @@ public class SightingController {
     }
     
     @PostMapping("addSighting")
-    public String addSighting(Sighting sighting, HttpServletRequest request){
-        String locationId = request.getParameter("location");
+    public String addSighting(HttpServletRequest request){
         String superId = request.getParameter("superPeople");
+        String locationId = request.getParameter("location");
         String date = request.getParameter("dateString");
         
-        sighting.setLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
+        Sighting sighting = new Sighting();
         sighting.setHero(heroDao.getHeroById(Integer.parseInt(superId)));
+        sighting.setLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         sighting.setDate(LocalDate.parse(date, formatter));
         sightingDao.addSighting(sighting);
@@ -77,6 +79,8 @@ public class SightingController {
         sightingDao.deleteSightingById(id);
         return "redirect:/sightings";
     }
+    
+
 
     // edit reach and edit perform remains!
     

@@ -52,14 +52,14 @@ public class LocationController {
     }
 
     @PostMapping("addLocation")
-    public String addLocation(HttpServletRequest request) {
+    public String addLocation(Location location, HttpServletRequest request) {
         String name = request.getParameter("name");
         String description = request.getParameter("description");
         String address = request.getParameter("address");
         String latitude = request.getParameter("latitude");
         String longitude = request.getParameter("longitude");
 
-        Location location = new Location();
+        
         location.setName(name);
         location.setDescription(description);
         location.setAddress(address);

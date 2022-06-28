@@ -85,4 +85,37 @@ public class HeroController {
         return "redirect:/supers";
     }
 
+    @GetMapping("editSuper")
+    public String editHero(int id, Model model) {
+        Hero hero = heroDao.getHeroById(id);
+        List<Organization> organizations = organizationDao.getAllOrganization();
+        List<Superpower> superpowers = superpowerDao.getAllSuperpowers();
+        model.addAttribute("organizations", organizations);
+        model.addAttribute("superpowers", superpowers);
+        model.addAttribute("supers", hero);
+
+        return "editSuper";
+    }
+
+    @PostMapping("editSuper")
+    public String performEditHero(Hero hero, HttpServletRequest request, Model model) {
+        String superPowerId = request.getParameter("superpowerId");
+        String[] organizationIds = request.getParameterValues("orgId");
+        String heroDescription = request.getParameter("description");
+
+        hero.setSuperPower(superpowerDao.getSuperpowerById(Integer.parseInt(superPowerId)));
+
+        List<Organization> organizations = new ArrayList<>();
+
+        for(String organizationId : organizationIds){
+        organizations.add(organizationDao.getOrganizationById(Integer.parseInt(organizationId)));
+        }
+        
+        hero.setDescription(heroDescription);
+        hero.setOrganization(organizations);
+        heroDao.updateHero(hero);
+        
+        return "redirect:/supers";
+    }
+
 }
