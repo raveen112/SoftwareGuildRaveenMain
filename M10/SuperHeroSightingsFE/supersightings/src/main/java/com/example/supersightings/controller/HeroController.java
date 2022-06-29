@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -86,19 +87,20 @@ public class HeroController {
     }
 
     @GetMapping("editSuper")
-    public String editHero(int id, Model model) {
+    public String editHero(Integer id, Model model) {
         Hero hero = heroDao.getHeroById(id);
         List<Organization> organizations = organizationDao.getAllOrganization();
         List<Superpower> superpowers = superpowerDao.getAllSuperpowers();
         model.addAttribute("organizations", organizations);
         model.addAttribute("superpowers", superpowers);
-        model.addAttribute("supers", hero);
+        model.addAttribute("hero", hero);
 
         return "editSuper";
     }
 
     @PostMapping("editSuper")
-    public String performEditHero(Hero hero, HttpServletRequest request, Model model) {
+    public String performEditHero(HttpServletRequest request, Model model) {
+        Hero hero = new Hero();
         String superPowerId = request.getParameter("superpowerId");
         String[] organizationIds = request.getParameterValues("orgId");
         String heroDescription = request.getParameter("description");
@@ -107,14 +109,14 @@ public class HeroController {
 
         List<Organization> organizations = new ArrayList<>();
 
-        for(String organizationId : organizationIds){
-        organizations.add(organizationDao.getOrganizationById(Integer.parseInt(organizationId)));
+        for (String organizationId : organizationIds) {
+            organizations.add(organizationDao.getOrganizationById(Integer.parseInt(organizationId)));
         }
-        
+
         hero.setDescription(heroDescription);
         hero.setOrganization(organizations);
         heroDao.updateHero(hero);
-        
+
         return "redirect:/supers";
     }
 
