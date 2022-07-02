@@ -15,7 +15,9 @@ import com.example.supersightings.model.Location;
 import com.example.supersightings.model.Sighting;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -86,6 +88,21 @@ public class SightingController {
         model.addAttribute("sightings", sighting);
         return "sightingDetails";
     }
+    
+    @GetMapping("/") //Go to index html page
+    public String recentSightings(Model model) {
+        List<Sighting> sightings = sightingDao.getAllSightings();
+        
+        List<Sighting> recentSightings = sightings.stream()
+                .sorted(Comparator.comparing(Sighting::getDate).reversed()) //order by date from most recent to oldest
+                .limit(10) //get the 10 first sightings
+                .collect(Collectors.toList());        
+
+        model.addAttribute("sightings", recentSightings);
+        
+        return "index"; //returning "sightings" means we will need a sightings.html file to push our data to
+    }
+       
 
     
 

@@ -61,8 +61,8 @@
                                 <tr th:each="sighting : ${sightings}">
                                     <td th:text ="${sighting.id}">ID</td>
                                     <td th:text ="${sighting.date}">Date</td>
-                                    <td th:text ="${sighting.super.name}">Supe</td>
-                                    <td th:text ="${sighting.location.name}">Supe</td>
+                                    <td th:text ="${sighting.heroes.name}">Supe</td>
+                                    <td th:text ="${sighting.locations.name}">Supe</td>
                                     <td><a href="#" th:href="@{/detailSighting(id=${sighting.id})}">Details</a></td>
                                 </tr>
                             </tbody>
