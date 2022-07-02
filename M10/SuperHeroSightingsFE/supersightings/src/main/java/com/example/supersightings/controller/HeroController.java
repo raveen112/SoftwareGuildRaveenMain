@@ -80,7 +80,7 @@ public class HeroController {
         return "redirect:/supers";
     }
 
-    @GetMapping("deleteHero")
+    @GetMapping("deleteSupe")
     public String deleteHero(int id) {
         heroDao.deleteHeroById(id);
         return "redirect:/supers";
@@ -118,6 +118,14 @@ public class HeroController {
         heroDao.updateHero(hero);
 
         return "redirect:/supers";
+    }
+    
+    @GetMapping("heroDetails")
+    public String heroDetail(Integer id, Model model) {
+        
+        Hero hero = heroDao.getHeroById(id);
+        model.addAttribute("hero", hero);
+        return "heroDetails";
     }
 
 }

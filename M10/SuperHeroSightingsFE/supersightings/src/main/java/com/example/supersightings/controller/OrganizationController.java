@@ -71,4 +71,12 @@ public class OrganizationController {
         return "redirect:/organizations";
 
     }
+    
+     @GetMapping("organizationDetails")
+    public String organizationDetail(Integer id, Model model) {
+        Organization organization = organizationDao.getOrganizationById(id);
+        model.addAttribute("organization", organization);
+        return "organizationDetails";
+    }
+    
 }

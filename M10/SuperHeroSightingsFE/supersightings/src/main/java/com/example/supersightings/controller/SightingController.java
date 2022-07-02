@@ -80,6 +80,14 @@ public class SightingController {
         return "redirect:/sightings";
     }
     
+    @GetMapping("sightingDetails")
+    public String sightingDetails(Integer id, Model model) {
+        Sighting sighting = sightingDao.getSightingById(id);
+        model.addAttribute("sightings", sighting);
+        return "sightingDetails";
+    }
+
+    
 
 
     // edit reach and edit perform remains!
