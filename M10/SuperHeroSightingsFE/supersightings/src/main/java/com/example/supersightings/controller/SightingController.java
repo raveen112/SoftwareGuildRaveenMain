@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -103,6 +104,36 @@ public class SightingController {
         return "index"; //returning "sightings" means we will need a sightings.html file to push our data to
     }
        
+    @GetMapping("editSighting")
+    public String editSighting (Integer id, Model model){
+        List<Hero> heroes = heroDao.getAllHero();
+        List<Location> locations = locationDao.getAllLocations();
+        Sighting sighting = sightingDao.getSightingById(id);
+        
+        if(model.getAttribute("sightings")!=null){
+            ((Sighting) model.getAttribute("sightings")).setHero(sighting.getHero());
+            ((Sighting) model.getAttribute("sightings")).setLocation(sighting.getLocation());
+        }
+        
+        model.addAttribute("sightings", model.getAttribute("sightings") != null ? model.getAttribute("sightings"): sighting);
+        model.addAttribute("heroes", heroes);
+        model.addAttribute("locations", locations);
+        model.addAttribute("date", sighting.getDate());
+        model.addAttribute("sightings", sighting); 
+        return "editSighting";
+    }
+    
+    @PostMapping("editSighting")
+    public String performEditSighting(HttpServletRequest request, Model model){
+        Sighting sighting = new Sighting();
+        String superId = request.getParameter("heroId");
+        String locationId = request.getParameter("locationId");
+        sighting.setHero(sightingDao.getHeroForSighting(Integer.parseInt(superId)));
+        sighting.setLocation(sightingDao.getLocationForSighting(Integer.parseInt(locationId)));
+        
+        sightingDao.updateSighting(sighting);
+        return "redirect:/sightings";
+    }
 
     
 

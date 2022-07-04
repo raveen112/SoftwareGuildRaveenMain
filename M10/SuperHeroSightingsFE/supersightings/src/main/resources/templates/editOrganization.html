@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
@@ -8,14 +9,14 @@
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-        <title>Super Sightings</title>
+        <title>Manage Sightings</title>
     </head>
     <body>
         <!-- Main Body of Page -->
         <div class="container">
             <div class="row m-4">
                 <div class="col text-center border border-dark">
-                  <h1><a href="/" class="text-dark">Super Hero Sightings</a></h1>
+                      <h1><a href="/" class="text-dark">Super Hero Sightings</a></h1>
                 </div>
             </div>
             <div class="row m-4 border border-darl">
@@ -23,7 +24,7 @@
                     <a href="supers" class="btn btn-outline-primary btn-lg">Supers</a>
                 </div> 
                 <div class="col text-center m-3">
-                    <a href="locations" class="btn btn-outline-primary btn-lg">Locations</a>
+                    <a href="locations" class="btn btn-outline-primary btn-lg">Location</a>
                 </div> 
                 <div class="col text-center m-3">
                     <a href="sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
@@ -36,89 +37,49 @@
                 </div> 
 
             </div>
-            <!--Add error message-->
-
             <div class="row m-4 border border-dark">
                 <div class="col-3 text-center m-3">
-                    <span class="h3">Add Hero:</span>
+                    <span class="h3">Edit Organization:</span>
                 </div>
                 <div class="col-7 text-center m-3">
-                    <form action="addHero" method="POST">
+                    <form action="editOrganization" method="POST">
                         <div class="form-group row">
                             <label for="name" class="col-3 col-form-label">
                                 Name</label>
                             <div class="col-9">
                                 <input type="text" name="name" 
-                                       id="name" class="form-control"/>
+                                       id="name" class="form-control" th:value="${organization.name}" />
                             </div>
                         </div>
 
-                        <div class="form-group row">
-                            <label for="superpower" class="col-3 col-form-label">Superpower</label>
-                            <select id="superpower" name="id" class="form-control col-9">
-                                <option th:each="superpower : ${superpowers}" 
-                                        th:value="${superpower.id}" 
-                                        th:text="${superpower.name}">SuperPower</option>
-                            </select>
-                        </div>
+                        
                         <div class="form-group row">
                             <label for="description" class="col-3 col-form-label">
                                 Description</label>
                             <div class="col-9">
                                 <input type="text" name="description" 
-                                       id="description" class="form-control"/>
+                                       id="description" class="form-control" th:value="${organization.description}"/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="organizations" class="col-3 col-form-label">
-                                Organization</label>
+                            <label for="address" class="col-3 col-form-label">
+                                Description</label>
                             <div class="col-9">
-                                <select multiple id="organizations" name="orgId" class="form-control">
-                                    <option th:each="organization : ${organizations}"
-                                            th:value="${organization.id}"
-                                            th:text="${organization.name}">
-                                    Organization Name</option>
-                                        
-                                </select>
+                                <input type="text" name="address" 
+                                       id="address" class="form-control" th:value="${organization.address}"/>
                             </div>
                         </div>
                         
-                        <button type="submit" class="btn btn-primary">Add Hero</button>
+                        <input type="hidden" name="id" th:value="${organization.id}"/>
+                        <button type="submit" class="btn btn-primary">Update Organization</button>
+
                     </form>
 
                 </div>
 
             </div>
-
-            <div class="row m-4 border border-dark">
-                <div class="col text-center m-3">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Superpower</th>
-                                <th>Details</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:each="hero : ${supers}">
-                                <td th:text ="${hero.id}">HeroId</td>
-                                <td th:text ="${hero.name}">Superperson Name</td>
-                                <td th:text ="${hero.superPower.name}">Superpower</td>
-                                <td><a href="#" th:href="@{/heroDetails(id=${hero.id})}">Details</a></td>
-                                <td><a href="#" th:href="@{/editSuper(id=${hero.id})}">Edit</a></td>
-                                <td><a href="#" th:href="@{/deleteSupe(id=${hero.id})}">Delete</a></td>
-
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
         </div>
+
 
         <!-- End main body -->
 
@@ -129,3 +90,4 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     </body>
 </html>;
+

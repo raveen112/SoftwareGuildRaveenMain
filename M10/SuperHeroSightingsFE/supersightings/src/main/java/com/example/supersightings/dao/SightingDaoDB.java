@@ -46,14 +46,15 @@ public class SightingDaoDB implements SightingDao {
     }
 
     // HELPER  -----------------------------------------------------------------------------------------------------------------------------
-    private Location getLocationForSighting(int sightingId) {
+    @Override
+    public Location getLocationForSighting(int sightingId) {
         final String SELECT_LOCATION_FOR_SIGHTING = "SELECT l.* FROM sightings st JOIN location l "
                 + "ON st.locationId = l.locationId "
                 + "WHERE st.sightingId= ?";
         return jdbc.queryForObject(SELECT_LOCATION_FOR_SIGHTING, new LocationDaoDB.LocationMapper(), sightingId);
     }
-
-    private Hero getHeroForSighting(int heroId) {
+    @Override
+    public Hero getHeroForSighting(int heroId) {
         final String SELECT_HERO_FOR_SIGHTING = "SELECT h.* FROM sightings st JOIN super_people h " 
                 + "ON st.superId = h.superId "
                 + "WHERE st.sightingId = ?";

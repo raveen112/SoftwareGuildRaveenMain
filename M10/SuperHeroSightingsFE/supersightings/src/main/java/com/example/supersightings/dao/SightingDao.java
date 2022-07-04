@@ -5,6 +5,8 @@
  */
 package com.example.supersightings.dao;
 
+import com.example.supersightings.model.Hero;
+import com.example.supersightings.model.Location;
 import com.example.supersightings.model.Sighting;
 import java.time.LocalDate;
 import java.util.List;
@@ -21,7 +23,8 @@ public interface SightingDao {
     Sighting addSighting(Sighting Sighting);
     void updateSighting(Sighting Sighting);
     void deleteSightingById(int id);
-    
+    Location getLocationForSighting(int sightingId);
+    Hero getHeroForSighting(int heroId);
     
     // helper methods?
     public List<Sighting> getSightingsByDate(LocalDate date);

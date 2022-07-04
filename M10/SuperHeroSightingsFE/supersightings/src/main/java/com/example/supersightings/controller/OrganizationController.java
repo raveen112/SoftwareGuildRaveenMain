@@ -79,4 +79,18 @@ public class OrganizationController {
         return "organizationDetails";
     }
     
+    @GetMapping("editOrganization")
+    public String editOrganization(Integer id, Model model){
+        Organization organization = organizationDao.getOrganizationById(id);
+        model.addAttribute("organization", organization);
+        return "editOrganization";
+    }
+    
+    @PostMapping("editOrganization")
+    public String performEditOrganization(){
+        Organization organization = new Organization();
+        organizationDao.updateOrganization(organization);
+        
+        return "redirect:/organizations";
+    }
 }

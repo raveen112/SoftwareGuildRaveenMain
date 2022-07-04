@@ -15,7 +15,7 @@
         <div class="container">
             <div class="row m-4">
                 <div class="col text-center border border-dark">
-                    <h1>Super Hero Sightings</h1>
+                    <h1><a href="/" class="text-dark">Super Hero Sightings</a></h1>
                 </div>
             </div>
             <div class="row m-4 border border-darl">
@@ -29,7 +29,7 @@
                     <a href="sightings" class="btn btn-outline-primary btn-lg">Sightings</a>
                 </div> 
                 <div class="col text-center m-3">
-                    <a href="organization" class="btn btn-outline-primary btn-lg">Organizations</a>
+                    <a href="organizations" class="btn btn-outline-primary btn-lg">Organizations</a>
                 </div> 
                 <div class="col text-center m-3">
                     <a href="superpowers" class="btn btn-outline-primary btn-lg">Powers</a>
@@ -62,8 +62,8 @@
                                     <td th:text ="${sighting.id}">ID</td>
                                     <td th:text ="${sighting.date}">Date</td>
                                     <td th:text ="${sighting.hero.name}">Supe</td>
-                                    <td th:text ="${sighting.locations.name}">Supe</td>
-                                    <td><a href="#" th:href="@{/detailSighting(id=${sighting.id})}">Details</a></td>
+                                    <td th:text ="${sighting.location.name}">Supe</td>
+                                    <td><a href="#" th:href="@{/sightingDetails(id=${sighting.id})}">Details</a></td>
                                 </tr>
                             </tbody>
                         </table> 
