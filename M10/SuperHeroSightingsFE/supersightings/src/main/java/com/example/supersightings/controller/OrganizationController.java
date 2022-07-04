@@ -59,38 +59,50 @@ public class OrganizationController {
 
     @PostMapping("addOrganization")
     public String addOrganization(Organization organization, HttpServletRequest request) {
-       
-        
+
         List<Hero> members = heroDao.getMembersForOrganization(organization);
-        for(Hero hero : members){
+        for (Hero hero : members) {
             System.out.println(hero.getName());
         }
-      
+
         organizationDao.addOrganization(organization);
 
         return "redirect:/organizations";
 
     }
-    
-     @GetMapping("organizationDetails")
+
+    @GetMapping("organizationDetails")
     public String organizationDetail(Integer id, Model model) {
         Organization organization = organizationDao.getOrganizationById(id);
         model.addAttribute("organization", organization);
         return "organizationDetails";
     }
-    
+
     @GetMapping("editOrganization")
-    public String editOrganization(Integer id, Model model){
+    public String editOrganization(Integer id, Model model) {
         Organization organization = organizationDao.getOrganizationById(id);
         model.addAttribute("organization", organization);
         return "editOrganization";
     }
-    
+
     @PostMapping("editOrganization")
-    public String performEditOrganization(){
+    public String performEditOrganization(HttpServletRequest request) {
         Organization organization = new Organization();
+
+        organization.setName(request.getParameter("name"));
+        organization.setAddress(request.getParameter("address"));
+        organization.setDescription(request.getParameter("description"));
         organizationDao.updateOrganization(organization);
+
+        return "redirect:/organizations";
+    }
+
+    @GetMapping("deleteOrganization")
+    public String deleteOrganization(HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        organizationDao.deleteOrganizationById(id);
         
+
         return "redirect:/organizations";
     }
 }
