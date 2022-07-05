@@ -23,6 +23,7 @@ superId INT PRIMARY KEY AUTO_INCREMENT,
 heroName VARCHAR(50) NOT NULL,
 heroDescription VARCHAR(50) NOT NULL,
 superPowerId INT NOT NULL,
+`super_image` blob,
 FOREIGN KEY (superPowerId)
 REFERENCES super_power(superPowerId)
 );

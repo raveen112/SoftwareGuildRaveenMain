@@ -43,7 +43,7 @@
                     <span class="h3">Add Hero:</span>
                 </div>
                 <div class="col-7 text-center m-3">
-                    <form action="addHero" method="POST">
+                    <form action="addHero" method="POST" enctype="multipart/form-data">
                         <div class="form-group row">
                             <label for="name" class="col-3 col-form-label">
                                 Name</label>
@@ -83,6 +83,12 @@
                             </div>
                         </div>
                         
+                        <div class="form-group row">
+                            <label for="superImage" class="col-3 col-form-label">Super Image</label>
+                            <div class="col-9 text-left">
+                                <input type="file" name="superImageToSave" id="superImage" class="file"/>
+                            </div>  
+                        </div>
                         <button type="submit" class="btn btn-primary">Add Hero</button>
                     </form>
 

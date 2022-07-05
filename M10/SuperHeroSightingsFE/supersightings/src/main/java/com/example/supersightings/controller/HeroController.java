@@ -14,9 +14,14 @@ import com.example.supersightings.model.Hero;
 import com.example.supersightings.model.Location;
 import com.example.supersightings.model.Organization;
 import com.example.supersightings.model.Superpower;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +29,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -61,7 +69,7 @@ public class HeroController {
     }
 
     @PostMapping("addHero")
-    public String addHero(Hero hero, HttpServletRequest request) {
+    public String addHero(Hero hero, HttpServletRequest request, @RequestParam("superImageToSave") MultipartFile file, RedirectAttributes redirect) throws IOException {
         String superPowerId = request.getParameter("id");
         String[] organizationIds = request.getParameterValues("orgId");
         String heroDescription = request.getParameter("description");
@@ -75,6 +83,7 @@ public class HeroController {
 
         hero.setDescription(heroDescription);
         hero.setOrganization(organizations);
+        hero.setSuperImage(file.getBytes());
 
         heroDao.addHero(hero);
         return "redirect:/supers";
@@ -119,13 +128,23 @@ public class HeroController {
 
         return "redirect:/supers";
     }
-    
+
     @GetMapping("heroDetails")
     public String heroDetail(Integer id, Model model) {
-        
+
         Hero hero = heroDao.getHeroById(id);
         model.addAttribute("hero", hero);
         return "heroDetails";
+    }
+
+    @GetMapping("supers/{id}/image")
+    public void renderSuperImage(@PathVariable String id, HttpServletResponse response) throws IOException {
+        Hero hero = heroDao.getHeroById(Integer.parseInt(id));
+
+        response.setContentType("image/jpeg");
+        InputStream is = new ByteArrayInputStream(hero.getSuperImage());
+        IOUtils.copy(is, response.getOutputStream());
+
     }
 
 }

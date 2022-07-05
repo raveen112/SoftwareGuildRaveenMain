@@ -94,9 +94,11 @@ public class HeroDaoDB implements HeroDao {
                 hero.getName(),
                 hero.getDescription(),
                 hero.getSuperPower().getId());
+                hero.getSuperImage();
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         hero.setId(newId);
+        
         insertHeroOrganization(hero);
         return hero;
     }

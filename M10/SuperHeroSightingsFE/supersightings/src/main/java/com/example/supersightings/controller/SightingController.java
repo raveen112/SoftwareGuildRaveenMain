@@ -18,7 +18,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -123,6 +122,8 @@ public class SightingController {
         return "editSighting";
     }
     
+    // need to debug
+    
     @PostMapping("editSighting")
     public String performEditSighting(HttpServletRequest request, Model model){
         Sighting sighting = new Sighting();
@@ -134,10 +135,4 @@ public class SightingController {
         sightingDao.updateSighting(sighting);
         return "redirect:/sightings";
     }
-
-    
-
-
-    // edit reach and edit perform remains!
-    
 }
