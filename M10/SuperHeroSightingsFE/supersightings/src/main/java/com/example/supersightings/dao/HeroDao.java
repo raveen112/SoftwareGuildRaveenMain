@@ -29,4 +29,6 @@ public interface HeroDao {
     List<Hero> getMembersForOrganization(Organization organization);
 
     List<Hero> getAllHeroSightedAtLocation(Location location);
+//    
+//    Hero getImageForHero(int superId);
 }

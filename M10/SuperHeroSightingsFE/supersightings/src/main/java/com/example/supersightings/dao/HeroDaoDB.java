@@ -157,6 +157,11 @@ public class HeroDaoDB implements HeroDao {
                "WHERE ho.orgId = ?";
        return jdbc.query(GET_MEMBERS_FOR_ORGANIZATION, new HeroMapper(), organization.getId());
     }
+    
+    public List<Hero> getImageForHero(int superId){
+        final String GET_IMAGE_FOR_HERO = "Select super_image FROM super_people";
+        return jdbc.query(GET_IMAGE_FOR_HERO, new HeroMapper() ,Integer.class);
+    }
 
     public static final class HeroMapper implements RowMapper<Hero> {
 

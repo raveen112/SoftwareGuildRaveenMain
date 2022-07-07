@@ -140,8 +140,8 @@ public class HeroController {
     @GetMapping("supers/{id}/image")
     public void renderSuperImage(@PathVariable String id, HttpServletResponse response) throws IOException {
         Hero hero = heroDao.getHeroById(Integer.parseInt(id));
-
-        response.setContentType("image/jpeg");
+//        byte[] imageData = heroDao.getImageForHero(Integer.parseInt(id));
+        response.setContentType("image/jpg");
         InputStream is = new ByteArrayInputStream(hero.getSuperImage());
         IOUtils.copy(is, response.getOutputStream());
 
