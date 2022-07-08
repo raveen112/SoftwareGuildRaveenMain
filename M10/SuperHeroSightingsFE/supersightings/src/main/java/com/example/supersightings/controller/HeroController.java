@@ -18,6 +18,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -113,7 +114,8 @@ public class HeroController {
         String superPowerId = request.getParameter("superpowerId");
         String[] organizationIds = request.getParameterValues("orgId");
         String heroDescription = request.getParameter("description");
-
+        String heroName = request.getParameter("name");
+        
         hero.setSuperPower(superpowerDao.getSuperpowerById(Integer.parseInt(superPowerId)));
 
         List<Organization> organizations = new ArrayList<>();
@@ -121,7 +123,8 @@ public class HeroController {
         for (String organizationId : organizationIds) {
             organizations.add(organizationDao.getOrganizationById(Integer.parseInt(organizationId)));
         }
-
+        hero.setId(Integer.parseInt(request.getParameter("id")));
+        hero.setName(heroName);
         hero.setDescription(heroDescription);
         hero.setOrganization(organizations);
         heroDao.updateHero(hero);
@@ -138,13 +141,16 @@ public class HeroController {
     }
 
     @GetMapping("supers/{id}/image")
-    public void renderSuperImage(@PathVariable String id, HttpServletResponse response) throws IOException {
+    public void renderSuperImage(@PathVariable String id, HttpServletResponse response, Model model) throws IOException {
         Hero hero = heroDao.getHeroById(Integer.parseInt(id));
-//        byte[] imageData = heroDao.getImageForHero(Integer.parseInt(id));
+        byte[] imageData = hero.getSuperImage();
+        String getImageData = Base64.getMimeEncoder().encodeToString(imageData);
+        model.addAttribute("imageData",getImageData);
+       
+        
         response.setContentType("image/jpg");
         InputStream is = new ByteArrayInputStream(hero.getSuperImage());
         IOUtils.copy(is, response.getOutputStream());
-
     }
 
 }

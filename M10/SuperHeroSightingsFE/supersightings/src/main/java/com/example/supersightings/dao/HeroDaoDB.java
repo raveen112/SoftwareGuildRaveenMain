@@ -71,6 +71,7 @@ public class HeroDaoDB implements HeroDao {
         }
     }
 
+
     //------------------------------------------------------------------------------------------------------------------------------
     @Override
     public List<Hero> getAllHero() {
@@ -113,6 +114,10 @@ public class HeroDaoDB implements HeroDao {
                 hero.getDescription(),
                 hero.getSuperPower().getId(),
                 hero.getId());
+        
+//        final String DELETE_SUPER_POWER = "DELETE FROM superPower WHERE superId = ?";
+//        jdbc.update(DELETE_SUPER_POWER, hero.getId());
+//        insert(hero);
         
         final String DELETE_HERO_ORGANIZATION = "DELETE FROM super_people_org WHERE superId= ?";
         jdbc.update(DELETE_HERO_ORGANIZATION, hero.getId());
@@ -171,6 +176,7 @@ public class HeroDaoDB implements HeroDao {
             hero.setId(rs.getInt("superId"));
             hero.setName(rs.getString("heroName"));
             hero.setDescription(rs.getString("heroDescription"));
+            hero.setSuperImage(rs.getBytes("super_image"));
             return hero;
         }
 

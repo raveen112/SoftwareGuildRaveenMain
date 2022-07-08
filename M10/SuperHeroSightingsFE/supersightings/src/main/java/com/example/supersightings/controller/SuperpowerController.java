@@ -10,8 +10,6 @@ import com.example.supersightings.dao.LocationDao;
 import com.example.supersightings.dao.OrganizationDao;
 import com.example.supersightings.dao.SightingDao;
 import com.example.supersightings.dao.SuperpowerDao;
-import com.example.supersightings.model.Hero;
-import com.example.supersightings.model.Organization;
 import com.example.supersightings.model.Superpower;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
