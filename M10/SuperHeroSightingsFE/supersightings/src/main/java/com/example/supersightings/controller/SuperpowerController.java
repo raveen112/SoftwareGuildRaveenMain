@@ -69,10 +69,11 @@ public class SuperpowerController {
     }
     
     @PostMapping("editSuperpower")
-    public String performEditSuperpower(Integer id, HttpServletRequest request){
+    public String performEditSuperpower(HttpServletRequest request){
         
-        Superpower superpower = superpowerDao.getSuperpowerById(id);
-
+        Superpower superpower = new Superpower();
+        
+        superpower.setId(Integer.parseInt(request.getParameter("id")));
         superpower.setName(request.getParameter("name"));
         superpowerDao.updateSuperpower(superpower);
 

@@ -86,6 +86,7 @@ public class OrganizationController {
     public String performEditOrganization(HttpServletRequest request) {
         Organization organization = new Organization();
 
+        organization.setId(Integer.parseInt(request.getParameter("id")));
         organization.setName(request.getParameter("name"));
         organization.setAddress(request.getParameter("address"));
         organization.setDescription(request.getParameter("description"));
