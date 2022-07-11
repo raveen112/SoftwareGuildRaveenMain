@@ -8,6 +8,8 @@ package com.example.supersightings.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -16,10 +18,19 @@ import java.util.Objects;
 public class Organization {
 
     private int id;
+
+    @NotBlank(message = "Name cannot be empty.")
+    @Size(max = 40, message = "Name must be less than 40 characters.")
     private String name;
+
+    @NotBlank(message = "Description cannot be empty.")
+    @Size(max = 120, message = "Description must be less than 120 characters.")
     private String description;
+
+    @NotBlank(message = "Address cannot be empty.")
     private String address;
     private String contact;
+    
     private List<Hero> members = new ArrayList<>();
 
     public int getId() {
@@ -70,7 +81,6 @@ public class Organization {
         this.members = members;
     }
 
-    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -115,6 +125,5 @@ public class Organization {
         }
         return true;
     }
-    
-    
+
 }

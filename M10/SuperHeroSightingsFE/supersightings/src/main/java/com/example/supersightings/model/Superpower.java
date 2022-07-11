@@ -6,6 +6,7 @@
 package com.example.supersightings.model;
 
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
@@ -13,6 +14,7 @@ import java.util.Objects;
  */
 public class Superpower {
     private int id;
+    
     private String name;
 
     public int getId() {

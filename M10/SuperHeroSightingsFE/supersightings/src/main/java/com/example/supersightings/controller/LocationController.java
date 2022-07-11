@@ -12,8 +12,13 @@ import com.example.supersightings.dao.SightingDao;
 import com.example.supersightings.dao.SuperpowerDao;
 import com.example.supersightings.model.Location;
 import com.example.supersightings.model.Organization;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,12 +47,16 @@ public class LocationController {
     @Autowired
     SuperpowerDao superpowerDao;
 
+    Set<ConstraintViolation<Location>> violations = new HashSet<>();
+
     @GetMapping("locations")
     public String displayLocations(Model model) {
+
         List<Location> locations = locationDao.getAllLocations();
         List<Organization> organizations = organizationDao.getAllOrganization();
         model.addAttribute("organziations", organizations);
         model.addAttribute("locations", locations);
+        model.addAttribute("errors", violations);
         return "locations";
     }
 
@@ -59,14 +68,19 @@ public class LocationController {
         String latitude = request.getParameter("latitude");
         String longitude = request.getParameter("longitude");
 
-        
+
         location.setName(name);
         location.setDescription(description);
         location.setAddress(address);
         location.setLatitude(latitude);
         location.setLongitude(longitude);
 
-        locationDao.addLocation(location);
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(location);
+
+        if (violations.isEmpty()) {
+            locationDao.addLocation(location);
+        }
 
         return "redirect:/locations";
 

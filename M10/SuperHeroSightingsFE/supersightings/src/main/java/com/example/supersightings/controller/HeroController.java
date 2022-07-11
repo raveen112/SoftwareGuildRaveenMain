@@ -19,14 +19,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,21 +60,27 @@ public class HeroController {
     @Autowired
     SuperpowerDao superpowerDao;
 
+    Set<ConstraintViolation<Hero>> violations = new HashSet<>();
+    
     @GetMapping("supers")
     public String displayHero(Model model) {
         List<Hero> supers = heroDao.getAllHero();
         List<Superpower> superpowers = superpowerDao.getAllSuperpowers();
         List<Organization> organizations = organizationDao.getAllOrganization();
 
+        
         model.addAttribute("organizations", organizations);
         model.addAttribute("superpowers", superpowers);
         model.addAttribute("supers", supers);
+//        model.addAttribute("errors", violations);
 
         return "supers";
     }
 
     @PostMapping("addHero")
     public String addHero(Hero hero, HttpServletRequest request, @RequestParam("superImageToSave") MultipartFile file, RedirectAttributes redirect) throws IOException {
+
+        
         String superPowerId = request.getParameter("id");
         String[] organizationIds = request.getParameterValues("orgId");
         String heroDescription = request.getParameter("description");
@@ -87,6 +97,7 @@ public class HeroController {
         hero.setSuperImage(file.getBytes());
 
         heroDao.addHero(hero);
+
         return "redirect:/supers";
     }
 
@@ -115,7 +126,7 @@ public class HeroController {
         String[] organizationIds = request.getParameterValues("orgId");
         String heroDescription = request.getParameter("description");
         String heroName = request.getParameter("name");
-        
+
         hero.setSuperPower(superpowerDao.getSuperpowerById(Integer.parseInt(superPowerId)));
 
         List<Organization> organizations = new ArrayList<>();
@@ -145,9 +156,8 @@ public class HeroController {
         Hero hero = heroDao.getHeroById(Integer.parseInt(id));
         byte[] imageData = hero.getSuperImage();
         String getImageData = Base64.getMimeEncoder().encodeToString(imageData);
-        model.addAttribute("imageData",getImageData);
-       
-        
+        model.addAttribute("imageData", getImageData);
+
         response.setContentType("image/jpg");
         InputStream is = new ByteArrayInputStream(hero.getSuperImage());
         IOUtils.copy(is, response.getOutputStream());

@@ -8,6 +8,8 @@ package com.example.supersightings.model;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -16,10 +18,19 @@ import java.util.Objects;
 public class Hero {
     
     private int id;
+    @NotBlank(message="Name cannot be empty.")
+    @Size(max=40, message = "Name must be less than 40 characters.")
     private String name;
+    
+    @NotBlank(message="Description cannot be empty.")
     private String description;
+    
+    @NotBlank(message="Superpower cannot be empty.")
     private Superpower superPower;
+    
+    
     private List<Organization> organization;
+    
     private byte[] superImage;
 
     public byte[] getSuperImage() {
