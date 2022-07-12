@@ -25,9 +25,7 @@ public class Hero {
     @NotBlank(message="Description cannot be empty.")
     private String description;
     
-    @NotBlank(message="Superpower cannot be empty.")
     private Superpower superPower;
-    
     
     private List<Organization> organization;
     

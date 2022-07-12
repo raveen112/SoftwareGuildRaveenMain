@@ -31,6 +31,8 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,26 +63,24 @@ public class HeroController {
     SuperpowerDao superpowerDao;
 
     Set<ConstraintViolation<Hero>> violations = new HashSet<>();
-    
+
     @GetMapping("supers")
     public String displayHero(Model model) {
         List<Hero> supers = heroDao.getAllHero();
         List<Superpower> superpowers = superpowerDao.getAllSuperpowers();
         List<Organization> organizations = organizationDao.getAllOrganization();
 
-        
         model.addAttribute("organizations", organizations);
         model.addAttribute("superpowers", superpowers);
         model.addAttribute("supers", supers);
-//        model.addAttribute("errors", violations);
+        model.addAttribute("errors", violations);
 
         return "supers";
     }
 
     @PostMapping("addHero")
-    public String addHero(Hero hero, HttpServletRequest request, @RequestParam("superImageToSave") MultipartFile file, RedirectAttributes redirect) throws IOException {
+    public String addHero(Hero hero, BindingResult result, HttpServletRequest request, @RequestParam("superImageToSave") MultipartFile file, RedirectAttributes redirect) throws IOException {
 
-        
         String superPowerId = request.getParameter("id");
         String[] organizationIds = request.getParameterValues("orgId");
         String heroDescription = request.getParameter("description");
@@ -88,16 +88,25 @@ public class HeroController {
 
         List<Organization> organizations = new ArrayList<>();
 
-        for (String organizationId : organizationIds) {
-            organizations.add(organizationDao.getOrganizationById(Integer.parseInt(organizationId)));
-        }
+        if (organizationIds != null) {
 
+            for (String organizationId : organizationIds) {
+                organizations.add(organizationDao.getOrganizationById(Integer.parseInt(organizationId)));
+            }
+        }else {
+            FieldError error = new FieldError("hero", "organizations", "Must Include one organization.");
+            result.addError(error);
+        }
         hero.setDescription(heroDescription);
         hero.setOrganization(organizations);
         hero.setSuperImage(file.getBytes());
 
-        heroDao.addHero(hero);
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(hero);
 
+        if (violations.isEmpty()) {
+            heroDao.addHero(hero);
+        }
         return "redirect:/supers";
     }
 

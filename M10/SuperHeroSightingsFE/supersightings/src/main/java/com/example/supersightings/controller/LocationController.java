@@ -17,11 +17,13 @@ import java.util.List;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
+import javax.validation.Valid;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -68,7 +70,6 @@ public class LocationController {
         String latitude = request.getParameter("latitude");
         String longitude = request.getParameter("longitude");
 
-
         location.setName(name);
         location.setDescription(description);
         location.setAddress(address);
@@ -104,15 +105,18 @@ public class LocationController {
     }
 
     @PostMapping("editLocation")
-    public String performEditLocation(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        Location location = locationDao.getLocationById(id);
+    public String performEditLocation(@Valid Location location, BindingResult result, HttpServletRequest request) {
 
+        location.setId(Integer.parseInt(request.getParameter("id")));
         location.setName(request.getParameter("name"));
         location.setAddress(request.getParameter("address"));
         location.setDescription(request.getParameter("description"));
         location.setLatitude(request.getParameter("latitude"));
         location.setLongitude(request.getParameter("longitude"));
+
+        if (result.hasErrors()) {
+            return "editLocation";
+        }
 
         locationDao.updateLocation(location);
 

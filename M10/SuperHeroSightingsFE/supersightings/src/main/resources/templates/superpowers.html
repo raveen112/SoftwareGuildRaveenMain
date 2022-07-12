@@ -39,6 +39,11 @@
             <!--Add error message-->
 
             <div class="row m-4 border border-dark">
+                <div class="col-12 m-1 text-center" 
+                     th:if="${!errors.isEmpty()}">
+                    <p class="alert alert-danger" th:each="error : ${errors}" 
+                       th:text="${error.message}">Error message</p>
+                </div>
                 <div class="col-3 text-center m-3">
                     <span class="h3">Add Power:</span>
                 </div>
@@ -75,7 +80,7 @@
                             <tr th:each="superpower : ${superpowers}">
                                 <td th:text ="${superpower.id}">SuperIDs</td>
                                 <td th:text ="${superpower.name}">Superpower Name</td>
-                               <!-- <td><a href="#" th:href="@{/superPowerDetails(id=${superpower.superPowerId})}">Details</a></td> -->
+                                <!-- <td><a href="#" th:href="@{/superPowerDetails(id=${superpower.superPowerId})}">Details</a></td> -->
                                 <td><a href="#" th:href="@{/editSuperpower(id=${superpower.id})}">Edit</a></td>
                                 <td><a href="#" th:href="@{/deleteSuperpower(id=${superpower.id})}">Delete</a></td>
 

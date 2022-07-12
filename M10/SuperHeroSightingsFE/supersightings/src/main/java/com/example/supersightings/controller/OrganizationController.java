@@ -12,8 +12,13 @@ import com.example.supersightings.dao.SightingDao;
 import com.example.supersightings.dao.SuperpowerDao;
 import com.example.supersightings.model.Hero;
 import com.example.supersightings.model.Organization;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +47,8 @@ public class OrganizationController {
     @Autowired
     SuperpowerDao superpowerDao;
 
+    Set<ConstraintViolation<Organization>> violations = new HashSet<>();
+
     @GetMapping("organizations")
     public String displayOrganizations(Model model) {
         List<Hero> heroes = heroDao.getAllHero();
@@ -50,6 +57,8 @@ public class OrganizationController {
         model.addAttribute("heroes", heroes);
 
         model.addAttribute("organizations", organizations);
+        
+        model.addAttribute("errors", violations);
 
         return "organizations";
     }
@@ -62,8 +71,12 @@ public class OrganizationController {
             System.out.println(hero.getName());
         }
 
-        organizationDao.addOrganization(organization);
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(organization);
 
+        if (violations.isEmpty()) {
+            organizationDao.addOrganization(organization);
+        }
         return "redirect:/organizations";
 
     }
@@ -99,7 +112,6 @@ public class OrganizationController {
     public String deleteOrganization(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
         organizationDao.deleteOrganizationById(id);
-        
 
         return "redirect:/organizations";
     }

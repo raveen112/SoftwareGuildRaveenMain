@@ -15,6 +15,7 @@ import javax.validation.constraints.NotBlank;
 public class Superpower {
     private int id;
     
+    @NotBlank(message="Superpower name cannot be empty.")
     private String name;
 
     public int getId() {

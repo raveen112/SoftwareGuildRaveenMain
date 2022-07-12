@@ -47,6 +47,10 @@
                             <div class="col-9">
                                 <input type="text" name="name" 
                                        id="name" class="form-control" th:value="${superpowers.name}"/>
+                                <div th:if="${#fields.hasErrors('superpowers.name')}">
+                                    <p th:each="error : ${#fields.errors('superpowers.name')}" class="alert alert-danger" 
+                                       th:text="${error}"> Bad last name</p>
+                                </div>
                             </div>
                         </div>
 
