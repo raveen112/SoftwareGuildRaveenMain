@@ -86,13 +86,13 @@ public class SuperpowerController {
     @PostMapping("editSuperpower")
     public String performEditSuperpower(@Valid Superpower superpower, HttpServletRequest request, BindingResult result) {
 
-        
         superpower.setId(Integer.parseInt(request.getParameter("id")));
         superpower.setName(request.getParameter("name"));
-        
-        if(result.hasErrors()){
+
+        if (result.hasErrors()) {
             return "editSuperpower";
         }
+        
         superpowerDao.updateSuperpower(superpower);
 
         return "redirect:/superpowers";
