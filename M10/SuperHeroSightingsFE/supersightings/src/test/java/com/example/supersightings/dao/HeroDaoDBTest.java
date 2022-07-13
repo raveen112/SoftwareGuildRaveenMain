@@ -223,8 +223,8 @@ public class HeroDaoDBTest {
         location.setName("Toronto");
         location.setDescription("6ix");
         location.setAddress("ON, CA");
-        location.setLatitude("11.11");
-        location.setLongitude("-11.23");
+        location.setLatitude(11.11);
+        location.setLongitude(-11.23);
         locationDao.addLocation(location);
 
         Hero hero = new Hero();

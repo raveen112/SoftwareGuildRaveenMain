@@ -25,18 +25,66 @@ public class Location {
     
     @NotBlank(message="Address cannot be empty.")
     private String address;
-    private String longitude;
-    private String latitude;
+    private Double longitude;
+    private Double latitude;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + this.id;
-        hash = 67 * hash + Objects.hashCode(this.name);
-        hash = 67 * hash + Objects.hashCode(this.description);
-        hash = 67 * hash + Objects.hashCode(this.address);
-        hash = 67 * hash + Objects.hashCode(this.longitude);
-        hash = 67 * hash + Objects.hashCode(this.latitude);
+        int hash = 7;
+        hash = 71 * hash + this.id;
+        hash = 71 * hash + Objects.hashCode(this.name);
+        hash = 71 * hash + Objects.hashCode(this.description);
+        hash = 71 * hash + Objects.hashCode(this.address);
+        hash = 71 * hash + Objects.hashCode(this.longitude);
+        hash = 71 * hash + Objects.hashCode(this.latitude);
         return hash;
     }
 
@@ -73,53 +121,4 @@ public class Location {
         return true;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    
 }

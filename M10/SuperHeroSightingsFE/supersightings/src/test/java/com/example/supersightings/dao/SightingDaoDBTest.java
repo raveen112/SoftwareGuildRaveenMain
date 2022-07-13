@@ -93,8 +93,8 @@ public class SightingDaoDBTest {
         location.setName("Toronto");
         location.setDescription("6ix");
         location.setAddress("ON, CA");
-        location.setLatitude("11.11");
-        location.setLongitude("-11.23");
+        location.setLongitude(12.41);
+        location.setLatitude(-12.31);
         locationDao.addLocation(location);
 
         Hero hero = new Hero();
@@ -136,8 +136,8 @@ public class SightingDaoDBTest {
         location.setName("Toronto");
         location.setDescription("6ix");
         location.setAddress("ON, CA");
-        location.setLatitude("11.11");
-        location.setLongitude("-11.23");
+        location.setLongitude(12.41);
+        location.setLatitude(-12.31);
         locationDao.addLocation(location);
 
         Hero hero = new Hero();
@@ -181,8 +181,8 @@ public class SightingDaoDBTest {
         location.setName("Toronto");
         location.setDescription("6ix");
         location.setAddress("ON, CA");
-        location.setLatitude("11.11");
-        location.setLongitude("-11.23");
+        location.setLongitude(12.41);
+        location.setLatitude(-12.31);
         locationDao.addLocation(location);
 
         Hero hero = new Hero();
@@ -235,8 +235,8 @@ public class SightingDaoDBTest {
         location.setName("Toronto");
         location.setDescription("6ix");
         location.setAddress("ON, CA");
-        location.setLatitude("11.11");
-        location.setLongitude("-11.23");
+        location.setLongitude(12.41);
+        location.setLatitude(-12.31);
         locationDao.addLocation(location);
 
         Hero hero = new Hero();

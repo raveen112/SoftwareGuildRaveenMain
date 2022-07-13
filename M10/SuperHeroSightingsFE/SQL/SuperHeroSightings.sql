@@ -9,8 +9,8 @@ locationId int PRIMARY KEY AUTO_INCREMENT,
 `name` VARCHAR(50) NOT NULL,
 `description` VARCHAR(50) NOT NULL,
 address VARCHAR(50) NOT NULL,
-longitude VARCHAR(40),
-latitude VARCHAR(40)
+longitude DOUBLE,
+latitude DOUBLE
 );
 
 CREATE TABLE super_power(
@@ -23,7 +23,7 @@ superId INT PRIMARY KEY AUTO_INCREMENT,
 heroName VARCHAR(50) NOT NULL,
 heroDescription VARCHAR(50) NOT NULL,
 superPowerId INT NOT NULL,
-`super_image` blob,
+`super_image` LONGBLOB
 FOREIGN KEY (superPowerId)
 REFERENCES super_power(superPowerId)
 );
@@ -59,16 +59,3 @@ PRIMARY KEY (superId, orgId),
 	REFERENCES super_org(orgId)
 );
 
--- SELECT o.* FROM super_people h 
--- JOIN super_people_org ho
--- ON h.superId = ho.superId 
--- JOIN super_org o 
--- ON ho.orgId = o.orgId 
--- WHERE h.superId = 1;
-
--- SELECT * FROM sightings WHERE sightingId= 1;
-
--- SELECT DISTINCT h.* FROM super_people h 
---                 JOIN super_people_org ho 
---                 ON h.superId = ho.superId
---                 WHERE orgId = 1;

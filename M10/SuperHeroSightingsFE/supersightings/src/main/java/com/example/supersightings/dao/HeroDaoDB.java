@@ -88,14 +88,14 @@ public class HeroDaoDB implements HeroDao {
     @Override
     @Transactional
     public Hero addHero(Hero hero) {
-        final String INSERT_HERO = "INSERT INTO super_people(heroName, heroDescription, superPowerId) "
-                + "VALUES(?,?,?)";
+        final String INSERT_HERO = "INSERT INTO super_people(heroName, heroDescription, superPowerId, super_image) "
+                + "VALUES(?,?,?,?)";
 
         jdbc.update(INSERT_HERO,
                 hero.getName(),
                 hero.getDescription(),
-                hero.getSuperPower().getId());
-                hero.getSuperImage();
+                hero.getSuperPower().getId(),
+                hero.getSuperImage());
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         hero.setId(newId);

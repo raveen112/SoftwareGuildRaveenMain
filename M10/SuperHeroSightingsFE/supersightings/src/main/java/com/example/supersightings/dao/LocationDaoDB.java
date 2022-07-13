@@ -103,8 +103,8 @@ public class LocationDaoDB implements LocationDao {
             location.setName(rs.getString("name"));
             location.setAddress(rs.getString("address"));
             location.setDescription(rs.getString("description"));
-            location.setLatitude(rs.getString("latitude"));
-            location.setLongitude(rs.getString("longitude"));
+            location.setLatitude(rs.getDouble("latitude"));
+            location.setLongitude(rs.getDouble("longitude"));
 
             return location;
         }

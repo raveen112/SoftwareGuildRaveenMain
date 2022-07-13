@@ -69,8 +69,8 @@ public class LocationDaoDBTest {
         location.setName("Test first");
         location.setDescription("Test Description");
         location.setAddress("Test address");
-        location.setLongitude("Test Longitude");
-        location.setLatitude("Test Latitude");
+        location.setLongitude(12.41);
+        location.setLatitude(-12.31);
 
         location = locationDao.addLocation(location);
 
@@ -89,16 +89,16 @@ public class LocationDaoDBTest {
         location.setName("Test first");
         location.setDescription("Test Description");
         location.setAddress("Test address");
-        location.setLongitude("Test Longitude");
-        location.setLatitude("Test Latitude");
+        location.setLongitude(12.41);
+        location.setLatitude(-12.31);
         location = locationDao.addLocation(location);
 
         Location location2 = new Location();
         location2.setName("Test first 2");
         location2.setDescription("Test Description 2 ");
         location2.setAddress("Test address 2");
-        location2.setLongitude("Test Longitude 2");
-        location2.setLatitude("Test Latitude 2");
+        location2.setLongitude(12.41);
+        location2.setLatitude(-21.3);
         location2 = locationDao.addLocation(location2);
 
         List<Location> locations = locationDao.getAllLocations();
@@ -120,8 +120,8 @@ public class LocationDaoDBTest {
         location.setName("Test first");
         location.setDescription("Test Description");
         location.setAddress("Test address");
-        location.setLongitude("Test Longitude");
-        location.setLatitude("Test Latitude");
+        location.setLongitude(12.41);
+        location.setLatitude(-12.31);
         location = locationDao.addLocation(location);
 
         Location fromDao = locationDao.getLocationById(location.getId());
@@ -146,8 +146,8 @@ public class LocationDaoDBTest {
         location.setName("Test first");
         location.setDescription("Test Description");
         location.setAddress("Test address");
-        location.setLongitude("Test Longitude");
-        location.setLatitude("Test Latitude");
+        location.setLongitude(12.41);
+        location.setLatitude(-12.31);
         location = locationDao.addLocation(location);
         
         Location fromDao = locationDao.getLocationById(location.getId());

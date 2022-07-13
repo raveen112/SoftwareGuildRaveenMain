@@ -16,7 +16,7 @@
         <div class="container">
             <div class="row m-4">
                 <div class="col text-center border border-dark">
-                      <h1><a href="/" class="text-dark">Super Hero Sightings</a></h1>
+                    <h1><a href="/" class="text-dark">Super Hero Sightings</a></h1>
                 </div>
             </div>
             <div class="row m-4 border border-darl">
@@ -53,16 +53,18 @@
                         </div>
 
                         <div class="form-group row">
+
                             <label for="superpower" class="col-3 col-form-label">Superpower</label>
-                            <select id="superpower" name="superpowerId" class="form-control col-9">
-                                <option th:each="superpower : ${superpowers}" 
-                                        th:value="${superpower.id}" 
-                                        th:text="${superpower.name}"
-                                        th:selected="${hero.id == superpower.id}">SuperPower</option>
-                                        
-                            </select>
+                            <div class="col-9">
+                                <select id="superpower" name="superpowerId" class="form-control col-9">
+                                    <option th:each="superpower : ${superpowers}" 
+                                            th:value="${superpower.id}" 
+                                            th:text="${superpower.name}"
+                                            th:selected="${hero.id == superpower.id}">SuperPower</option>
+
+                                </select>
+                            </div>
                         </div>
-                        
                         <div class="form-group row">
                             <label for="description" class="col-3 col-form-label">
                                 Description</label>

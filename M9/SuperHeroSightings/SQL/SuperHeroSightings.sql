@@ -9,8 +9,8 @@ locationId int PRIMARY KEY AUTO_INCREMENT,
 `name` VARCHAR(50) NOT NULL,
 `description` VARCHAR(50) NOT NULL,
 address VARCHAR(50) NOT NULL,
-longitude VARCHAR(40),
-latitude VARCHAR(40)
+longitude DOUBLE,
+latitude DOUBLE
 );
 
 CREATE TABLE super_power(
@@ -23,6 +23,7 @@ superId INT PRIMARY KEY AUTO_INCREMENT,
 heroName VARCHAR(50) NOT NULL,
 heroDescription VARCHAR(50) NOT NULL,
 superPowerId INT NOT NULL,
+`super_image` LONGBLOB,
 FOREIGN KEY (superPowerId)
 REFERENCES super_power(superPowerId)
 );

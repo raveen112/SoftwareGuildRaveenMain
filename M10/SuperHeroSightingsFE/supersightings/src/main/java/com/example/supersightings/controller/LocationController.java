@@ -67,8 +67,8 @@ public class LocationController {
         String name = request.getParameter("name");
         String description = request.getParameter("description");
         String address = request.getParameter("address");
-        String latitude = request.getParameter("latitude");
-        String longitude = request.getParameter("longitude");
+        Double latitude = Double.parseDouble(request.getParameter("latitude"));
+        Double longitude = Double.parseDouble(request.getParameter("longitude"));
 
         location.setName(name);
         location.setDescription(description);
@@ -111,8 +111,8 @@ public class LocationController {
         location.setName(request.getParameter("name"));
         location.setAddress(request.getParameter("address"));
         location.setDescription(request.getParameter("description"));
-        location.setLatitude(request.getParameter("latitude"));
-        location.setLongitude(request.getParameter("longitude"));
+        location.setLatitude(Double.parseDouble(request.getParameter("latitude")));
+        location.setLongitude(Double.parseDouble(request.getParameter("longitude")));
 
         if (result.hasErrors()) {
             return "editLocation";
