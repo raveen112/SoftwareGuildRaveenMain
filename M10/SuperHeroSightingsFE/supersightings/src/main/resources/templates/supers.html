@@ -123,12 +123,34 @@
                                 <td th:text ="${hero.superPower.name}">Superpower</td>
                                 <td><a href="#" th:href="@{/heroDetails(id=${hero.id})}">Details</a></td>
                                 <td><a href="#" th:href="@{/editSuper(id=${hero.id})}">Edit</a></td>
-                                <td><a href="#" th:href="@{/deleteSupe(id=${hero.id})}">Delete</a></td>
-
+                                <td><a data-toggle="modal" class="btn btn-danger btn-sm deleteButton" style="color:white" th:data-id="${hero.id}" data-target="#deleteSupe">Delete</a></td>
                             </tr>
 
                         </tbody>
                     </table>
+                    <div class="modal" id="deleteSupe" data-target="modal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Delete Supe:</h5>
+                                    <button type ="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body"> 
+                                    <div class="modal-body"> 
+                                        Are you sure you want to confirm this delete?
+                                        <form method="GET" action="">
+                                            <input type="text" hidden="true" name="id" />
+                                            <button type="submit" class="btn btn-delete">Remove</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
                 </div>
             </div>
         </div>
@@ -140,5 +162,27 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script>
+
+
+
+            $('.deleteButton').click(function () {
+                //clone dialog and remove ids to ensure uniqueness
+
+                var modal = $('#deleteSupe');
+
+
+                //apply custom values where needed
+                var btn = $(this);
+                var rowId = btn.attr('data-id');
+                //                modal.find('[name="id"]').val(btn.attr('data-id'));
+                modal.find('form').attr('action', "/deleteSupe/" + rowId);
+                //                $modal.find('button[type="submit"]').attr('href', $modal.find('button[type="submit"]').attr('href'));
+                //show dialog
+
+            });
+
+
+        </script>
     </body>
 </html>;

@@ -25,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -87,9 +88,9 @@ public class LocationController {
 
     }
 
-    @GetMapping("deleteLocation")
-    public String deleteLocation(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
+    @GetMapping("deleteLocation/{id}")
+    public String deleteLocation(HttpServletRequest request, @PathVariable Integer id) {
+       
         locationDao.deleteLocationById(id);
 
         return "redirect:/locations";
@@ -123,5 +124,8 @@ public class LocationController {
         return "redirect:/locations";
 
     }
+    
+  
+    
 
 }

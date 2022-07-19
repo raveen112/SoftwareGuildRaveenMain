@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -108,9 +109,10 @@ public class OrganizationController {
         return "redirect:/organizations";
     }
 
-    @GetMapping("deleteOrganization")
-    public String deleteOrganization(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
+    // path variable reads the integer from the route
+    @GetMapping("deleteOrganization/{id}")
+    public String deleteOrganization(HttpServletRequest request, @PathVariable Integer id) {
+        
         organizationDao.deleteOrganizationById(id);
 
         return "redirect:/organizations";

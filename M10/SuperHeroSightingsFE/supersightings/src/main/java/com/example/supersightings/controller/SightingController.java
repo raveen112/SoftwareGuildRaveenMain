@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -77,8 +78,8 @@ public class SightingController {
         return "redirect:/sightings";
     }
 
-    @GetMapping("deleteSighting")
-    public String deleteSighting(int id) {
+    @GetMapping("deleteSighting/{id}")
+    public String deleteSighting(@PathVariable Integer id) {
         sightingDao.deleteSightingById(id);
         return "redirect:/sightings";
     }

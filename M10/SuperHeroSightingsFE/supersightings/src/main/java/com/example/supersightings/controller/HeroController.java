@@ -110,8 +110,8 @@ public class HeroController {
         return "redirect:/supers";
     }
 
-    @GetMapping("deleteSupe")
-    public String deleteHero(int id) {
+    @GetMapping("deleteSupe/{id}")
+    public String deleteHero(@PathVariable Integer id) {
         heroDao.deleteHeroById(id);
         return "redirect:/supers";
     }
