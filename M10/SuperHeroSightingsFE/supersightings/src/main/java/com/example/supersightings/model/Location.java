@@ -25,6 +25,7 @@ public class Location {
     
     @NotBlank(message="Address cannot be empty.")
     private String address;
+    
     private Double longitude;
     private Double latitude;
 

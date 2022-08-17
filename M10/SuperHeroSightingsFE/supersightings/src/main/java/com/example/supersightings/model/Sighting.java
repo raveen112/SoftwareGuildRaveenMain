@@ -7,14 +7,18 @@ package com.example.supersightings.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import javax.validation.constraints.NotBlank;
 
 /**
  *
  * @author ravee
  */
 public class Sighting {
+
     private int sightingId;
+    
     private LocalDate date;
+    
     Hero hero;
     Location location;
 

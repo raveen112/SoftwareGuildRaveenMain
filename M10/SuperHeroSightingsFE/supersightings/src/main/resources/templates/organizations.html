@@ -102,7 +102,7 @@
                                 <td th:text ="${organization.address}">Address</td>
                                 <td><a href="#" th:href="@{/organizationDetails(id=${organization.id})}">Details</a></td>
                                 <td><a href="#" th:href="@{/editOrganization(id=${organization.id})}">Edit</a></td>
-                                <td><button data-toggle="modal" class="deleteButton" th:data-id="${organization.id}" data-target="#deleteOrganization">Delete</button></td>
+                                <td><a data-toggle="modal" class="btn btn-danger btn-sm deleteButton" style="color:white" th:data-id="${organization.id}" data-target="#deleteOrganization">Delete</a></td>
 
                             </tr>
 

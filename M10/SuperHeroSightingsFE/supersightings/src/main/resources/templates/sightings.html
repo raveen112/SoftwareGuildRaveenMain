@@ -36,7 +36,15 @@
                 </div> 
 
             </div>
+
             <div class="row m-4 border border-dark">
+
+                <div class="col-12 m-1 text-center" 
+                     th:if="${!errors.isEmpty()}">
+                    <p class="alert alert-danger" th:each="error : ${errors}" 
+                       th:text="${error.message}">Error message</p>
+                </div>
+
                 <div class="col-3 text-center m-3">
                     <span class="h3">Add Sighting</span>
                 </div>
@@ -146,9 +154,9 @@
                 //apply custom values where needed
                 var btn = $(this);
                 var rowId = btn.attr('data-id');
-    //                modal.find('[name="id"]').val(btn.attr('data-id'));
+                //                modal.find('[name="id"]').val(btn.attr('data-id'));
                 modal.find('form').attr('action', "/deleteSighting/" + rowId);
-    //                $modal.find('button[type="submit"]').attr('href', $modal.find('button[type="submit"]').attr('href'));
+                //                $modal.find('button[type="submit"]').attr('href', $modal.find('button[type="submit"]').attr('href'));
                 //show dialog
 
             });

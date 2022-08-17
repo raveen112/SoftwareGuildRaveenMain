@@ -17,9 +17,14 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,6 +54,8 @@ public class SightingController {
     @Autowired
     SuperpowerDao superpowerDao;
 
+    Set<ConstraintViolation<Sighting>> violations = new HashSet<>();
+
     @GetMapping("sightings")
     public String displaySightings(Model model) {
         List<Hero> heroes = heroDao.getAllHero();
@@ -57,6 +64,7 @@ public class SightingController {
         model.addAttribute("heroes", heroes);
         model.addAttribute("sightings", sightings);
         model.addAttribute("locations", locations);
+        model.addAttribute("errors", violations);
 
         return "sightings";
     }
@@ -73,7 +81,13 @@ public class SightingController {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         sighting.setDate(LocalDate.parse(date, formatter));
-        sightingDao.addSighting(sighting);
+
+        Validator validate = Validation.buildDefaultValidatorFactory().getValidator();
+        violations = validate.validate(sighting);
+
+        if (violations.isEmpty()) {
+            sightingDao.addSighting(sighting);
+        }
 
         return "redirect:/sightings";
     }
@@ -138,13 +152,13 @@ public class SightingController {
         String superId = request.getParameter("heroId");
         String locationId = request.getParameter("locationId");
         String date = request.getParameter("date");
-        
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         sighting.setDate(LocalDate.parse(date, formatter));
 
 //        sighting.setId(sightingId);
         sighting.setId(Integer.parseInt(sightingId));
-      
+
         sighting.setHero(sightingDao.getHeroForSighting(Integer.parseInt(superId)));
         sighting.setLocation(sightingDao.getLocationForSighting(Integer.parseInt(locationId)));
 

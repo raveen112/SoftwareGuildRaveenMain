@@ -11,23 +11,17 @@ import com.example.supersightings.dao.OrganizationDao;
 import com.example.supersightings.dao.SightingDao;
 import com.example.supersightings.dao.SuperpowerDao;
 import com.example.supersightings.model.Hero;
-import com.example.supersightings.model.Location;
 import com.example.supersightings.model.Organization;
 import com.example.supersightings.model.Superpower;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -160,16 +154,16 @@ public class HeroController {
         return "heroDetails";
     }
 
-    @GetMapping("supers/{id}/image")
-    public void renderSuperImage(@PathVariable String id, HttpServletResponse response, Model model) throws IOException {
-        Hero hero = heroDao.getHeroById(Integer.parseInt(id));
-        byte[] imageData = hero.getSuperImage();
-        String getImageData = Base64.getMimeEncoder().encodeToString(imageData);
-        model.addAttribute("imageData", getImageData);
-
-        response.setContentType("image/jpg");
-        InputStream is = new ByteArrayInputStream(hero.getSuperImage());
-        IOUtils.copy(is, response.getOutputStream());
-    }
+//    @GetMapping("supers/{id}/image")
+//    public void renderSuperImage(@PathVariable String id, HttpServletResponse response, Model model) throws IOException {
+//        Hero hero = heroDao.getHeroById(Integer.parseInt(id));
+//        byte[] imageData = hero.getSuperImage();
+//        String getImageData = Base64.getMimeEncoder().encodeToString(imageData);
+//        model.addAttribute("imageData", getImageData);
+//
+//        response.setContentType("image/jpg");
+//        InputStream is = new ByteArrayInputStream(hero.getSuperImage());
+//        IOUtils.copy(is, response.getOutputStream());
+//    }
 
 }
