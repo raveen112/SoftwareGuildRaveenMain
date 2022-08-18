@@ -21,7 +21,7 @@
             </div>
             <div class="row m-4 border border-dark">
                 <div class="col text-center m-3">
-                    <a href="home" class="btn btn-outline-primary btn-lg">Home</a>
+                    <a href="issues" class="btn btn-outline-primary btn-lg">Home</a>
                 </div>
                 <div class="col text-center m-3">
                     <a href="createIssue" class="btn btn-outline-primary btn-lg">Create New Request</a>
@@ -31,13 +31,15 @@
                 </div>
             </div>
             <div class="row m-4">
-                <div id="itemTemplate" class="col-md-4 p-2 d-none">
-                    <div class="card border-primary mb-3 h-100">
-                        <div id="itemNumber" class="card-header h5"></div>
-                        <div class="card-body text-center">
-                            <div id="itemName" class="card-title text-primary h6"></div>
-                            <div id="itemPrice" class="card-text"></div>
-                            <div id="itemQuantity" class="card-text"></div>
+                <div class="col-md-3" th:each="issue : ${issues}">
+                    <div class="card" style="width: 50rem;">
+                        <img class="card-img-top" src="..." alt="Card image cap">
+                        <div class="card-body">
+                            <p class="card-title" th:text = "${issue.issue_id}"></p>
+                            <hr>
+                            <p class="card-text" th:text = "${issue.login}"></p>
+                            <a href="#" class="btn btn-primary">Mark As Complete</a>
+                            <a href="#" class="btn btn-danger">Delete</a>
                         </div>
                     </div>
                 </div>
