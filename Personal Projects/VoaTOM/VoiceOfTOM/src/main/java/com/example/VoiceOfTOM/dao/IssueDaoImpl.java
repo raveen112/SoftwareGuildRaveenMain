@@ -5,6 +5,7 @@
  */
 package com.example.VoiceOfTOM.dao;
 
+import com.example.VoiceOfTOM.model.Associate;
 import com.example.VoiceOfTOM.model.Issue;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,24 +29,37 @@ public class IssueDaoImpl implements IssueDao {
 
     @Override
     public Issue getIssueById(int id) {
-        try {
-            final String GET_ISSUE_BY_ID = "SELECT * FROM issue WHERE issue_id=?";
-            return jdbc.queryForObject(GET_ISSUE_BY_ID, new IssueMapper(), id);
+         try {
+            final String GET_ISSUE_BY_ID = "SELECT * FROM issues WHERE issue_id= ?";
+            Issue Issue = jdbc.queryForObject(GET_ISSUE_BY_ID, new IssueMapper(), id);
+            Issue.setAssociate(getAssociateForIssue(id));
+            return Issue;
         } catch (DataAccessException ex) {
+            System.out.println(ex.getMessage());
             return null;
         }
     }
+    
+   // Helper methods
 
+    public List<Associate> getAssociateForIssue(int id){
+        final String GET_ASSOCIATE_FOR_ISSUE = "SELECT i.* FROM associate JOIN issues a "
+                + "ON i.issue_id= a.issue_id"
+                + "WHERE i.issue_id= ?";
+         return jdbc.queryForObject(GET_ASSOCIATE_FOR_ISSUE, new IssueDaoImpl.IssueMapper(), id);
+    }
+    
+    
     @Override
     public List<Issue> getAllIssues() {
-        final String GET_ALL_ISSUES = "SELECT * FROM issue";
+        final String GET_ALL_ISSUES = "SELECT * FROM issues";
         return jdbc.query(GET_ALL_ISSUES, new IssueMapper());
     }
 
     @Override
     @Transactional
     public Issue addIssue(Issue issue) {
-        final String INSERT_ISSUE = "INSERT INTO issue(complaint, date, status) VALUES(?, ?, ?);";
+        final String INSERT_ISSUE = "INSERT INTO issues(complaint, date, status) VALUES(?, ?, ?);";
         
         jdbc.update(INSERT_ISSUE, 
                 issue.getComplaint(),
@@ -61,7 +75,7 @@ public class IssueDaoImpl implements IssueDao {
 
     @Override
     public void updateIssue(Issue issue) {
-        final String UPDATE_ISSUE = "UPDATE issue SET complaint=?, date=?, status=? WHERE issue_id =?";
+        final String UPDATE_ISSUE = "UPDATE issues SET complaint=?, date=?, status=? WHERE issue_id =?";
         jdbc.update(UPDATE_ISSUE, 
                 issue.getComplaint(),
                 issue.getDate(),
@@ -71,8 +85,13 @@ public class IssueDaoImpl implements IssueDao {
 
     @Override
     public void deleteIssueById(int id) {
-      final String DELETE_ISSUE = "DELETE FROM issue WHERE issue_id=?" ; 
+      final String DELETE_ISSUE = "DELETE FROM issues WHERE issue_id=?" ; 
       jdbc.update(DELETE_ISSUE, id);
+    }
+
+    @Override
+    public List<Issue> getIssuesByAssociate(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public static final class IssueMapper implements RowMapper<Issue> {

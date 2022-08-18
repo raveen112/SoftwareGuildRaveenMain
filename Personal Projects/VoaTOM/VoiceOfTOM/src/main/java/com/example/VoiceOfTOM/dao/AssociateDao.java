@@ -5,11 +5,24 @@
  */
 package com.example.VoiceOfTOM.dao;
 
+import com.example.VoiceOfTOM.model.Associate;
+import java.util.List;
+
 /**
  *
  * @author ravee
  */
 public interface AssociateDao {
-    
-    
+
+    Associate getAssociateById(int id);
+
+    List<Associate> getAllAssociates();
+
+    Associate addAssociate(Associate Associate);
+
+    void updateAssociate(Associate Associate);
+
+    void deleteAssociateById(int id);
+
+
 }

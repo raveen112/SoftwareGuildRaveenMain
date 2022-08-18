@@ -32,14 +32,14 @@
             </div>
             <div class="row m-4">
                 <div class="col-md-3" th:each="issue : ${issues}">
-                    <div class="card" style="width: 50rem;">
-                        <img class="card-img-top" src="..." alt="Card image cap">
+                    <div class="card" style="width: 15rem;">
+                        <img class="card-img-top" src="..." alt="Voice #">
                         <div class="card-body">
                             <p class="card-title" th:text = "${issue.issue_id}"></p>
                             <hr>
-                            <p class="card-text" th:text = "${issue.login}"></p>
-                            <a href="#" class="btn btn-primary">Mark As Complete</a>
-                            <a href="#" class="btn btn-danger">Delete</a>
+                            <p class="card-text" th:text = "${issue.complaint}"></p>
+                            <a href="#" class="btn btn-outline-primary">Mark As Complete</a>
+                            <a href="#" class="btn btn-outline-danger">Delete</a>
                         </div>
                     </div>
                 </div>

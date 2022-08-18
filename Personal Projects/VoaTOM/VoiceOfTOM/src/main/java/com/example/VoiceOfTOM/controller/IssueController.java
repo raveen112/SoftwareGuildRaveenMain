@@ -26,7 +26,7 @@ public class IssueController {
     @GetMapping("issues")
     public String displayIssues(Model model){
         List<Issue> issues = issueDao.getAllIssues();
-        model.addAttribute("issue", issues);
+        model.addAttribute("issues", issues);
         return "issues";
     }
 }

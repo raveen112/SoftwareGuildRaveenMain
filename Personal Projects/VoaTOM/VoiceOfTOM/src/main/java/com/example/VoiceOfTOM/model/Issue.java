@@ -25,5 +25,7 @@ public class Issue {
     LocalDate date;
     String complaint;
     Boolean status;
+    
+    Associate associate;
 
 }

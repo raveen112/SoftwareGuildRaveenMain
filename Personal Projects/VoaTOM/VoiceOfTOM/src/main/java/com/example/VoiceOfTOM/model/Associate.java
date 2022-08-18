@@ -5,6 +5,7 @@
  */
 package com.example.VoiceOfTOM.model;
 
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,5 +21,5 @@ public class Associate {
    int associate_id;
    String login;
    String name;
-   Issue issue;
+   List<Issue> issues;
 }
