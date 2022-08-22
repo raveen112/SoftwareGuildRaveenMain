@@ -5,6 +5,7 @@
  */
 package com.example.VoiceOfTOM.dao;
 
+import com.example.VoiceOfTOM.model.Associate;
 import com.example.VoiceOfTOM.model.Issue;
 import java.util.List;
 
@@ -27,4 +28,5 @@ public interface IssueDao {
     // helper
     
     List<Issue> getIssuesByAssociate(int id);
+    Associate getAssociateForIssue(int id);
 }

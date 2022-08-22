@@ -42,11 +42,12 @@ public class IssueDaoImpl implements IssueDao {
     
    // Helper methods
 
-    public List<Associate> getAssociateForIssue(int id){
-        final String GET_ASSOCIATE_FOR_ISSUE = "SELECT i.* FROM associate JOIN issues a "
+    @Override
+    public Associate getAssociateForIssue(int id){
+        final String GET_ASSOCIATE_FOR_ISSUE = "SELECT i.* FROM associate a JOIN issues a "
                 + "ON i.issue_id= a.issue_id"
-                + "WHERE i.issue_id= ?";
-         return jdbc.queryForObject(GET_ASSOCIATE_FOR_ISSUE, new IssueDaoImpl.IssueMapper(), id);
+                + "WHERE a.id= ?";
+         return jdbc.queryForObject(GET_ASSOCIATE_FOR_ISSUE, new AssociateDaoImpl.AssociateMapper(), id);
     }
     
     

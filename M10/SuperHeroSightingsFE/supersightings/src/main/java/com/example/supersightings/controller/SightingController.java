@@ -74,7 +74,7 @@ public class SightingController {
         String superId = request.getParameter("superPeople");
         String locationId = request.getParameter("location");
         String date = request.getParameter("dateString");
-
+            
         Sighting sighting = new Sighting();
         sighting.setHero(heroDao.getHeroById(Integer.parseInt(superId)));
         sighting.setLocation(locationDao.getLocationById(Integer.parseInt(locationId)));
@@ -88,7 +88,6 @@ public class SightingController {
         if (violations.isEmpty()) {
             sightingDao.addSighting(sighting);
         }
-
         return "redirect:/sightings";
     }
 
