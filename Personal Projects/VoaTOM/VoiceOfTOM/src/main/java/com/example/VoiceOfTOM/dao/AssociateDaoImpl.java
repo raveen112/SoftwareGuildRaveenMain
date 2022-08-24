@@ -40,6 +40,19 @@ public class AssociateDaoImpl implements AssociateDao {
 
     // Helper methods
     @Override
+    public Associate getAssociateByLogin(String login){
+        try{
+            final String GET_ASSOCIATE_BY_LOGIN = "SELECT * FROM associate WHERE login= ?";
+            Associate associate = jdbc.queryForObject(GET_ASSOCIATE_BY_LOGIN, new AssociateMapper(), login);
+            return associate;
+        } catch(DataAccessException ex){
+            System.out.println(ex.getMessage());
+            return null;
+        }
+        
+    }
+    
+    @Override
     public List<Associate> getAllAssociates() {
         final String GET_ALL_ASSOCIATES = "SELECT * FROM associate";
         return jdbc.query(GET_ALL_ASSOCIATES, new AssociateMapper());
@@ -63,7 +76,7 @@ public class AssociateDaoImpl implements AssociateDao {
 
     @Override
     public void updateAssociate(Associate Associate) {
-        final String UPDATE_Associate = "UPDATE Associates SET name=?, login=?  WHERE id =?";
+        final String UPDATE_Associate = "UPDATE associate SET name=?, login=?  WHERE id =?";
         jdbc.update(UPDATE_Associate,
                 Associate.getName(),
                 Associate.getName(),
@@ -73,7 +86,7 @@ public class AssociateDaoImpl implements AssociateDao {
 
     @Override
     public void deleteAssociateById(int id) {
-        final String DELETE_Associate = "DELETE FROM Associates WHERE id=?";
+        final String DELETE_Associate = "DELETE FROM associate WHERE id=?";
         jdbc.update(DELETE_Associate, id);
     }
 

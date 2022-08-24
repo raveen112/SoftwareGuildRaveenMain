@@ -31,9 +31,9 @@ public class IssueDaoImpl implements IssueDao {
     public Issue getIssueById(int id) {
          try {
             final String GET_ISSUE_BY_ID = "SELECT * FROM issues WHERE issue_id= ?";
-            Issue Issue = jdbc.queryForObject(GET_ISSUE_BY_ID, new IssueMapper(), id);
-            Issue.setAssociate(getAssociateForIssue(id));
-            return Issue;
+            Issue issue = jdbc.queryForObject(GET_ISSUE_BY_ID, new IssueMapper(), id);
+            issue.setAssociate(getAssociateForIssue(id));
+            return issue;
         } catch (DataAccessException ex) {
             System.out.println(ex.getMessage());
             return null;
@@ -44,28 +44,37 @@ public class IssueDaoImpl implements IssueDao {
 
     @Override
     public Associate getAssociateForIssue(int id){
-        final String GET_ASSOCIATE_FOR_ISSUE = "SELECT i.* FROM associate a JOIN issues a "
-                + "ON i.issue_id= a.issue_id"
-                + "WHERE a.id= ?";
+        final String GET_ASSOCIATE_FOR_ISSUE = "SELECT a.* FROM associate a JOIN issues i "
+                + "ON i.id= a.id"
+                + " WHERE i.id= ? GROUP BY a.id";
          return jdbc.queryForObject(GET_ASSOCIATE_FOR_ISSUE, new AssociateDaoImpl.AssociateMapper(), id);
     }
+    
+    
     
     
     @Override
     public List<Issue> getAllIssues() {
         final String GET_ALL_ISSUES = "SELECT * FROM issues";
-        return jdbc.query(GET_ALL_ISSUES, new IssueMapper());
+        List<Issue> issues = jdbc.query(GET_ALL_ISSUES, new IssueMapper());
+        
+        for(Issue issue : issues){
+            issue.setAssociate(getAssociateForIssue(issue.getIssue_id()));
+            
+        }
+        return issues;
     }
 
     @Override
     @Transactional
     public Issue addIssue(Issue issue) {
-        final String INSERT_ISSUE = "INSERT INTO issues(complaint, date, status) VALUES(?, ?, ?);";
+        final String INSERT_ISSUE = "INSERT INTO issues(complaint, date, status, id) VALUES(?, ?, ?, ?);";
         
         jdbc.update(INSERT_ISSUE, 
                 issue.getComplaint(),
                 issue.getDate(),
-                issue.getStatus()
+                issue.getStatus(),
+                issue.getAssociate().getAssociate_id()
                 );
         
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);

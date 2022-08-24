@@ -6,7 +6,8 @@
 package com.example.VoiceOfTOM.model;
 
 import java.time.LocalDate;
-import lombok.EqualsAndHashCode;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -15,17 +16,32 @@ import lombok.Setter;
  *
  * @author ravee
  */
-@RequiredArgsConstructor
+
 @Getter
-@EqualsAndHashCode
 @Setter
+@Data
+@Builder
 public class Issue {
 
+    
     int issue_id;
     LocalDate date;
     String complaint;
     Boolean status;
-    
+
     Associate associate;
+
+   
+    public Issue(){
+        
+    }
+    
+    public Issue(int issue_id, LocalDate date, String complaint, Boolean status, Associate associate) {
+        this.issue_id = issue_id;
+        this.date = date;
+        this.complaint = complaint;
+        this.status = status;
+        this.associate = associate;
+    }
 
 }

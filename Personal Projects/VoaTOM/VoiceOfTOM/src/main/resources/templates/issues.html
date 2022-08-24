@@ -33,9 +33,9 @@
             <div class="row m-4">
                 <div class="col-md-3" th:each="issue : ${issues}">
                     <div class="card" style="width: 15rem;">
-                        <img class="card-img-top" src="..." alt="Voice #">
+                        <img class="card-img-top" src="..." th:alt="${issue.date}">
                         <div class="card-body">
-                            <p class="card-title" th:text = "${issue.issue_id}"></p>
+                            <p class="card-title" th:text = "${issue.associate.login   }"></p>
                             <hr>
 
                             <p class="card-text" th:text = "${issue.complaint}"></p>

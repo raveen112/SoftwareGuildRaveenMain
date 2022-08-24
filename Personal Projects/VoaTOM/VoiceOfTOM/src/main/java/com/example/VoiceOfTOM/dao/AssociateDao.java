@@ -23,6 +23,8 @@ public interface AssociateDao {
     void updateAssociate(Associate Associate);
 
     void deleteAssociateById(int id);
+    
+    Associate getAssociateByLogin(String login);
 
 
 }

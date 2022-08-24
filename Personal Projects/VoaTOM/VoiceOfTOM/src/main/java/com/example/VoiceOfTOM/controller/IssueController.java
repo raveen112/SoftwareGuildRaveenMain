@@ -5,7 +5,6 @@
  */
 package com.example.VoiceOfTOM.controller;
 
-
 import com.example.VoiceOfTOM.dao.AssociateDao;
 import com.example.VoiceOfTOM.dao.IssueDao;
 import com.example.VoiceOfTOM.model.Associate;
@@ -30,7 +29,7 @@ public class IssueController {
 
     @Autowired
     IssueDao issueDao;
-    
+
     @Autowired
     AssociateDao associateDao;
 
@@ -40,22 +39,34 @@ public class IssueController {
         List<Associate> associates = associateDao.getAllAssociates();
         model.addAttribute("issues", issues);
         model.addAttribute("associate", associates);
-        
+
         return "issues";
+    }
+
+    @GetMapping("createIssue")
+    public String showCreateIssue(Integer id, Model model) {
+        List<Issue> issues = issueDao.getAllIssues();
+        List<Associate> associates = associateDao.getAllAssociates();
+        model.addAttribute("issues", issues);
+        model.addAttribute("associate", associates);
+
+        return "createIssue";
     }
 
     @PostMapping("addRequest")
     public String addIssue(HttpServletRequest request) {
 
-        String associate = request.getParameter("login");
+        String login = request.getParameter("login");
         String complaint = request.getParameter("complaint");
         String status = request.getParameter("status");
-        String date = request.getParameter("date");
-
+        String date = request.getParameter("dateString");
+        
+        Associate associate = associateDao.getAssociateByLogin(login);
+        
         Issue issue = new Issue();
         issue.setComplaint(complaint);
-        issue.setAssociate(issueDao.getAssociateForIssue(Integer.parseInt(associate)));
-        issue.setStatus(getBoolean(status));    
+        issue.setAssociate(associate);
+        issue.setStatus(getBoolean(status));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         issue.setDate(LocalDate.parse(date, formatter));
@@ -64,4 +75,5 @@ public class IssueController {
 
         return "redirect:/issues";
     }
+
 }
