@@ -44,9 +44,8 @@ public class IssueDaoImpl implements IssueDao {
 
     @Override
     public Associate getAssociateForIssue(int id){
-        final String GET_ASSOCIATE_FOR_ISSUE = "SELECT a.* FROM associate a JOIN issues i "
-                + "ON i.id= a.id"
-                + " WHERE i.id= ? GROUP BY a.id";
+        final String GET_ASSOCIATE_FOR_ISSUE = "SELECT * FROM associate "
+                + "WHERE id = (SELECT i.id FROM issues i WHERE i.issue_id = ?)";
          return jdbc.queryForObject(GET_ASSOCIATE_FOR_ISSUE, new AssociateDaoImpl.AssociateMapper(), id);
     }
     
@@ -113,7 +112,7 @@ public class IssueDaoImpl implements IssueDao {
             issue.setComplaint(rs.getString("complaint"));
             issue.setDate(rs.getTimestamp("date").toLocalDateTime().toLocalDate());
             issue.setStatus(rs.getBoolean("status"));
-
+           
             return issue;
         }
     }
