@@ -41,7 +41,6 @@ public class IssueDaoImpl implements IssueDao {
     }
     
    // Helper methods
-
     @Override
     public Associate getAssociateForIssue(int id){
         final String GET_ASSOCIATE_FOR_ISSUE = "SELECT * FROM associate "
@@ -49,9 +48,7 @@ public class IssueDaoImpl implements IssueDao {
          return jdbc.queryForObject(GET_ASSOCIATE_FOR_ISSUE, new AssociateDaoImpl.AssociateMapper(), id);
     }
     
-    
-    
-    
+        
     @Override
     public List<Issue> getAllIssues() {
         final String GET_ALL_ISSUES = "SELECT * FROM issues";
@@ -103,6 +100,7 @@ public class IssueDaoImpl implements IssueDao {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    
     public static final class IssueMapper implements RowMapper<Issue> {
 
         @Override

@@ -27,11 +27,12 @@
                     <a href="createIssue" class="btn btn-outline-primary btn-lg">Create New Request</a>
                 </div>
                 <div class="col text-center m-3">
-                    <a href="addressRequest" class="btn btn-outline-primary btn-lg">Address Request</a>
+                    <a href="allIssues" class="btn btn-outline-primary btn-lg">Completed Requests</a>
                 </div>
             </div>
-            <div class="row m-4">
+            
                 <div class="col-md-3" th:each="issue : ${issues}">
+                    <div class="row m-4">
                     <div class="card" style="width: 15rem;">
                         <img class="card-img-top" src="..." th:alt="${issue.date}">
                         <div class="card-body">

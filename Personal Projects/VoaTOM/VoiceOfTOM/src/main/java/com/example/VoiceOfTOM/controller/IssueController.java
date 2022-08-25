@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -74,6 +75,24 @@ public class IssueController {
         issueDao.addIssue(issue);
 
         return "redirect:/issues";
+    }
+    
+    @GetMapping("deleteIssue/{id}")
+    public String deleteIssue(HttpServletRequest request, @PathVariable Integer id) {
+       
+        issueDao.deleteIssueById(id);
+
+        return "redirect:/issues";
+    }
+    
+    @GetMapping("allIssues")
+    public String showDeleteIssue(Integer id, Model model) {
+        List<Issue> issues = issueDao.getAllIssues();
+        List<Associate> associates = associateDao.getAllAssociates();
+        model.addAttribute("issues", issues);
+        model.addAttribute("associate", associates);
+
+        return "allIssues";
     }
 
 }
