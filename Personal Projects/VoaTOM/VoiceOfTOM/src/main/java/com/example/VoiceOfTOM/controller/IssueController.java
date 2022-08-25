@@ -94,5 +94,13 @@ public class IssueController {
 
         return "allIssues";
     }
+    
+    @GetMapping("/issueSearch")
+    public String lectureSearch(Model model) {
+
+        model.addAttribute("issue", new Issue());
+
+        return "allIssues";
+    }
 
 }
