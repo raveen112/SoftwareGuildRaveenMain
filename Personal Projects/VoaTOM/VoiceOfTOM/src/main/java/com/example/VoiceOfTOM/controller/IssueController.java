@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,8 +83,29 @@ public class IssueController {
        
         issueDao.deleteIssueById(id);
 
-        return "redirect:/issues";
+        return "redirect:/allIssues";
     }
+    
+    @GetMapping("completeIssue")
+    public String editLocation(HttpServletRequest request, Model model) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Issue issue = issueDao.getIssueById(id);
+
+        model.addAttribute("completeIssue", issue);
+        return "editLocation";
+    }
+    
+    @PostMapping("completeIssue/{id}")
+    public String completeIssue(Issue issue, BindingResult result, HttpServletRequest request) {
+       
+        issue.setStatus(Boolean.TRUE);
+        
+        
+        issueDao.updateIssue(issue);
+        return "redirect:/issues";
+        
+    }
+    
     
     @GetMapping("allIssues")
     public String showDeleteIssue(Integer id, Model model) {
@@ -101,6 +123,15 @@ public class IssueController {
         model.addAttribute("issue", new Issue());
 
         return "allIssues";
+    }
+    
+    @PostMapping("/issueSearch")
+    public String issueSearch(Issue issue, Model model, String login) {
+
+        Associate searchAssociate = associateDao.getAssociateByLogin(login);
+        model.addAttribute("foundIssues", searchAssociate);
+
+        return "lectureSearch";
     }
 
 }

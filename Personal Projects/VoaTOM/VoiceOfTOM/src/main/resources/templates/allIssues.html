@@ -45,6 +45,7 @@
                         <th>Login</th>
                         <th>Date</th>
                         <th>Request</th>
+                        <th>Status</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -54,6 +55,7 @@
                         <td th:text="${issue.associate.login}">Login</td>
                         <td th:text="${issue.date}">Date</td>
                         <td th:text="${issue.complaint}">Request</td>
+                        <td th:text="${issue.status}">Status</td>
                         <td><a data-toggle="modal" class="btn btn-danger btn-sm deleteButton" style="color:white" th:data-id="${issue.issue_id}" data-target="#deleteIssue">Delete</a></td>
                     </tr>
                 </tbody>

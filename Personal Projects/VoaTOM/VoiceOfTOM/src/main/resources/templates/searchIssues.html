@@ -88,18 +88,18 @@
 
 
             $('.deleteButton').click(function () {
-                //clone dialog and remove ids to ensure uniqueness
+            //clone dialog and remove ids to ensure uniqueness
 
-                var modal = $('#deleteIssue');
+            var modal = $('#deleteIssue');
 
 
-                //apply custom values where needed
-                var btn = $(this);
-                var rowId = btn.attr('data-id');
-//                modal.find('[name="id"]').val(btn.attr('data-id'));
-                modal.find('form').attr('action', "/deleteIssue/" + rowId);
-//                $modal.find('button[type="submit"]').attr('href', $modal.find('button[type="submit"]').attr('href'));
-                //show dialog
+            //apply custom values where needed
+            var btn = $(this);
+            var rowId = btn.attr('data-id');
+            //                modal.find('[name="id"]').val(btn.attr('data-id'));
+            modal.find('form').attr('action', "/deleteIssue/" + rowId);
+            //                $modal.find('button[type="submit"]').attr('href', $modal.find('button[type="submit"]').attr('href'));
+            //show dialog
 
             });
 

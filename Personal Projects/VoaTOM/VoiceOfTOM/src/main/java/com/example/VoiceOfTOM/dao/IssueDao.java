@@ -25,6 +25,8 @@ public interface IssueDao {
 
     void deleteIssueById(int id);
     
+
+    
     // helper
     
     List<Issue> getIssuesByAssociate(int id);

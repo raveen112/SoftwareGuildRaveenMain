@@ -9,33 +9,24 @@ import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 /**
  *
  * @author ravee
  */
-
 @Getter
 @Setter
 @Data
 @Builder
 public class Issue {
 
-    
     int issue_id;
     LocalDate date;
     String complaint;
     Boolean status;
-
     Associate associate;
 
-   
-    public Issue(){
-        
-    }
-    
     public Issue(int issue_id, LocalDate date, String complaint, Boolean status, Associate associate) {
         this.issue_id = issue_id;
         this.date = date;
@@ -43,5 +34,9 @@ public class Issue {
         this.status = status;
         this.associate = associate;
     }
+
+    public Issue() {
+    }
+   
 
 }
